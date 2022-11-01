@@ -12,7 +12,7 @@ public class Prueba {
 	@GetMapping("/prueba")
 	public String prueba(){
 
-		return "Prueba";
+		return "Prueba 2";
 	}
 	
 
