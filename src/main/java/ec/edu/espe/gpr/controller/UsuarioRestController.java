@@ -12,7 +12,8 @@ import ec.edu.espe.gpr.dao.IUsuarioDao;
 import ec.edu.espe.gpr.response.UsuarioResponseRest;
 import ec.edu.espe.gpr.services.IUsuarioService;
 
-@CrossOrigin(origins= {"http://localhost:4200"})
+//@CrossOrigin(origins= {"http://localhost:4200"})
+@CrossOrigin(origins= {"https://mango-rock-08c52cc10.2.azurestaticapps.net"})
 @RestController
 @RequestMapping("/api/v1")
 public class UsuarioRestController {
