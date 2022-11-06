@@ -7,7 +7,6 @@ package ec.edu.espe.gpr.model;
 
 import java.io.Serializable;
 import java.util.List;
-import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,44 +14,36 @@ import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-/**
- *
- * @author luisl
- */
 @Entity
 @Table(name = "docente")
-@NamedQueries({
-    @NamedQuery(name = "Docente.findAll", query = "SELECT d FROM Docente d")})
 public class Docente implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @Basic(optional = false)
+    
     @Column(name = "CODIGO_DOCENTE")
     private Integer codigoDocente;
-    @Basic(optional = false)
+    
     @Column(name = "ID_DOCENTE")
     private String idDocente;
-    @Basic(optional = false)
+    
     @Column(name = "NOMBRE_DOCENTE")
     private String nombreDocente;
-    @Basic(optional = false)
+    
     @Column(name = "APELLIDO_DOCENTE")
     private String apellidoDocente;
-    @Basic(optional = false)
+    
     @Column(name = "CEDULA_DOCENTE")
     private String cedulaDocente;
-    @Basic(optional = false)
+    
     @Column(name = "TELEFONO_DOCENTE")
     private String telefonoDocente;
-    @Basic(optional = false)
+    
     @Column(name = "CORREO_DOCENTE")
     private String correoDocente;
     

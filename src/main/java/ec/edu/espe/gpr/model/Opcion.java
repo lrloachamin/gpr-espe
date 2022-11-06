@@ -7,7 +7,6 @@ package ec.edu.espe.gpr.model;
 
 import java.io.Serializable;
 import java.util.List;
-import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,29 +14,21 @@ import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-/**
- *
- * @author luisl
- */
 @Entity
 @Table(name = "opcion")
-@NamedQueries({
-    @NamedQuery(name = "Opcion.findAll", query = "SELECT o FROM Opcion o")})
 public class Opcion implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @Basic(optional = false)
+    
     @Column(name = "CODIGO_OPCION")
     private String codigoOpcion;
-    @Basic(optional = false)
+    
     @Column(name = "DESC_OPCION")
     private String descOpcion;
     

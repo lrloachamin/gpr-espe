@@ -8,13 +8,11 @@ package ec.edu.espe.gpr.model;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-import javax.persistence.Basic;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -22,36 +20,30 @@ import javax.persistence.TemporalType;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-/**
- *
- * @author luisl
- */
 @Entity
 @Table(name = "usuario")
-@NamedQueries({
-    @NamedQuery(name = "Usuario.findAll", query = "SELECT u FROM Usuario u")})
 public class Usuario implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @Basic(optional = false)
+    
     @Column(name = "CODIGO_USUARIO")
     private Integer codigoUsuario;
-    @Basic(optional = false)
+    
     @Column(name = "NOMBRE_USUARIO")
     private String nombreUsuario;
-    @Basic(optional = false)
+    
     @Column(name = "PASSW_USUARIO")
     private String passwUsuario;
-    @Basic(optional = false)
+    
     @Column(name = "FECHA_CRE_USU")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaCreUsu;
-    @Basic(optional = false)
+    
     @Column(name = "FECHA_MOD_USUARIO")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaModUsuario;
-    @Basic(optional = false)
+    
     @Column(name = "ESTADO_USUARIO")
     private Character estadoUsuario;
     

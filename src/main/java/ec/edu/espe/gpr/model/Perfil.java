@@ -7,36 +7,27 @@ package ec.edu.espe.gpr.model;
 
 import java.io.Serializable;
 import java.util.List;
-import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-/**
- *
- * @author luisl
- */
 @Entity
 @Table(name = "perfil")
-@NamedQueries({
-    @NamedQuery(name = "Perfil.findAll", query = "SELECT p FROM Perfil p")})
 public class Perfil implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @Basic(optional = false)
+    
     @Column(name = "CODIGO_PERFIL")
     private String codigoPerfil;
-    @Basic(optional = false)
+    
     @Column(name = "DESC_PERFIL")
     private String descPerfil;
     @Lob

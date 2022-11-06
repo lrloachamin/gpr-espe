@@ -7,38 +7,29 @@ package ec.edu.espe.gpr.model;
 
 import java.io.Serializable;
 import java.util.List;
-import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-/**
- *
- * @author luisl
- */
 @Entity
 @Table(name = "cargo")
-@NamedQueries({
-    @NamedQuery(name = "Cargo.findAll", query = "SELECT c FROM Cargo c")})
 public class Cargo implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @Basic(optional = false)
+    
     @Column(name = "COD_CARGO")
     private String codCargo;
-    @Basic(optional = false)
+    
     @Column(name = "NOMBRE_CARGO")
     private String nombreCargo;
-    @Basic(optional = false)
+    
     @Column(name = "DESCRI_CARGO")
     private String descriCargo;
     

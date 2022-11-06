@@ -7,41 +7,32 @@ package ec.edu.espe.gpr.model;
 
 import java.io.Serializable;
 import java.util.Date;
-import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-/**
- *
- * @author luisl
- */
 @Entity
 @Table(name = "opc_per")
-@NamedQueries({
-    @NamedQuery(name = "OpcPer.findAll", query = "SELECT o FROM OpcPer o")})
 public class OpcPer implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @Basic(optional = false)
+    
     @Column(name = "COD_OPCPER")
     private String codOpcper;
-    @Basic(optional = false)
+    
     @Column(name = "FECHA_ASG_OPCPER")
     @Temporal(TemporalType.DATE)
     private Date fechaAsgOpcper;
-    @Basic(optional = false)
+    
     @Column(name = "FECHA_RET_OPCPER")
     @Temporal(TemporalType.DATE)
     private Date fechaRetOpcper;
