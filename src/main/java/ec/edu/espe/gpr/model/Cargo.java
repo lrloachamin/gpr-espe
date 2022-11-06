@@ -18,6 +18,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
@@ -42,7 +43,7 @@ public class Cargo implements Serializable {
     @Column(name = "DESCRI_CARGO")
     private String descriCargo;
     
-    @JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "codCargo",fetch= FetchType.LAZY)
     private List<Docente> docenteList;
 

@@ -45,6 +45,12 @@ public class UsuarioServiceImpl implements IUsuarioService {
 		
 	}
 
+	@Override
+	public ResponseEntity<UsuarioResponseRest> save(Usuario usuario) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	
 	
 
