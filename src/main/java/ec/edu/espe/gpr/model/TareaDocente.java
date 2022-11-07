@@ -38,7 +38,6 @@ public class TareaDocente implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-
     @Column(name = "CODIGO_TAREA_DOCENTE")
     private Integer codigoTareaDocente;
 
