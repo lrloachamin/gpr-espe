@@ -4,6 +4,6 @@ import org.springframework.data.repository.CrudRepository;
 
 import ec.edu.espe.gpr.model.*;
 
-public interface IUsuarioDao extends CrudRepository<Usuario, Long>{
+public interface IUsuarioDao extends CrudRepository<Usuario, Integer>{
 
 }
