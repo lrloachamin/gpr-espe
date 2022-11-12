@@ -21,6 +21,7 @@ import ec.edu.espe.gpr.response.DocenteResponseRest;
 
 
 
+
 @Service
 public class IDocenteServiceImpl implements IDocenteService  {
 	
@@ -86,6 +87,30 @@ public class IDocenteServiceImpl implements IDocenteService  {
 		}
 		
 		
+		return new ResponseEntity<DocenteResponseRest>(response,HttpStatus.OK);
+	}
+	
+
+	
+	@Override
+	@Transactional(readOnly = true)
+	public ResponseEntity<DocenteResponseRest> serach() {
+		DocenteResponseRest response= new DocenteResponseRest();
+		try {
+			List<Docente> usuarioperfil= (List<Docente>) docenteDao.findAll();
+			
+			response.getDocenteResponse().setDocente(usuarioperfil);
+			response.setMetadata("Respuesta 0k", "200", "Respuesta exitosa");
+			
+			
+		}catch (Exception e) {
+			// TODO: handle exception
+			response.setMetadata("Respuesta nok", "000", "Error Consultar");
+			e.getStackTrace();
+			System.out.println("Sale");
+			return new ResponseEntity<DocenteResponseRest>(response,HttpStatus.INTERNAL_SERVER_ERROR);
+			
+		}
 		return new ResponseEntity<DocenteResponseRest>(response,HttpStatus.OK);
 	}
 	

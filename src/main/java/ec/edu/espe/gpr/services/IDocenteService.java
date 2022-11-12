@@ -7,6 +7,7 @@ import ec.edu.espe.gpr.response.DocenteResponseRest;
 
 
 public interface IDocenteService {
+	public ResponseEntity<DocenteResponseRest> serach();
 	public ResponseEntity<DocenteResponseRest> save(Docente docente, String id);
 
 }

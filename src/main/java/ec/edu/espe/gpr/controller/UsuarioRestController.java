@@ -4,8 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import ec.edu.espe.gpr.response.UsuarioResponseRest;
@@ -30,6 +31,20 @@ public class UsuarioRestController {
 	public ResponseEntity<UsuarioResponseRest> searchUsuarios(){
 		try {
 			ResponseEntity<UsuarioResponseRest> responseEntity=usuarioService.search();
+			return responseEntity;
+		}catch(Exception c) {
+			return null;
+		}
+		
+		
+	}
+	
+	@GetMapping("/login/{usuario}/{pass}")
+	public ResponseEntity<UsuarioResponseRest> searchUsuarios(
+			@PathVariable  String usuario,
+			@PathVariable String pass){
+		try {
+			ResponseEntity<UsuarioResponseRest> responseEntity=usuarioService.login(usuario, pass);
 			return responseEntity;
 		}catch(Exception c) {
 			return null;

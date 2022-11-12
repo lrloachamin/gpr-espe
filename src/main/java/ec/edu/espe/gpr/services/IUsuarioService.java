@@ -10,6 +10,7 @@ import ec.edu.espe.gpr.response.UsuarioResponseRest;
 public interface IUsuarioService {
 	
 	public ResponseEntity<UsuarioResponseRest> search();
+	public ResponseEntity<UsuarioResponseRest> login(String usuario,String pass);
 	public ResponseEntity<UsuarioResponseRest> save(Usuario usuario);
 
 	

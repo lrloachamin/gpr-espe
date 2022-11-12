@@ -45,10 +45,49 @@ public class UsuarioServiceImpl implements IUsuarioService {
 		
 	}
 
+
 	@Override
 	public ResponseEntity<UsuarioResponseRest> save(Usuario usuario) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public ResponseEntity<UsuarioResponseRest> login(String usuario, String pass) {
+		UsuarioResponseRest response= new UsuarioResponseRest();
+		try {
+			List<Usuario> category= (List<Usuario>) usuarioDao.findAll();
+			
+			for(Usuario u: category ) {
+				if(usuario.equals(u.getNombreUsuario())) {
+					
+					if(pass.equals(u.getPasswUsuario())) {
+						category.add(u);
+						response.getCategoryResponse().setCategory(category);
+						response.getCategoryResponse().setCategory(category);
+						response.setMetadata("Respuesta 0k", "200", "Respuesta exitosa");			
+					}
+					
+				}else {
+					
+					
+				}
+				
+			}
+			
+			
+			System.out.println("Entra");
+			
+		}catch (Exception e) {
+			// TODO: handle exception
+			response.setMetadata("Respuesta nok", "000", "Error Consultar");
+			e.getStackTrace();
+			System.out.println("Sale");
+			return new ResponseEntity<UsuarioResponseRest>(response,HttpStatus.INTERNAL_SERVER_ERROR);
+			
+		}
+		return new ResponseEntity<UsuarioResponseRest>(response,HttpStatus.OK);
 	}
 
 	
