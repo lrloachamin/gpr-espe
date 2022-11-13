@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,6 +17,7 @@ import ec.edu.espe.gpr.model.Proyecto;
 import ec.edu.espe.gpr.services.ProyectoService;
 import lombok.RequiredArgsConstructor;
 
+@CrossOrigin(origins= {"https://mango-rock-08c52cc10.2.azurestaticapps.net","http://localhost:4200"})
 @RestController
 @RequestMapping(path = "/proyecto")
 @RequiredArgsConstructor
@@ -36,6 +38,7 @@ public class ProyectoRestController {
     @PostMapping
     public ResponseEntity<String> crear(@RequestBody Proyecto proyecto) {
         try {
+            System.out.println("Data de proyecto antes del rest:"+proyecto.toString());
             this.proyectoService.crear(proyecto);
             return ResponseEntity.ok().build();
         } catch (Exception e) {

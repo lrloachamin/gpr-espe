@@ -30,8 +30,10 @@ public class ProyectoService {
     }
 	
     public void crear(Proyecto proyecto) {
+        proyecto.setNombreProyecto(proyecto.getNombreProyecto().toUpperCase());
         proyecto.setFechaCreacionproyecto(new Date());
 		proyecto.setEstadoProyecto(EstadoProyectoEnum.ACTIVE.getValue());
+        System.out.println("Data de proyecto:"+proyecto.toString());
 		this.proyectoDao.save(proyecto);
     }
 
