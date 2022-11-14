@@ -30,19 +30,23 @@ public class ProyectoService {
     }
 	
     public void crear(Proyecto proyecto) {
+        Long codProy = proyectoDao.count()+1;
+        proyecto.setCodigoProyecto(codProy.intValue());
         proyecto.setNombreProyecto(proyecto.getNombreProyecto().toUpperCase());
         proyecto.setFechaCreacionproyecto(new Date());
 		proyecto.setEstadoProyecto(EstadoProyectoEnum.ACTIVE.getValue());
-        System.out.println("Data de proyecto:"+proyecto.toString());
 		this.proyectoDao.save(proyecto);
     }
 
     public Proyecto modificarDatos(Proyecto proyecto) {
-        Proyecto proyectoDB = this.obtenerPorCodigoProyecto(proyecto.getCodigoProyecto());
+        /*Proyecto proyectoDB = this.obtenerPorCodigoProyecto(proyecto.getCodigoProyecto());
         proyectoDB.setNombreProyecto(proyecto.getNombreProyecto());
 		proyectoDB.setDescripcionProyecto(proyecto.getDescripcionProyecto());
-		this.proyectoDao.save(proyectoDB);
-        return proyectoDB;
+		this.proyectoDao.save(proyectoDB);*/
+        proyecto.setNombreProyecto(proyecto.getNombreProyecto().toUpperCase());
+        this.proyectoDao.save(proyecto);
+        //return proyectoDB;
+        return proyecto;
     }
 	
     public Proyecto cambiarEstadoProyecto(Integer codProyecto) {

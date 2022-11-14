@@ -42,7 +42,6 @@ public class Proyecto implements Serializable {
 
     @Id
     @Column(name = "CODIGO_PROYECTO")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer codigoProyecto;
     
     @Column(name = "NOMBRE_PROYECTO")

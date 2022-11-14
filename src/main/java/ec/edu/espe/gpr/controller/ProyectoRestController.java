@@ -38,7 +38,6 @@ public class ProyectoRestController {
     @PostMapping
     public ResponseEntity<String> crear(@RequestBody Proyecto proyecto) {
         try {
-            System.out.println("Data de proyecto antes del rest:"+proyecto.toString());
             this.proyectoService.crear(proyecto);
             return ResponseEntity.ok().build();
         } catch (Exception e) {
