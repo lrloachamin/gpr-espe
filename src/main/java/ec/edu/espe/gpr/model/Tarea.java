@@ -65,8 +65,9 @@ public class Tarea implements Serializable {
     @ManyToOne(optional = false,fetch= FetchType.LAZY)
     private Proyecto codigoProyecto;
     
+    /* 
     @JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "codigoTarea",fetch= FetchType.LAZY)
     private List<TareaDocente> tareaDocenteList;
-    
+    */
 }
