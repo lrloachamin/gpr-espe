@@ -54,7 +54,7 @@ public class TareaDocenteService {
     public void crear(TareaDocenteProyecto tareaDocenteProyecto) {
         Long codTarea = tareaDao.count()+1;
         tareaDocenteProyecto.getTarea().setCodigoTarea(codTarea.intValue());
-        tareaDocenteProyecto.getTarea().setFechaCreaciontarea(new Date());
+        //tareaDocenteProyecto.getTarea().setFechaCreaciontarea(new Date());
         tareaDocenteProyecto.getTarea().setEstadoTarea(EstadoTareaEnum.ACTIVE.getValue().charAt(0));
         tareaDocenteProyecto.getTarea().setCodigoTarea(codTarea.intValue());
         this.tareaDao.save(tareaDocenteProyecto.getTarea());
