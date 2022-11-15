@@ -52,7 +52,8 @@ public class IDocenteServiceImpl implements IDocenteService  {
 			
 			Long idLoc=usuarioDao.count()+1;
 			usuario.setCodigoUsuario(idLoc.intValue());
-			String nombreUsuario=(docente.getNombreDocente().substring(0,1).concat(docente.getApellidoDocente())).toLowerCase();
+			String[] parts = docente.getApellidoDocente().split(" ");
+			String nombreUsuario=(docente.getNombreDocente().substring(0,1).concat(parts[0])).toLowerCase();
 			usuario.setNombreUsuario(nombreUsuario);
 			usuario.setPasswUsuario(docente.getCedulaDocente());
 			usuario.setFechaCreUsu(new Date());
