@@ -134,7 +134,7 @@ public class UsuarioServiceImpl implements IUsuarioService {
 				
 				response.getCategoryResponse().setCategory(list);
 				response.setMetadata("Respuesta 0k", "000", "Respuesta exitosa");
-				emservice.enviarCorreo(correo, "Registro completo", "Bienvenido el administrador a aceptado su solicitud, su usuario es"
+				emservice.enviarCorreo(correo, "Registro completo", "Bienvenido el administrador a aceptado su solicitud, su usuario es "
 						+usuarioF.get().getNombreUsuario()+ " y su contraseña es: "+usuarioF.get().getPasswUsuario());
 				
 				
