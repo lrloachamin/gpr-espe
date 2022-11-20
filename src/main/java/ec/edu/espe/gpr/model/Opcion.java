@@ -18,6 +18,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "opcion")
@@ -38,6 +39,7 @@ public class Opcion implements Serializable {
     
     @JoinColumn(name = "COD_SISTEMA", referencedColumnName = "COD_SISTEMA")
     @ManyToOne(optional = false,fetch= FetchType.LAZY)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Sistema codSistema;
 
     public Opcion() {
