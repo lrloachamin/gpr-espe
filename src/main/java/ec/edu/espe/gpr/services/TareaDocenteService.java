@@ -81,6 +81,7 @@ public class TareaDocenteService {
     }
 
     public TareaDocente modificarDatos(TareaDocente tareaDocente) {
+        System.out.println("\nData:"+tareaDocente);
         this.tareaDocenteDao.save(tareaDocente);
         this.tareaDao.save(tareaDocente.getCodigoTarea());
         return tareaDocente;

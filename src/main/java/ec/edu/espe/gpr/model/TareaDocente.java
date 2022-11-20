@@ -43,7 +43,7 @@ public class TareaDocente implements Serializable {
     private Integer codigoTareaDocente;
 
     @Column(name = "FECHA_ENTREGA")
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date fechaEntrega;
 
     @Column(name = "ARCHIVO_TAREA_DOCENTE")
