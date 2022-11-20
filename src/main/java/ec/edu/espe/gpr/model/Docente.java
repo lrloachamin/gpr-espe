@@ -6,18 +6,15 @@
 package ec.edu.espe.gpr.model;
 
 import java.io.Serializable;
-import java.util.List;
-import javax.persistence.CascadeType;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
@@ -58,10 +55,10 @@ public class Docente implements Serializable {
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Usuario codigoUsuario;
     
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "codigoDocente",fetch= FetchType.LAZY)
+    /*@OneToMany(cascade = CascadeType.ALL, mappedBy = "codigoDocente",fetch= FetchType.LAZY)
     @JsonBackReference
     private List<TareaDocente> tareaDocenteList;
-
+    */
     public Docente() {
     }
 
@@ -151,6 +148,7 @@ public class Docente implements Serializable {
         this.codigoUsuario = codigoUsuario;
     }
 
+    /*
     public List<TareaDocente> getTareaDocenteList() {
         return tareaDocenteList;
     }
@@ -158,7 +156,7 @@ public class Docente implements Serializable {
     public void setTareaDocenteList(List<TareaDocente> tareaDocenteList) {
         this.tareaDocenteList = tareaDocenteList;
     }
-
+    */
     @Override
     public int hashCode() {
         int hash = 0;
