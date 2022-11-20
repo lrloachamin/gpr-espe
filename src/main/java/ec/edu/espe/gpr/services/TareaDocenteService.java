@@ -54,7 +54,7 @@ public class TareaDocenteService {
     }
 
     public List<Docente> listarDocentesTareaAsignada(Tarea codigoTarea) {
-        List<TareaDocente> tareas=this.tareaDocenteDao.findByCodigoTarea(codigoTarea)
+        List<TareaDocente> tareas=this.tareaDocenteDao.findByCodigoTarea(codigoTarea);
         List<Docente> docentes = new ArrayList<>();
         for(TareaDocente tarea : tareas){
             docentes.add(tarea.getCodigoDocente());
