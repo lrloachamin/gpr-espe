@@ -16,12 +16,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "cargo")
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Cargo implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -37,7 +34,7 @@ public class Cargo implements Serializable {
     private String descriCargo;
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "codCargo",fetch= FetchType.LAZY)
-    @JsonIgnore
+    @JsonBackReference
     private List<Docente> docenteList;
 
     public Cargo() {

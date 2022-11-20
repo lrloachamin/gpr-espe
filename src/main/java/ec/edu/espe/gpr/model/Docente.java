@@ -18,12 +18,10 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "docente")
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Docente implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -61,7 +59,7 @@ public class Docente implements Serializable {
     private Usuario codigoUsuario;
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "codigoDocente",fetch= FetchType.LAZY)
-    @JsonIgnore
+    @JsonBackReference
     private List<TareaDocente> tareaDocenteList;
 
     public Docente() {
