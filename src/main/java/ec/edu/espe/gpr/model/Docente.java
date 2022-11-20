@@ -17,6 +17,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
@@ -47,19 +48,16 @@ public class Docente implements Serializable {
     @Column(name = "CORREO_DOCENTE")
     private String correoDocente;
     
-    @JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
     @JoinColumn(name = "COD_CARGO", referencedColumnName = "COD_CARGO")
     @ManyToOne(optional = false,fetch= FetchType.LAZY)
     private Cargo codCargo;
-    
-    @JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
+
     @JoinColumn(name = "CODIGO_USUARIO", referencedColumnName = "CODIGO_USUARIO")
     @ManyToOne(fetch= FetchType.LAZY)
     private Usuario codigoUsuario;
     
-    
-    @JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "codigoDocente",fetch= FetchType.LAZY)
+    @JsonBackReference
     private List<TareaDocente> tareaDocenteList;
 
     public Docente() {

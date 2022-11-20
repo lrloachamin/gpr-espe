@@ -16,6 +16,7 @@ import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -34,12 +35,12 @@ public class Perfil implements Serializable {
     @Column(name = "OBS_PERFIL")
     private String obsPerfil;
     
-    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "codigoPerfil",fetch= FetchType.LAZY)
+    @JsonBackReference
     private List<OpcPer> opcPerList;
     
-    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "codigoPerfil",fetch= FetchType.LAZY)
+    @JsonBackReference
     private List<Usuper> usuperList;
 
     public Perfil() {

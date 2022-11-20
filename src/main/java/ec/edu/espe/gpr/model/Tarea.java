@@ -60,7 +60,6 @@ public class Tarea implements Serializable {
     @Column(name = "ESTADO_TAREA")
     private Character estadoTarea;
     
-    @JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
     @JoinColumn(name = "CODIGO_PROYECTO", referencedColumnName = "CODIGO_PROYECTO")
     @ManyToOne(optional = false,fetch= FetchType.LAZY)
     private Proyecto codigoProyecto;

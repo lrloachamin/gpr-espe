@@ -21,6 +21,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.AllArgsConstructor;
@@ -57,7 +58,7 @@ public class Proyecto implements Serializable {
     @Column(name = "ESTADO_PROYECTO")
     private String estadoProyecto;
     
-    @JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "codigoProyecto",fetch= FetchType.LAZY)
+    @JsonBackReference
     private List<Tarea> tareaList;
 }

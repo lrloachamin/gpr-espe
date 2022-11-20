@@ -15,6 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
@@ -30,8 +31,8 @@ public class Sistema implements Serializable {
     @Column(name = "DESCRI_SISTEMA")
     private String descriSistema;
     
-    @JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "codSistema",fetch= FetchType.LAZY)
+    @JsonBackReference
     private List<Opcion> opcionList;
 
     public Sistema() {

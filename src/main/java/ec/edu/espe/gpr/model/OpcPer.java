@@ -37,12 +37,10 @@ public class OpcPer implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date fechaRetOpcper;
     
-    @JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
     @JoinColumn(name = "CODIGO_OPCION", referencedColumnName = "CODIGO_OPCION")
     @ManyToOne(optional = false,fetch= FetchType.LAZY)
     private Opcion codigoOpcion;
     
-    @JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
     @JoinColumn(name = "CODIGO_PERFIL", referencedColumnName = "CODIGO_PERFIL")
     @ManyToOne(optional = false,fetch= FetchType.LAZY)
     private Perfil codigoPerfil;

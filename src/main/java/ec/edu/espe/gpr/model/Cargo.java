@@ -15,6 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -33,8 +34,8 @@ public class Cargo implements Serializable {
     @Column(name = "DESCRI_CARGO")
     private String descriCargo;
     
-    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "codCargo",fetch= FetchType.LAZY)
+    @JsonBackReference
     private List<Docente> docenteList;
 
     public Cargo() {

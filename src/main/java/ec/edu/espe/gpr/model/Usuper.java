@@ -38,13 +38,10 @@ public class Usuper implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date fechRetiroUsuperOpcper;
     
-    @JsonIgnore
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"}) 
     @JoinColumn(name = "CODIGO_PERFIL", referencedColumnName = "CODIGO_PERFIL")
     @ManyToOne(optional = false,fetch= FetchType.LAZY)
     private Perfil codigoPerfil;
     
-    @JsonIgnore
     @JoinColumn(name = "CODIGO_USUARIO", referencedColumnName = "CODIGO_USUARIO")
     @ManyToOne(optional = false,fetch= FetchType.LAZY)
     private Usuario codigoUsuario;

@@ -17,6 +17,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
@@ -32,11 +33,10 @@ public class Opcion implements Serializable {
     @Column(name = "DESC_OPCION")
     private String descOpcion;
     
-    @JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
     @OneToMany(cascade = CascadeType.ALL,fetch= FetchType.LAZY, mappedBy = "codigoOpcion")
+    @JsonBackReference
     private List<OpcPer> opcPerList;
     
-    @JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
     @JoinColumn(name = "COD_SISTEMA", referencedColumnName = "COD_SISTEMA")
     @ManyToOne(optional = false,fetch= FetchType.LAZY)
     private Sistema codSistema;
