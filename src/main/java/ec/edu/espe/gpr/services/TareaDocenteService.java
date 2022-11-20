@@ -1,6 +1,7 @@
 package ec.edu.espe.gpr.services;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -51,6 +52,15 @@ public class TareaDocenteService {
     public List<Docente> listarDocentes() {
         return this.docenteDao.findAll();
     }
+
+    public List<Docente> listarDocentesTareaAsignada(Tarea codigoTarea) {
+        List<TareaDocente> tareas=this.tareaDocenteDao.findByCodigoTarea(codigoTarea)
+        List<Docente> docentes = new ArrayList<>();
+        for(TareaDocente tarea : tareas){
+            docentes.add(tarea.getCodigoDocente());
+        } 
+        return docentes;
+    }
 	
     public void crear(TareaDocenteProyecto tareaDocenteProyecto) {
         Long codTarea = tareaDao.count()+1;
@@ -70,9 +80,10 @@ public class TareaDocenteService {
         this.tareaDocenteDao.save(tareaDocenteProyecto.getTareaDocente());
     }
 
-    public Tarea modificarDatos(Tarea tarea) {
-        this.tareaDao.save(tarea);
-        return tarea;
+    public TareaDocente modificarDatos(TareaDocente tareaDocente) {
+        this.tareaDocenteDao.save(tareaDocente);
+        this.tareaDao.save(tareaDocente.getCodigoTarea());
+        return tareaDocente;
     }
 
 }

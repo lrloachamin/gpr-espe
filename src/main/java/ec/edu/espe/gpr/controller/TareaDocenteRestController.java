@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -48,6 +49,16 @@ public class TareaDocenteRestController {
         }
     }
 
+    @GetMapping(path = "/listarDocentesTareaAsignada")
+    public ResponseEntity<List<Docente>> listarDocentesTareaAsignada(@RequestBody Tarea codigoTarea) {
+        try {
+            List<Docente> docentes = this.tareaDocenteService.listarDocentesTareaAsignada(codigoTarea);
+            return ResponseEntity.ok(docentes);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
     @PostMapping
     public ResponseEntity<String> crear(@RequestBody TareaDocenteProyecto tareaDocenteProyecto) {
         try {
@@ -60,10 +71,10 @@ public class TareaDocenteRestController {
     }
 
     @PutMapping("/modificar")
-    public ResponseEntity<Tarea> modificar(@RequestBody Tarea tarea) {
+    public ResponseEntity<TareaDocente> modificar(@RequestBody TareaDocente tareaDocente) {
         try {
-            tarea = this.tareaDocenteService.modificarDatos(tarea);
-            return ResponseEntity.ok(tarea);
+            tareaDocente = this.tareaDocenteService.modificarDatos(tareaDocente);
+            return ResponseEntity.ok(tareaDocente);
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.badRequest().build();
