@@ -63,8 +63,8 @@ public class TareaDocenteService {
         tareaDocenteProyecto.getTareaDocente().setCodigoTareaDocente(codTareaDocente.intValue());
         tareaDocenteProyecto.getTareaDocente().setCodigoTarea(tareaDocenteProyecto.getTarea());
         tareaDocenteProyecto.getTareaDocente().setArchivoTareaDocente("");
+        tareaDocenteProyecto.getTareaDocente().setIndicadorTareadocente(new BigDecimal(0));
         tareaDocenteProyecto.getTareaDocente().setDescripcionTareadocente("");
-        tareaDocenteProyecto.getTareaDocente().setArchivoTareaDocente("");
         tareaDocenteProyecto.getTareaDocente().setEstadoTareaDocente(EstadoTareaDocenteEnum.ACTIVE.getValue());
 
         this.tareaDocenteDao.save(tareaDocenteProyecto.getTareaDocente());
