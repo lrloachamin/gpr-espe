@@ -19,6 +19,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "usuario")
@@ -47,11 +48,11 @@ public class Usuario implements Serializable {
     private Character estadoUsuario;
     
     @OneToMany( fetch= FetchType.LAZY,mappedBy = "codigoUsuario")
-    @JsonBackReference
+    @JsonIgnore
     private List<Usuper> usuperList;
 
     @OneToMany(fetch= FetchType.LAZY,mappedBy = "codigoUsuario")
-    @JsonBackReference
+    @JsonIgnore
     private List<Docente> docenteList;
 
     public Usuario() {
