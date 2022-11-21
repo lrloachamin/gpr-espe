@@ -22,7 +22,7 @@ public class DocenteRestController {
 	@Autowired
 	private IDocenteService docenteservice;
 	
-	@GetMapping("/usuario/{id}")
+	@GetMapping("/usuarionombre/{id}")
 	public ResponseEntity<DocenteResponseRest> buscarUsuarios(@PathVariable String id){
 		ResponseEntity<DocenteResponseRest> responseEntity=docenteservice.buscarPorUsuario(id);
 		return responseEntity;
