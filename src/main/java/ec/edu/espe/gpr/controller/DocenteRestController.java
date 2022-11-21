@@ -31,7 +31,7 @@ public class DocenteRestController {
 		}
 	}
 
-	@GetMapping("/obtenerDocente/{codigoDocente}")
+	@GetMapping("/obtenerDocente/{codeUser}")
 	public ResponseEntity<Docente> obtenerDocente(@PathVariable Integer codeUser){
 		try {
 			Docente docente=docenteservice.getDocentByCodeUser(codeUser);
