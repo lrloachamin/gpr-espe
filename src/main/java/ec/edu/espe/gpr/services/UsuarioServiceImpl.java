@@ -2,7 +2,6 @@ package ec.edu.espe.gpr.services;
 
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -12,14 +11,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-
-
 import ec.edu.espe.gpr.dao.IDocenteDao;
 import ec.edu.espe.gpr.dao.IUsuarioDao;
-import ec.edu.espe.gpr.model.Cargo;
 import ec.edu.espe.gpr.model.Docente;
 import ec.edu.espe.gpr.model.Usuario;
-import ec.edu.espe.gpr.response.DocenteResponseRest;
 import ec.edu.espe.gpr.response.UsuarioResponseRest;
 
 @Service
