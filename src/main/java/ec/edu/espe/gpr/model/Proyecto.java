@@ -21,7 +21,6 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -58,6 +57,6 @@ public class Proyecto implements Serializable {
     private String estadoProyecto;
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "codigoProyecto",fetch= FetchType.LAZY)
-    @JsonIgnore
+    @JsonBackReference(value="tareaList")
     private List<Tarea> tareaList;
 }
