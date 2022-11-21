@@ -91,7 +91,22 @@ public class IDocenteServiceImpl implements IDocenteService  {
 		return new ResponseEntity<DocenteResponseRest>(response,HttpStatus.OK);
 	}
 	
+	public Usuario getUserByCOdeUser(Integer codeUser) {	
+		Optional<Usuario> user = this.usuarioDao.findById(codeUser);
+		if (user.isPresent())
+			return user.get();
+		else 
+			return null;
+	}
 
+	public Docente getDocentByCOdeUser(Integer codeUser) {	
+		Usuario user = getUserByCOdeUser(codeUser);
+		Optional<Docente> docenteOpt = this.docenteDao.findByCodigoUsuario(user);
+		if (docenteOpt.isPresent())
+			return docenteOpt.get();
+		else 
+			return null;
+	}
 	
 	@Override
 	@Transactional(readOnly = true)
@@ -115,6 +130,8 @@ public class IDocenteServiceImpl implements IDocenteService  {
 		return new ResponseEntity<DocenteResponseRest>(response,HttpStatus.OK);
 	}
 	
-
-
+	@Override
+	public Docente getDocentByCodeUser(Integer codeUser) {
+		return this.getDocentByCodeUser(codeUser);
+	}
 }
