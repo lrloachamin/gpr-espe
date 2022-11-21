@@ -30,16 +30,6 @@ public class DocenteRestController {
 			return null;
 		}
 	}
-
-	@GetMapping("/obtenerDocente/{codeUser}")
-	public ResponseEntity<Docente> obtenerDocente(@PathVariable Integer codeUser){
-		try {
-			Docente docente=docenteservice.getDocentByCodeUser(codeUser);
-			return ResponseEntity.ok(docente);
-		}catch(Exception c) {
-			return ResponseEntity.badRequest().build();
-		}
-	}
 	
 	@PostMapping("/docentes")
 	public ResponseEntity<DocenteResponseRest> saveDocentes(

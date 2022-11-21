@@ -155,6 +155,27 @@ public class UsuarioServiceImpl implements IUsuarioService {
 		return new ResponseEntity<UsuarioResponseRest>(response,HttpStatus.OK);
 	}
 
+	public Usuario getUserByCOdeUser(Integer codeUser) {	
+		Optional<Usuario> user = this.usuarioDao.findById(codeUser);
+		if (user.isPresent())
+			return user.get();
+		else 
+			return null;
+	}
+
+	public Docente getDocentByCodeUserSearch(Integer codeUser) {	
+		Usuario user = getUserByCOdeUser(codeUser);
+		Optional<Docente> docenteOpt = this.docentedao.findByCodigoUsuario(user);
+		if (docenteOpt.isPresent())
+			return docenteOpt.get();
+		else 
+			return null;
+	}
+
+	@Override
+	public Docente getDocentByCodeUser(Integer codeUser) {
+		return this.getDocentByCodeUserSearch(codeUser);
+	}
 	
 	
 
