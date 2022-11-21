@@ -59,7 +59,7 @@ public class TareaDocenteRestController {
         }
     }
 
-    @GetMapping(path = "/listarTareaAsignadaPorDocente")
+    @GetMapping(path = "/listarTareaAsignadaPorDocente/{codigoDocente}")
     public ResponseEntity<List<TareaDocente>> listarTareaAsignadaPorDocente(@PathVariable Integer codigoDocente) {
         try {
             List<TareaDocente> tareaDocente = this.tareaDocenteService.listarTareaAsignadaPorDocente(codigoDocente);
