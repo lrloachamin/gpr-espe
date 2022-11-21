@@ -37,10 +37,10 @@ public class TareaDocenteService {
 			return null;
 	}
 
-    public Tarea obtenerDocentePorCodigoDocente(Integer codTarea) {	
-		Optional<Tarea> tareaOpt = this.tareaDao.findById(codTarea);
-		if (tareaOpt.isPresent())
-			return tareaOpt.get();
+    public Docente obtenerDocentePorCodigoDocente(Integer codigoDocente) {	
+		Optional<Docente> docenteOpt = this.docenteDao.findByCodigoDocente(codigoDocente);
+		if (docenteOpt.isPresent())
+			return docenteOpt.get();
 		else 
 			return null;
 	}
@@ -60,6 +60,12 @@ public class TareaDocenteService {
             docentes.add(tarea.getCodigoDocente());
         } 
         return docentes;
+    }
+
+    public List<TareaDocente> listarTareaAsignadaPorDocente(Integer codigoDocente) {
+        Docente docente = this.obtenerDocentePorCodigoDocente(codigoDocente);
+        List<TareaDocente> tareas=this.tareaDocenteDao.findByCodigoDocente(docente);
+        return tareas;
     }
 	
     public void crear(TareaDocenteProyecto tareaDocenteProyecto) {
@@ -81,7 +87,6 @@ public class TareaDocenteService {
     }
 
     public TareaDocente modificarDatos(TareaDocente tareaDocente) {
-        System.out.println("\nData:"+tareaDocente);
         this.tareaDocenteDao.save(tareaDocente);
         this.tareaDao.save(tareaDocente.getCodigoTarea());
         return tareaDocente;
