@@ -113,5 +113,67 @@ public class IDocenteServiceImpl implements IDocenteService  {
 		return new ResponseEntity<DocenteResponseRest>(response,HttpStatus.OK);
 	}
 	
+
+	@Override
+	public ResponseEntity<DocenteResponseRest> buscarPorUsuario(String usuario) {
+		DocenteResponseRest response= new DocenteResponseRest();
+		try {
+			List<Docente> usuarioperfil= (List<Docente>) docenteDao.findAll();
+			List<Docente> docenteList= new ArrayList<>();
+			for(Docente d: usuarioperfil) {
+				if(d.getCodigoUsuario().getNombreUsuario().equals(usuario)){
+					docenteList.add(d);
+					response.getDocenteResponse().setDocente(docenteList);
+					response.setMetadata("Respuesta 0k", "200", "Respuesta exitosa");
+					
+				}
+			}
+			
+			
+		}catch (Exception e) {
+			// TODO: handle exception
+			response.setMetadata("Respuesta nok", "000", "Error Consultar");
+			e.getStackTrace();
+			System.out.println("Sale");
+			return new ResponseEntity<DocenteResponseRest>(response,HttpStatus.INTERNAL_SERVER_ERROR);
+			
+		}
+		return new ResponseEntity<DocenteResponseRest>(response,HttpStatus.OK);
+	}
+
+
+
+	@Override
+	public ResponseEntity<DocenteResponseRest> buscarPorIDEspe(String idespe) {
+		DocenteResponseRest response= new DocenteResponseRest();
+		try {
+			List<Docente> usuarioperfil= (List<Docente>) docenteDao.findAll();
+			List<Docente> docenteList= new ArrayList<>();
+			for(Docente d: usuarioperfil) {
+				if(d.getIdDocente().equals(idespe)){
+					docenteList.add(d);
+					response.getDocenteResponse().setDocente(docenteList);
+					response.setMetadata("Respuesta 0k", "200", "Respuesta exitosa");
+					
+				}
+			}
+			
+			
+		}catch (Exception e) {
+			// TODO: handle exception
+			response.setMetadata("Respuesta nok", "000", "Error Consultar");
+			e.getStackTrace();
+			System.out.println("Sale");
+			return new ResponseEntity<DocenteResponseRest>(response,HttpStatus.INTERNAL_SERVER_ERROR);
+			
+		}
+		return new ResponseEntity<DocenteResponseRest>(response,HttpStatus.OK);
+	}
 	
+
+
 }
+
+	
+	
+
