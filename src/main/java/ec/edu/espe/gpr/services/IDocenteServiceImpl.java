@@ -99,7 +99,7 @@ public class IDocenteServiceImpl implements IDocenteService  {
 			return null;
 	}
 
-	public Docente getDocentByCOdeUser(Integer codeUser) {	
+	public Docente getDocentByCodeUserSearch(Integer codeUser) {	
 		Usuario user = getUserByCOdeUser(codeUser);
 		Optional<Docente> docenteOpt = this.docenteDao.findByCodigoUsuario(user);
 		if (docenteOpt.isPresent())
@@ -132,6 +132,6 @@ public class IDocenteServiceImpl implements IDocenteService  {
 	
 	@Override
 	public Docente getDocentByCodeUser(Integer codeUser) {
-		return this.getDocentByCodeUser(codeUser);
+		return this.getDocentByCodeUserSearch(codeUser);
 	}
 }
