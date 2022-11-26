@@ -14,9 +14,11 @@ import ec.edu.espe.gpr.dao.ITareaDocenteDao;
 import ec.edu.espe.gpr.enums.EstadoTareaDocenteEnum;
 import ec.edu.espe.gpr.enums.EstadoTareaEnum;
 import ec.edu.espe.gpr.model.Docente;
+import ec.edu.espe.gpr.model.Indicador;
 import ec.edu.espe.gpr.model.Tarea;
 import ec.edu.espe.gpr.model.TareaDocente;
 import ec.edu.espe.gpr.model.TareaDocenteProyecto;
+import ec.edu.espe.gpr.model.TareaIndicador;
 
 @Service
 public class TareaDocenteService {
@@ -71,18 +73,33 @@ public class TareaDocenteService {
         //tareaDocenteProyecto.getTarea().setCodigoTarea(codTarea.intValue());
         tareaDocenteProyecto.getTarea().setFechaCreaciontarea(new Date());
         tareaDocenteProyecto.getTarea().setEstadoTarea(EstadoTareaEnum.ACTIVE.getValue().charAt(0));
-        this.tareaDao.save(tareaDocenteProyecto.getTarea());
-
-        Long codTareaDocente = tareaDocenteDao.count()+1;
-        tareaDocenteProyecto.getTareaDocente().setCodigoTareaDocente(codTareaDocente.intValue());
         
-        tareaDocenteProyecto.getTareaDocente().setCodigoTarea(tareaDocenteProyecto.getTarea());
+        Tarea tarea =this.tareaDao.save(tareaDocenteProyecto.getTarea());
+        System.out.println(tarea.toString());
+        for(TareaDocente t :tareaDocenteProyecto.getTareaDocente()){
+            //t.setCodigoTareaDocente(tarea.get);
+            t.setCodigoTarea(tarea);
+            t.setEstadoTareaDocente(EstadoTareaDocenteEnum.ACTIVE.getValue());
+            TareaDocente tDocenteBD=this.tareaDocenteDao.save(t);
+            for (Indicador indicador : tareaDocenteProyecto.getIndicadors()) {
+                TareaIndicador indicadorBD = new TareaIndicador();
+                indicadorBD.setFechaCreacionIndicador(new Date());
+                indicadorBD.setIndicadorCODIGOINDICADOR(indicador);
+                indicadorBD.setTareadocenteCODIGOTAREADOCENTE(tDocenteBD);               
+            }
+        }
+        //tareaDocenteProyecto.getTarea().setFechaCreaciontarea(new Date());
+        //tareaDocenteProyecto.getTarea().setEstadoTarea(EstadoTareaEnum.ACTIVE.getValue().charAt(0));
+        //this.tareaDao.save(tareaDocenteProyecto.getTarea());
+
+        //Long codTareaDocente = tareaDocenteDao.count()+1;
+       
         //tareaDocenteProyecto.getTareaDocente().setArchivoTareaDocente("");
         //tareaDocenteProyecto.getTareaDocente().setIndicadorTareadocente(new BigDecimal(0));
         //tareaDocenteProyecto.getTareaDocente().setDescripcionTareadocente("");
-        tareaDocenteProyecto.getTareaDocente().setEstadoTareaDocente(EstadoTareaDocenteEnum.ACTIVE.getValue());
+        //tareaDocenteProyecto.getTareaDocente().setEstadoTareaDocente(EstadoTareaDocenteEnum.ACTIVE.getValue());
 
-        this.tareaDocenteDao.save(tareaDocenteProyecto.getTareaDocente());
+        //this.tareaDocenteDao.save(tareaDocenteProyecto.getTareaDocente());
     }
 
     public TareaDocente modificarDatos(TareaDocente tareaDocente) {
