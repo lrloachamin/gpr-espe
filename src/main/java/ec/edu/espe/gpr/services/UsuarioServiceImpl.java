@@ -8,6 +8,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -60,29 +62,32 @@ public class UsuarioServiceImpl implements IUsuarioService {
 	@Override
 	@Transactional(readOnly = true)
 	public ResponseEntity<UsuarioResponseRest> login(String usuario, String pass) {
+		PasswordEncoder passeconder;
+		passeconder=new BCryptPasswordEncoder();
 		UsuarioResponseRest response= new UsuarioResponseRest();
+		System.out.println(pass);
 		try {
 			List<Usuario> category= (List<Usuario>) usuarioDao.findAll();
 			
+			Usuario user=new Usuario();
+			List<Usuario> userLogin=new ArrayList<>();
+			
+			
 			for(Usuario u: category ) {
-				if(usuario.equals(u.getNombreUsuario())) {
-					
-					if(pass.equals(u.getPasswUsuario())) {
-						category.add(u);
-						response.getCategoryResponse().setCategory(category);
-						response.getCategoryResponse().setCategory(category);
-						response.setMetadata("Respuesta 0k", "200", "Respuesta exitosa");			
-					}
-					
-				}else {
-					
-					
+				if(usuario.equals(u.getNombreUsuario()) && passeconder.matches(pass, u.getPasswUsuario())) {				
+						user=u;								
 				}
 				
 			}
+			userLogin.add(user);
+			response.getCategoryResponse().setCategory(userLogin);
+			response.getCategoryResponse().setCategory(userLogin);
+			response.setMetadata("Respuesta 0k", "200", "Respuesta exitosa");	
+			System.out.println(usuario);
+			System.out.println(pass);
 			
 			
-			System.out.println("Entra");
+			
 			
 		}catch (Exception e) {
 			// TODO: handle exception
@@ -99,12 +104,14 @@ public class UsuarioServiceImpl implements IUsuarioService {
 	@Override
 	public ResponseEntity<UsuarioResponseRest> update(Usuario usuario, Integer id) {
 		UsuarioResponseRest response= new UsuarioResponseRest();
+		PasswordEncoder passeconder;
+		passeconder=new BCryptPasswordEncoder();
 		List<Usuario> list= new ArrayList<>();
 		try {
 			Optional<Usuario> usuarioF=usuarioDao.findById(id);
 			if(usuarioF.isPresent()) {
 				usuarioF.get().setNombreUsuario(usuario.getNombreUsuario());
-				usuarioF.get().setPasswUsuario(usuario.getPasswUsuario());
+				usuarioF.get().setPasswUsuario(passeconder.encode(usuario.getPasswUsuario()));
 				usuarioF.get().setFechaCreUsu(usuario.getFechaCreUsu());
 				usuarioF.get().setFechaModUsuario(usuario.getFechaModUsuario());
 				usuarioF.get().setEstadoUsuario(usuario.getEstadoUsuario());
@@ -129,8 +136,8 @@ public class UsuarioServiceImpl implements IUsuarioService {
 				
 				response.getCategoryResponse().setCategory(list);
 				response.setMetadata("Respuesta 0k", "000", "Respuesta exitosa");
-				emservice.enviarCorreo(correo, "Registro completo", "Bienvenido el administrador a aceptado su solicitud, su usuario es "
-						+usuarioF.get().getNombreUsuario()+ " y su contraseña es: "+usuarioF.get().getPasswUsuario());
+				//emservice.enviarCorreo(correo, "Registro completo", "Bienvenido el administrador a aceptado su solicitud, su usuario es "
+				//		+usuarioF.get().getNombreUsuario()+ " y su contraseña es: "+usuarioF.get().getPasswUsuario());
 				
 				
 				}else {
