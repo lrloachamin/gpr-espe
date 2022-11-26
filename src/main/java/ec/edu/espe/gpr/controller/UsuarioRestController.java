@@ -41,6 +41,17 @@ public class UsuarioRestController {
 		
 		
 	}
+	@GetMapping("/login/{user}/{pass}")
+	public ResponseEntity<UsuarioResponseRest> login(@PathVariable String user,@PathVariable String pass){
+		try {
+			ResponseEntity<UsuarioResponseRest> responseEntity=usuarioService.login(user, pass);
+			return responseEntity;
+		}catch(Exception c) {
+			return null;
+		}
+		
+		
+	}
 
 	@GetMapping("/obtenerDocente/{codeUser}")
 	public ResponseEntity<Docente> obtenerDocente(@PathVariable Integer codeUser){
@@ -51,6 +62,7 @@ public class UsuarioRestController {
 			return ResponseEntity.badRequest().build();
 		}
 	}
+	
 	
 	@PutMapping("/usuario/{id}")
 	public ResponseEntity<UsuarioResponseRest> updateCategories(@RequestBody Usuario usuario,@PathVariable Integer id){

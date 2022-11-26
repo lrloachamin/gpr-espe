@@ -4,12 +4,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import ec.edu.espe.gpr.model.Docente;
+import ec.edu.espe.gpr.response.CargoResponseRest;
 import ec.edu.espe.gpr.response.DocenteResponseRest;
 import ec.edu.espe.gpr.services.IDocenteService;
 
@@ -19,6 +21,17 @@ import ec.edu.espe.gpr.services.IDocenteService;
 public class DocenteRestController {
 	@Autowired
 	private IDocenteService docenteservice;
+	
+	@GetMapping("/usuarionombre/{id}")
+	public ResponseEntity<DocenteResponseRest> buscarUsuarios(@PathVariable String id){
+		ResponseEntity<DocenteResponseRest> responseEntity=docenteservice.buscarPorUsuario(id);
+		return responseEntity;
+	}
+	@GetMapping("/usuarioid/{id}")
+	public ResponseEntity<DocenteResponseRest> buscarporId(@PathVariable String id){
+		ResponseEntity<DocenteResponseRest> responseEntity=docenteservice.buscarPorIDEspe(id);
+		return responseEntity;
+	}
 	
 	@GetMapping("/docente")
 	public ResponseEntity<DocenteResponseRest> searchUsuarios(){

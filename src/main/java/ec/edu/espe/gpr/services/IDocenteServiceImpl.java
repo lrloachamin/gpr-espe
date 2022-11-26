@@ -8,6 +8,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -35,6 +37,9 @@ public class IDocenteServiceImpl implements IDocenteService  {
 	@Transactional
 	@Override
 	public ResponseEntity<DocenteResponseRest> save(Docente docente, String id) {
+		
+		PasswordEncoder passeconder;
+		passeconder=new BCryptPasswordEncoder();
 		// TODO Auto-generated method stub
 		DocenteResponseRest response= new DocenteResponseRest();
 		List<Docente> list= new ArrayList<>();
@@ -55,7 +60,7 @@ public class IDocenteServiceImpl implements IDocenteService  {
 			String[] parts = docente.getApellidoDocente().split(" ");
 			String nombreUsuario=(docente.getNombreDocente().substring(0,1).concat(parts[0])).toLowerCase();
 			usuario.setNombreUsuario(nombreUsuario);
-			usuario.setPasswUsuario(docente.getCedulaDocente());
+			usuario.setPasswUsuario(passeconder.encode(docente.getCedulaDocente()));
 			usuario.setFechaCreUsu(new Date());
 			usuario.setFechaModUsuario(new Date());
 			usuario.setEstadoUsuario('0');
@@ -113,5 +118,67 @@ public class IDocenteServiceImpl implements IDocenteService  {
 		return new ResponseEntity<DocenteResponseRest>(response,HttpStatus.OK);
 	}
 	
+
+	@Override
+	public ResponseEntity<DocenteResponseRest> buscarPorUsuario(String usuario) {
+		DocenteResponseRest response= new DocenteResponseRest();
+		try {
+			List<Docente> usuarioperfil= (List<Docente>) docenteDao.findAll();
+			List<Docente> docenteList= new ArrayList<>();
+			for(Docente d: usuarioperfil) {
+				if(d.getCodigoUsuario().getNombreUsuario().equals(usuario)){
+					docenteList.add(d);
+					response.getDocenteResponse().setDocente(docenteList);
+					response.setMetadata("Respuesta 0k", "200", "Respuesta exitosa");
+					
+				}
+			}
+			
+			
+		}catch (Exception e) {
+			// TODO: handle exception
+			response.setMetadata("Respuesta nok", "000", "Error Consultar");
+			e.getStackTrace();
+			System.out.println("Sale");
+			return new ResponseEntity<DocenteResponseRest>(response,HttpStatus.INTERNAL_SERVER_ERROR);
+			
+		}
+		return new ResponseEntity<DocenteResponseRest>(response,HttpStatus.OK);
+	}
+
+
+
+	@Override
+	public ResponseEntity<DocenteResponseRest> buscarPorIDEspe(String idespe) {
+		DocenteResponseRest response= new DocenteResponseRest();
+		try {
+			List<Docente> usuarioperfil= (List<Docente>) docenteDao.findAll();
+			List<Docente> docenteList= new ArrayList<>();
+			for(Docente d: usuarioperfil) {
+				if(d.getIdDocente().equals(idespe)){
+					docenteList.add(d);
+					response.getDocenteResponse().setDocente(docenteList);
+					response.setMetadata("Respuesta 0k", "200", "Respuesta exitosa");
+					
+				}
+			}
+			
+			
+		}catch (Exception e) {
+			// TODO: handle exception
+			response.setMetadata("Respuesta nok", "000", "Error Consultar");
+			e.getStackTrace();
+			System.out.println("Sale");
+			return new ResponseEntity<DocenteResponseRest>(response,HttpStatus.INTERNAL_SERVER_ERROR);
+			
+		}
+		return new ResponseEntity<DocenteResponseRest>(response,HttpStatus.OK);
+	}
 	
+
+
 }
+
+	
+	
+
