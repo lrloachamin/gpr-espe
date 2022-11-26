@@ -11,6 +11,8 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -39,6 +41,7 @@ public class Tarea implements Serializable {
     private static final long serialVersionUID = 1L;
     
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "CODIGO_TAREA")
     private Integer codigoTarea;
 
@@ -62,6 +65,10 @@ public class Tarea implements Serializable {
     @ManyToOne(optional = false,fetch= FetchType.LAZY)
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Proyecto codigoProyecto;
+
+    @Column(name = "FECHA_ENTREGA_TAREA")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date fechaEntregaTarea;
     
     /*
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "codigoTarea",fetch= FetchType.LAZY)

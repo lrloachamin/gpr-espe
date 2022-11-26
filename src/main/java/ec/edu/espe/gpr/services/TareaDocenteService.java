@@ -1,6 +1,5 @@
 package ec.edu.espe.gpr.services;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -69,18 +68,18 @@ public class TareaDocenteService {
     }
 	
     public void crear(TareaDocenteProyecto tareaDocenteProyecto) {
-        Long codTarea = tareaDao.count()+1;
-        tareaDocenteProyecto.getTarea().setCodigoTarea(codTarea.intValue());
+        //tareaDocenteProyecto.getTarea().setCodigoTarea(codTarea.intValue());
         tareaDocenteProyecto.getTarea().setFechaCreaciontarea(new Date());
         tareaDocenteProyecto.getTarea().setEstadoTarea(EstadoTareaEnum.ACTIVE.getValue().charAt(0));
         this.tareaDao.save(tareaDocenteProyecto.getTarea());
 
         Long codTareaDocente = tareaDocenteDao.count()+1;
         tareaDocenteProyecto.getTareaDocente().setCodigoTareaDocente(codTareaDocente.intValue());
+        
         tareaDocenteProyecto.getTareaDocente().setCodigoTarea(tareaDocenteProyecto.getTarea());
-        tareaDocenteProyecto.getTareaDocente().setArchivoTareaDocente("");
-        tareaDocenteProyecto.getTareaDocente().setIndicadorTareadocente(new BigDecimal(0));
-        tareaDocenteProyecto.getTareaDocente().setDescripcionTareadocente("");
+        //tareaDocenteProyecto.getTareaDocente().setArchivoTareaDocente("");
+        //tareaDocenteProyecto.getTareaDocente().setIndicadorTareadocente(new BigDecimal(0));
+        //tareaDocenteProyecto.getTareaDocente().setDescripcionTareadocente("");
         tareaDocenteProyecto.getTareaDocente().setEstadoTareaDocente(EstadoTareaDocenteEnum.ACTIVE.getValue());
 
         this.tareaDocenteDao.save(tareaDocenteProyecto.getTareaDocente());

@@ -6,19 +6,21 @@
 package ec.edu.espe.gpr.model;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
-import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.AllArgsConstructor;
@@ -39,21 +41,14 @@ public class TareaDocente implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "CODIGO_TAREA_DOCENTE")
     private Integer codigoTareaDocente;
-
-    @Column(name = "FECHA_ENTREGA")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date fechaEntrega;
 
     @Column(name = "ARCHIVO_TAREA_DOCENTE")
     private String archivoTareaDocente;
     // @Max(value=?) @Min(value=?)//if you know range of your decimal fields
     // consider using these annotations to enforce field validation
-
-    @Column(name = "INDICADOR_TAREADOCENTE")
-    private BigDecimal indicadorTareadocente;
-
     @Column(name = "DESCRIPCION_TAREADOCENTE")
     private String descripcionTareadocente;
 
@@ -69,4 +64,8 @@ public class TareaDocente implements Serializable {
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Tarea codigoTarea;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "tareadocenteCODIGOTAREADOCENTE")
+    @JsonBackReference(value="tareaIndicadorList")
+    private List<TareaIndicador> tareaIndicadorList;
 }
