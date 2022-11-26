@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import ec.edu.espe.gpr.model.Docente;
+import ec.edu.espe.gpr.model.Indicador;
 import ec.edu.espe.gpr.model.Tarea;
 import ec.edu.espe.gpr.model.TareaDocente;
 import ec.edu.espe.gpr.model.TareaDocenteProyecto;
@@ -44,6 +45,16 @@ public class TareaDocenteRestController {
         try {
             List<Docente> docentes = this.tareaDocenteService.listarDocentes();
             return ResponseEntity.ok(docentes);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+    @GetMapping(path = "/listarIndicadores")
+    public ResponseEntity<List<Indicador>> listarIndicadores() {
+        try {
+            List<Indicador> indicadores = this.tareaDocenteService.listarIndicadores();
+            return ResponseEntity.ok(indicadores);
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();
         }

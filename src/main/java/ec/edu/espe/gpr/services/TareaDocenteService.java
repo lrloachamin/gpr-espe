@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import ec.edu.espe.gpr.dao.IDocenteDao;
 import ec.edu.espe.gpr.dao.ITareaDao;
 import ec.edu.espe.gpr.dao.ITareaDocenteDao;
+import ec.edu.espe.gpr.dao.IndicadorDao;
 import ec.edu.espe.gpr.enums.EstadoTareaDocenteEnum;
 import ec.edu.espe.gpr.enums.EstadoTareaEnum;
 import ec.edu.espe.gpr.model.Docente;
@@ -29,6 +30,8 @@ public class TareaDocenteService {
 	private ITareaDocenteDao tareaDocenteDao;
     @Autowired
 	private IDocenteDao docenteDao;
+    @Autowired
+	private IndicadorDao indicadorDao;
 
 	public Tarea obtenerTareaPorCodigoTarea(Integer codTarea) {	
 		Optional<Tarea> tareaOpt = this.tareaDao.findById(codTarea);
@@ -54,6 +57,10 @@ public class TareaDocenteService {
         return this.docenteDao.findAll();
     }
 
+    public List<Indicador> listarIndicadores() {
+        return this.indicadorDao.findAll();
+    }
+
     public List<Docente> listarDocentesTareaAsignada(Tarea codigoTarea) {
         List<TareaDocente> tareas=this.tareaDocenteDao.findByCodigoTarea(codigoTarea);
         List<Docente> docentes = new ArrayList<>();
@@ -76,10 +83,12 @@ public class TareaDocenteService {
         
         Tarea tarea =this.tareaDao.save(tareaDocenteProyecto.getTarea());
         System.out.println(tarea.toString());
-        for(TareaDocente t :tareaDocenteProyecto.getTareaDocente()){
+        for(Docente docente :tareaDocenteProyecto.getDocentes()){
+            TareaDocente t = new TareaDocente();
             //t.setCodigoTareaDocente(tarea.get);
-            t.setCodigoTarea(tarea);
             t.setEstadoTareaDocente(EstadoTareaDocenteEnum.ACTIVE.getValue());
+            t.setCodigoDocente(docente);
+            t.setCodigoTarea(tarea);
             TareaDocente tDocenteBD=this.tareaDocenteDao.save(t);
             for (Indicador indicador : tareaDocenteProyecto.getIndicadors()) {
                 TareaIndicador indicadorBD = new TareaIndicador();
