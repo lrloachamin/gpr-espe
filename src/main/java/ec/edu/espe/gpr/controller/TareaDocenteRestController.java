@@ -31,9 +31,9 @@ public class TareaDocenteRestController {
     private TareaDocenteService tareaDocenteService;
 
     @GetMapping(path = "/listarTareas")
-    public ResponseEntity<List<TareaDocente>> listarTareas() {
+    public ResponseEntity<List<TareaDocenteProyecto>> listarTareas() {
         try {
-            List<TareaDocente> tareas = this.tareaDocenteService.listarTareasDocentes();
+            List<TareaDocenteProyecto> tareas = this.tareaDocenteService.listarTareasDocentes();
             return ResponseEntity.ok(tareas);
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();

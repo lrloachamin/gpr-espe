@@ -52,8 +52,30 @@ public class TareaDocenteService {
 			return null;
 	}
 
-	public List<TareaDocente> listarTareasDocentes() {
-        return this.tareaDocenteDao.findAll();
+	public List<TareaDocenteProyecto> listarTareasDocentes() {
+        List<TareaDocenteProyecto> tListDocenteProyecto = new ArrayList<>();
+        List<Tarea> tarea = this.tareaDao.findAll();
+        for (Tarea t : tarea) {
+            TareaDocenteProyecto tDocenteProyecto = new TareaDocenteProyecto();
+            tDocenteProyecto.setTarea(t);
+            Boolean check = true;
+            List<Docente> docentes = new ArrayList<>();
+            for (TareaDocente tDocente : t.getTareaDocenteList()) {
+                if(check){
+                    List<Indicador> tareaIndicadors = new ArrayList<>();
+
+                    for (TareaIndicador tareaIndicador:tDocente.getTareaIndicadorList()) 
+                        tareaIndicadors.add(tareaIndicador.getIndicadorCODIGOINDICADOR());
+                    
+                    tDocenteProyecto.setIndicadors(tareaIndicadors);
+                    check= false;
+                }
+                docentes.add(tDocente.getCodigoDocente());
+            }
+            tDocenteProyecto.setDocentes(docentes);
+            tListDocenteProyecto.add(tDocenteProyecto);
+        }
+        return tListDocenteProyecto;
     }
 
     public List<Docente> listarDocentes() {
