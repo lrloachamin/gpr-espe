@@ -61,14 +61,14 @@ public class Tarea implements Serializable {
     @Column(name = "ESTADO_TAREA")
     private Character estadoTarea;
     
+    @Column(name = "FECHA_ENTREGA_TAREA")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date fechaEntregaTarea;
+
     @JoinColumn(name = "CODIGO_PROYECTO", referencedColumnName = "CODIGO_PROYECTO")
     @ManyToOne(optional = false,fetch= FetchType.LAZY)
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Proyecto codigoProyecto;
-
-    @Column(name = "FECHA_ENTREGA_TAREA")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date fechaEntregaTarea;
     
     /*
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "codigoTarea",fetch= FetchType.LAZY)
