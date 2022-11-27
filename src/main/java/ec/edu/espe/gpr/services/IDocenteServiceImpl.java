@@ -5,6 +5,11 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import javax.persistence.Column;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +18,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import ec.edu.espe.gpr.dao.ICargoDao;
 import ec.edu.espe.gpr.dao.IDocenteDao;
 import ec.edu.espe.gpr.dao.IUsuarioDao;
@@ -20,6 +27,7 @@ import ec.edu.espe.gpr.model.Cargo;
 import ec.edu.espe.gpr.model.Docente;
 import ec.edu.espe.gpr.model.Usuario;
 import ec.edu.espe.gpr.response.DocenteResponseRest;
+import ec.edu.espe.gpr.response.UsuarioResponseRest;
 
 
 
@@ -172,6 +180,57 @@ public class IDocenteServiceImpl implements IDocenteService  {
 			return new ResponseEntity<DocenteResponseRest>(response,HttpStatus.INTERNAL_SERVER_ERROR);
 			
 		}
+		return new ResponseEntity<DocenteResponseRest>(response,HttpStatus.OK);
+	}
+
+	@Override
+	public ResponseEntity<DocenteResponseRest> update(Docente docente, Integer id) {
+		DocenteResponseRest response= new DocenteResponseRest();
+
+		List<Docente> list= new ArrayList<>();
+		try {
+			Optional<Docente> usuarioF=docenteDao.findById(id);
+			if(usuarioF.isPresent()) {
+				
+				usuarioF.get().setCodigoDocente(docente.getCodigoDocente());
+			    usuarioF.get().setIdDocente(docente.getIdDocente());
+			    usuarioF.get().setNombreDocente(docente.getNombreDocente());
+			    usuarioF.get().setApellidoDocente(docente.getApellidoDocente());
+			    usuarioF.get().setCedulaDocente(docente.getCedulaDocente());
+			    usuarioF.get().setTelefonoDocente(docente.getTelefonoDocente());
+			    usuarioF.get().setCorreoDocente(docente.getCorreoDocente());
+			    usuarioF.get().setCodCargo(docente.getCodCargo());
+
+				
+				
+			}else {
+				response.setMetadata("Respuesta nok", "-1", "No se encontro el usuario");
+				return new ResponseEntity<DocenteResponseRest>(response,HttpStatus.NOT_FOUND);
+				
+			}
+	
+			Docente usuuariosave=docenteDao.save(usuarioF.get());
+			
+			if(usuuariosave!=null) {
+				
+				list.add(usuuariosave);
+				
+				response.getDocenteResponse().setDocente(list);
+				response.setMetadata("Respuesta 0k", "000", "Respuesta exitosa");
+				}else {
+					response.setMetadata("Respuesta nok", "000", "Error usuario no guardado");
+					return new ResponseEntity<DocenteResponseRest>(response,HttpStatus.BAD_REQUEST);
+				}
+			
+			
+		}catch(Exception e) {
+			response.setMetadata("Respuesta nok", "000", "Error al guardar el usuario");
+			e.getStackTrace();
+			return new ResponseEntity<DocenteResponseRest>(response,HttpStatus.INTERNAL_SERVER_ERROR);
+			
+		}
+		
+		
 		return new ResponseEntity<DocenteResponseRest>(response,HttpStatus.OK);
 	}
 	
