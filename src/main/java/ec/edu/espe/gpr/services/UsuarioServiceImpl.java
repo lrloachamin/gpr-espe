@@ -113,6 +113,7 @@ public class UsuarioServiceImpl implements IUsuarioService {
 			if(usuarioF.isPresent()) {
 				estadoUsuario=usuarioF.get().getEstadoUsuario();
 				usuarioF.get().setNombreUsuario(usuario.getNombreUsuario());
+				System.out.println(estadoUsuario);
 				if(estadoUsuario!='0') {
 				usuarioF.get().setPasswUsuario(passeconder.encode(usuario.getPasswUsuario()));
 				}
@@ -140,11 +141,12 @@ public class UsuarioServiceImpl implements IUsuarioService {
 				
 				response.getCategoryResponse().setCategory(list);
 				response.setMetadata("Respuesta 0k", "000", "Respuesta exitosa");
+				System.out.println("s"+estadoUsuario);
 				
 				if(estadoUsuario=='0') {
 					emservice.enviarCorreo(correo, "Registro completo", "Bienvenido el administrador a aceptado su solicitud, su usuario es "
 						+usuarioF.get().getNombreUsuario()+ " y su contraseña es el número de cédula con el cual se registro");			
-					
+					System.out.println("s"+estadoUsuario);
 				}
 			
 				
