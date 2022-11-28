@@ -109,9 +109,14 @@ public class UsuarioServiceImpl implements IUsuarioService {
 		List<Usuario> list= new ArrayList<>();
 		try {
 			Optional<Usuario> usuarioF=usuarioDao.findById(id);
+			Character estadoUsuario='9';
 			if(usuarioF.isPresent()) {
+				estadoUsuario=usuarioF.get().getEstadoUsuario();
 				usuarioF.get().setNombreUsuario(usuario.getNombreUsuario());
+				System.out.println(estadoUsuario);
+				if(estadoUsuario!='0') {
 				usuarioF.get().setPasswUsuario(passeconder.encode(usuario.getPasswUsuario()));
+				}
 				usuarioF.get().setFechaCreUsu(usuario.getFechaCreUsu());
 				usuarioF.get().setFechaModUsuario(usuario.getFechaModUsuario());
 				usuarioF.get().setEstadoUsuario(usuario.getEstadoUsuario());
@@ -136,9 +141,14 @@ public class UsuarioServiceImpl implements IUsuarioService {
 				
 				response.getCategoryResponse().setCategory(list);
 				response.setMetadata("Respuesta 0k", "000", "Respuesta exitosa");
-				//emservice.enviarCorreo(correo, "Registro completo", "Bienvenido el administrador a aceptado su solicitud, su usuario es "
-				//		+usuarioF.get().getNombreUsuario()+ " y su contraseña es: "+usuarioF.get().getPasswUsuario());
+				System.out.println("s"+estadoUsuario);
 				
+				if(estadoUsuario=='0') {
+					emservice.enviarCorreo(correo, "Registro completo", "Bienvenido el administrador a aceptado su solicitud, su usuario es "
+						+usuarioF.get().getNombreUsuario()+ " y su contraseña es el número de cédula con el cual se registro");			
+					System.out.println("s"+estadoUsuario);
+				}
+			
 				
 				}else {
 					response.setMetadata("Respuesta nok", "000", "Error usuario no guardado");
