@@ -18,6 +18,7 @@ import ec.edu.espe.gpr.model.Indicador;
 import ec.edu.espe.gpr.model.Tarea;
 import ec.edu.espe.gpr.model.TareaDocente;
 import ec.edu.espe.gpr.model.TareaDocenteProyecto;
+import ec.edu.espe.gpr.model.TareaIndicador;
 import ec.edu.espe.gpr.services.TareaDocenteService;
 import lombok.RequiredArgsConstructor;
 
@@ -80,6 +81,16 @@ public class TareaDocenteRestController {
         }
     }
 
+    @GetMapping(path = "/listarIndicadoresPorTarea/{codigoTareaDocente}")
+    public ResponseEntity<List<TareaIndicador>> listarIndicadoresPorTarea(@PathVariable Integer codigoTareaDocente) {
+        try {
+            List<TareaIndicador> tareaIndicador = this.tareaDocenteService.listarIndicadoresPorTarea(codigoTareaDocente);
+            return ResponseEntity.ok(tareaIndicador);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
     @PostMapping
     public ResponseEntity<String> crear(@RequestBody TareaDocenteProyecto tareaDocenteProyecto) {
         try {
@@ -96,6 +107,17 @@ public class TareaDocenteRestController {
         try {
             tareaDocente = this.tareaDocenteService.modificarDatos(tareaDocente);
             return ResponseEntity.ok(tareaDocente);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+    @PutMapping("/guardarTareaAsignadaAlProfesor")
+    public ResponseEntity<TareaDocente> guardarTareaAsignadaAlProfesor(@RequestBody List<TareaIndicador> tareaIndicadors) {
+        try {
+            this.tareaDocenteService.guardarTareaAsignadaAlProfesor(tareaIndicadors);
+            return ResponseEntity.ok().build();
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.badRequest().build();

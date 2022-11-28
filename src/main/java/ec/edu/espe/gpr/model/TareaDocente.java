@@ -65,7 +65,7 @@ public class TareaDocente implements Serializable {
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Tarea codigoTarea;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "tareadocenteCODIGOTAREADOCENTE")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "tareadocenteCODIGOTAREADOCENTE",fetch= FetchType.LAZY)
     @JsonBackReference(value="tareaIndicadorList")
     private List<TareaIndicador> tareaIndicadorList;
 }

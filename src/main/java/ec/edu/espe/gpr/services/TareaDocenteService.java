@@ -52,6 +52,14 @@ public class TareaDocenteService {
 			return null;
 	}
 
+    public TareaDocente obtenerIndicadorPorCodigoTareaDocente(Integer codigoTareaDocente) {	
+		Optional<TareaDocente> tareaDocenteOpt = this.tareaDocenteDao.findById(codigoTareaDocente);
+		if (tareaDocenteOpt.isPresent())
+			return tareaDocenteOpt.get();
+		else 
+			return null;
+	}
+
 	public List<TareaDocenteProyecto> listarTareasDocentes() {
         List<TareaDocenteProyecto> tListDocenteProyecto = new ArrayList<>();
         List<Tarea> tarea = this.tareaDao.findAll();
@@ -100,6 +108,11 @@ public class TareaDocenteService {
         List<TareaDocente> tareas=this.tareaDocenteDao.findByCodigoDocente(docente);
         return tareas;
     }
+
+    public List<TareaIndicador> listarIndicadoresPorTarea(Integer codigoTareaDocente) {
+        TareaDocente tareaDocente = this.obtenerIndicadorPorCodigoTareaDocente(codigoTareaDocente);
+        return tareaDocente.getTareaIndicadorList();
+    }
 	
     public void crear(TareaDocenteProyecto tareaDocenteProyecto) {
         tareaDocenteProyecto.getTarea().setFechaCreaciontarea(new Date());
@@ -126,6 +139,12 @@ public class TareaDocenteService {
         this.tareaDocenteDao.save(tareaDocente);
         this.tareaDao.save(tareaDocente.getCodigoTarea());
         return tareaDocente;
+    }
+
+    public void guardarTareaAsignadaAlProfesor(List<TareaIndicador> tareaIndicadors) {
+        for (TareaIndicador tIndicador : tareaIndicadors) {
+            this.tareaIndicadorDao.save(tIndicador);    
+        }
     }
 
 }

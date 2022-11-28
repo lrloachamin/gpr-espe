@@ -75,7 +75,7 @@ public class Tarea implements Serializable {
     private Proyecto codigoProyecto;
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "codigoTarea",fetch= FetchType.LAZY)
-    @JsonBackReference(value="tareaIndicadorList")
+    @JsonBackReference(value="tareaDocenteList")
     private List<TareaDocente> tareaDocenteList;
     
 }
