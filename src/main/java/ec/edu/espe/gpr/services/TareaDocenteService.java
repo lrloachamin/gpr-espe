@@ -148,3 +148,45 @@ public class TareaDocenteService {
     }
 
 }
+
+/*
+public TareaDocente modificarDatos(TareaDocenteProyecto tareaDocenteProyecto) {
+    this.tareaDao.save(tareaDocenteProyecto.getTarea());
+    //crear metodo para obtener mediante idTarea todas las TareasDocente
+    List<TareaDocente> tareaDocentes = this.tareaDocenteDao.findByCodigoTarea(tareaDocenteProyecto.getTarea())
+
+    Boolean check = true;
+    //Comprobar el docente primero :v
+    for(TareaDocente tareaDocente : tareaDocentes){
+        if(check){
+            TareaDocente tareaD = tareaDocente;
+            check = false;
+        }
+        int indice = tareaDocenteProyecto.getTarea().getTareaDocenteList().indexOf(tareaDocente)==-1
+        if(indice == -1)
+            this.tareaDocenteDao.remove(tareaDocente);
+        else
+            tareaDocenteProyecto.getTarea().getTareaDocenteList().remove(indice);//eliminar los indicadores de esta tarea
+    }
+
+    if(tareaDocenteProyecto.getTarea().getTareaDocenteList().size() > 0){
+        for(TareaDocente t : tareaDocenteProyecto.getTarea().getTareaDocenteList())
+            this.tareaDocenteDao.add(t);
+    }
+
+    List<TareaIndicador> tareaIndicadors = this.tareaIndicadorDao.findByTareadocenteCODIGOTAREADOCENTE(tareaD);
+    for(TareaIndicador tareaIndicador : tareaIndicadors){
+        indice = tareaDocenteProyecto.getIndicadors().indexOf(indicadors)==-1
+        if(indice == -1)
+            this.tareaIndicadorDao.remove(tareaIndicador);
+        else
+            tareaDocenteProyecto.getIndicadors().remove(indice);//eliminar los indicadores de esta tarea
+    }
+
+    if(tareaDocenteProyecto.getIndicadors().size() > 0){
+        for(TareaIndicador tIndicador : tareaDocenteProyecto.getIndicadors())
+            this.tareaDocenteDao.add(tIndicador);
+    }
+}
+
+*/
