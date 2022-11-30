@@ -135,10 +135,69 @@ public class TareaDocenteService {
         }
     }
 
-    public TareaDocente modificarDatos(TareaDocente tareaDocente) {
-        this.tareaDocenteDao.save(tareaDocente);
-        this.tareaDao.save(tareaDocente.getCodigoTarea());
-        return tareaDocente;
+    public TareaDocente modificarDatos(TareaDocenteProyecto tareaDocenteProyecto) {
+        this.tareaDao.save(tareaDocenteProyecto.getTarea());
+        List<TareaDocente> tareaDocentes = this.tareaDocenteDao.findByCodigoTarea(tareaDocenteProyecto.getTarea());
+        int indice;
+        Boolean check = true;
+        TareaDocente tareaD = new TareaDocente(); 
+        //Comprobar el docente primero :v
+        for(TareaDocente tareaDocente : tareaDocentes){
+            if(check){
+                tareaD = tareaDocente;
+                check = false;
+            }
+            indice = tareaDocenteProyecto.getDocentes().indexOf(tareaDocente.getCodigoDocente());
+            if(indice == -1){
+
+                for (TareaIndicador tIndicador : tareaDocente.getTareaIndicadorList()) 
+                    this.tareaIndicadorDao.delete(tIndicador);   
+
+                this.tareaDocenteDao.delete(tareaDocente);
+            }
+            else
+                tareaDocenteProyecto.getDocentes().remove(indice);
+        }
+    
+        if(tareaDocenteProyecto.getDocentes().size() > 0){
+            for(Docente docente : tareaDocenteProyecto.getDocentes()){
+                TareaDocente t = new TareaDocente();
+                t.setEstadoTareaDocente(EstadoTareaDocenteEnum.ACTIVE.getValue());
+                t.setCodigoDocente(docente);
+                t.setCodigoTarea(tareaDocenteProyecto.getTarea());
+                TareaDocente tDocenteBD=this.tareaDocenteDao.save(t);
+                    for (Indicador indicador : tareaDocenteProyecto.getIndicadors()) {
+                        TareaIndicador indicadorBD = new TareaIndicador();
+                        indicadorBD.setFechaCreacionIndicador(new Date());
+                        indicadorBD.setIndicadorCODIGOINDICADOR(indicador);
+                        indicadorBD.setTareadocenteCODIGOTAREADOCENTE(tDocenteBD);  
+                        this.tareaIndicadorDao.save(indicadorBD);          
+                    }
+            }
+        }
+        /* 
+    
+        List<TareaIndicador> tareaIndicadors = this.tareaIndicadorDao.findByTareadocenteCODIGOTAREADOCENTE(tareaD);
+        for(TareaIndicador tareaIndicador : tareaIndicadors){
+            indice = tareaDocenteProyecto.getIndicadors().indexOf(tareaIndicador.getIndicadorCODIGOINDICADOR());
+            if(indice == -1)
+                this.tareaIndicadorDao.delete(tareaIndicador);
+            else
+                tareaDocenteProyecto.getIndicadors().remove(indice);//eliminar los indicadores de esta tarea
+        }
+        */
+    
+        /*if(tareaDocenteProyecto.getIndicadors().size() > 0){
+            for(Indicador indicador : tareaDocenteProyecto.getIndicadors()){
+                TareaIndicador indicadorBD = new TareaIndicador();
+                indicadorBD.setFechaCreacionIndicador(new Date());
+                indicadorBD.setIndicadorCODIGOINDICADOR(indicador);
+                indicadorBD.setTareadocenteCODIGOTAREADOCENTE(tDocenteBD);  
+                this.tareaIndicadorDao.save(indicadorBD);
+                this.tareaIndicadorDao.save(tIndicador);
+            }
+        }*/
+        return new TareaDocente();
     }
 
     public void guardarTareaAsignadaAlProfesor(List<TareaIndicador> tareaIndicadors) {
@@ -148,45 +207,3 @@ public class TareaDocenteService {
     }
 
 }
-
-/*
-public TareaDocente modificarDatos(TareaDocenteProyecto tareaDocenteProyecto) {
-    this.tareaDao.save(tareaDocenteProyecto.getTarea());
-    //crear metodo para obtener mediante idTarea todas las TareasDocente
-    List<TareaDocente> tareaDocentes = this.tareaDocenteDao.findByCodigoTarea(tareaDocenteProyecto.getTarea())
-
-    Boolean check = true;
-    //Comprobar el docente primero :v
-    for(TareaDocente tareaDocente : tareaDocentes){
-        if(check){
-            TareaDocente tareaD = tareaDocente;
-            check = false;
-        }
-        int indice = tareaDocenteProyecto.getTarea().getTareaDocenteList().indexOf(tareaDocente)==-1
-        if(indice == -1)
-            this.tareaDocenteDao.remove(tareaDocente);
-        else
-            tareaDocenteProyecto.getTarea().getTareaDocenteList().remove(indice);//eliminar los indicadores de esta tarea
-    }
-
-    if(tareaDocenteProyecto.getTarea().getTareaDocenteList().size() > 0){
-        for(TareaDocente t : tareaDocenteProyecto.getTarea().getTareaDocenteList())
-            this.tareaDocenteDao.add(t);
-    }
-
-    List<TareaIndicador> tareaIndicadors = this.tareaIndicadorDao.findByTareadocenteCODIGOTAREADOCENTE(tareaD);
-    for(TareaIndicador tareaIndicador : tareaIndicadors){
-        indice = tareaDocenteProyecto.getIndicadors().indexOf(indicadors)==-1
-        if(indice == -1)
-            this.tareaIndicadorDao.remove(tareaIndicador);
-        else
-            tareaDocenteProyecto.getIndicadors().remove(indice);//eliminar los indicadores de esta tarea
-    }
-
-    if(tareaDocenteProyecto.getIndicadors().size() > 0){
-        for(TareaIndicador tIndicador : tareaDocenteProyecto.getIndicadors())
-            this.tareaDocenteDao.add(tIndicador);
-    }
-}
-
-*/

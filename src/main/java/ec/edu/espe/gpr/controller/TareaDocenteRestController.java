@@ -103,9 +103,9 @@ public class TareaDocenteRestController {
     }
 
     @PutMapping("/modificar")
-    public ResponseEntity<TareaDocente> modificar(@RequestBody TareaDocente tareaDocente) {
+    public ResponseEntity<TareaDocente> modificar(@RequestBody TareaDocenteProyecto tareaDocenteProyecto) {
         try {
-            tareaDocente = this.tareaDocenteService.modificarDatos(tareaDocente);
+            TareaDocente tareaDocente = this.tareaDocenteService.modificarDatos(tareaDocenteProyecto);
             return ResponseEntity.ok(tareaDocente);
         } catch (Exception e) {
             e.printStackTrace();
