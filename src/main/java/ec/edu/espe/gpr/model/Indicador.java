@@ -45,5 +45,8 @@ public class Indicador implements Serializable {
     
     @Column(name = "ESTADO_INDICADOR")
     private String estadoIndicador;
+    
+    @Column(name = "DESCRIPCION_INDICADOR")
+    private String descripcionIndicador;
 
 }

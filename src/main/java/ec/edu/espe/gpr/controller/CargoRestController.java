@@ -1,5 +1,7 @@
 package ec.edu.espe.gpr.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -21,7 +23,6 @@ import ec.edu.espe.gpr.services.ICargoService;
 public class CargoRestController {
 	@Autowired
 	private ICargoService cargoservice;
-	
 
 	@GetMapping("/cargos")
 	public ResponseEntity<CargoResponseRest> buscarcargos(){
@@ -43,5 +44,16 @@ public class CargoRestController {
 		ResponseEntity<CargoResponseRest> responseEntity=cargoservice.save(cargo);
 		return responseEntity;
 	}
+
+	@GetMapping("/cargoModel")
+	public ResponseEntity<List<Cargo>> buscarCargosModel(){
+		try {
+            List<Cargo> cargos = this.cargoservice.findAll();
+            return ResponseEntity.ok(cargos);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+	}
+	
 
 }

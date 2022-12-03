@@ -129,6 +129,7 @@ public class TareaDocenteService {
                 TareaIndicador indicadorBD = new TareaIndicador();
                 indicadorBD.setFechaCreacionIndicador(new Date());
                 indicadorBD.setIndicadorCODIGOINDICADOR(indicador);
+                indicadorBD.setDescripcionTareaIndicador(indicador.getDescripcionIndicador());
                 indicadorBD.setTareadocenteCODIGOTAREADOCENTE(tDocenteBD);  
                 this.tareaIndicadorDao.save(indicadorBD);          
             }
@@ -166,13 +167,14 @@ public class TareaDocenteService {
                 t.setCodigoDocente(docente);
                 t.setCodigoTarea(tareaDocenteProyecto.getTarea());
                 TareaDocente tDocenteBD=this.tareaDocenteDao.save(t);
-                    for (Indicador indicador : tareaDocenteProyecto.getIndicadors()) {
-                        TareaIndicador indicadorBD = new TareaIndicador();
-                        indicadorBD.setFechaCreacionIndicador(new Date());
-                        indicadorBD.setIndicadorCODIGOINDICADOR(indicador);
-                        indicadorBD.setTareadocenteCODIGOTAREADOCENTE(tDocenteBD);  
-                        this.tareaIndicadorDao.save(indicadorBD);          
-                    }
+                for (Indicador indicador : tareaDocenteProyecto.getIndicadors()) {
+                    TareaIndicador indicadorBD = new TareaIndicador();
+                    indicadorBD.setFechaCreacionIndicador(new Date());
+                    indicadorBD.setIndicadorCODIGOINDICADOR(indicador);
+                    indicadorBD.setDescripcionTareaIndicador(indicador.getDescripcionIndicador());
+                    indicadorBD.setTareadocenteCODIGOTAREADOCENTE(tDocenteBD);  
+                    this.tareaIndicadorDao.save(indicadorBD);          
+                }
             }
         }
         /* 

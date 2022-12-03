@@ -105,6 +105,8 @@ public class ICargoServiceImpl implements ICargoService{
 		return new ResponseEntity<CargoResponseRest>(response,HttpStatus.OK);
 	}
 	
-	
+	public List<Cargo> findAll(){
+		return this.cargodao.findAll();
+	}
 
 }
