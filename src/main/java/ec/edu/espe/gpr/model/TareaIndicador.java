@@ -51,6 +51,9 @@ public class TareaIndicador implements Serializable {
     
     @Column(name = "VALOR_INDICADOR")
     private String valorIndicador;
+
+    @Column(name = "DESCRIPCION_TAREA_INDICADOR")
+    private String descripcionTareaIndicador;
     
     @JoinColumn(name = "indicador_CODIGO_INDICADOR", referencedColumnName = "CODIGO_INDICADOR")
     @ManyToOne(optional = false)
