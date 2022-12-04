@@ -8,6 +8,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import ec.edu.espe.gpr.dao.ICargoDao;
 import ec.edu.espe.gpr.dao.IDocenteDao;
 import ec.edu.espe.gpr.dao.ITareaDao;
 import ec.edu.espe.gpr.dao.ITareaDocenteDao;
@@ -15,6 +16,7 @@ import ec.edu.espe.gpr.dao.IndicadorDao;
 import ec.edu.espe.gpr.dao.TareaIndicadorDao;
 import ec.edu.espe.gpr.enums.EstadoTareaDocenteEnum;
 import ec.edu.espe.gpr.enums.EstadoTareaEnum;
+import ec.edu.espe.gpr.model.Cargo;
 import ec.edu.espe.gpr.model.Docente;
 import ec.edu.espe.gpr.model.Indicador;
 import ec.edu.espe.gpr.model.Tarea;
@@ -35,6 +37,8 @@ public class TareaDocenteService {
 	private IndicadorDao indicadorDao;
     @Autowired
 	private TareaIndicadorDao tareaIndicadorDao;
+    @Autowired
+	private ICargoDao cargoDao;
 
 	public Tarea obtenerTareaPorCodigoTarea(Integer codTarea) {	
 		Optional<Tarea> tareaOpt = this.tareaDao.findById(codTarea);
@@ -42,6 +46,19 @@ public class TareaDocenteService {
 			return tareaOpt.get();
 		else 
 			return null;
+	}
+
+    public Cargo obtenerCargoPorCodigoCargo(String codigoCargo) {	
+		Optional<Cargo> cargoOpt = this.cargoDao.findById(codigoCargo);
+		if (cargoOpt.isPresent())
+			return cargoOpt.get();
+		else 
+			return null;
+	}
+
+    public List<Docente> obtenerDocentesPorCargo(String codigoCargo) {
+        Cargo cargo = obtenerCargoPorCodigoCargo(codigoCargo);
+		return this.docenteDao.findByCodCargo(cargo);
 	}
 
     public Docente obtenerDocentePorCodigoDocente(Integer codigoDocente) {	
@@ -72,9 +89,13 @@ public class TareaDocenteService {
                 if(check){
                     List<Indicador> tareaIndicadors = new ArrayList<>();
 
-                    for (TareaIndicador tareaIndicador:tDocente.getTareaIndicadorList()) 
-                        tareaIndicadors.add(tareaIndicador.getIndicadorCODIGOINDICADOR());
-                    
+                    for (TareaIndicador tareaIndicador:tDocente.getTareaIndicadorList()){
+                        Indicador indicador = new Indicador(tareaIndicador.getIndicadorCODIGOINDICADOR().getCodigoIndicador(),
+                        tareaIndicador.getIndicadorCODIGOINDICADOR().getNombreIndicador(),
+                        tareaIndicador.getIndicadorCODIGOINDICADOR().getEstadoIndicador(),
+                        tareaIndicador.getDescripcionTareaIndicador());
+                        tareaIndicadors.add(indicador);
+                    } 
                     tDocenteProyecto.setIndicadors(tareaIndicadors);
                     check= false;
                 }
