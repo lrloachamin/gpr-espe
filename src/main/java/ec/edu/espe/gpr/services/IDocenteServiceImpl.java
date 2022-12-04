@@ -62,7 +62,6 @@ public class IDocenteServiceImpl implements IDocenteService  {
 			}
 			
 			Usuario usuario =new Usuario();
-			
 			Long idLoc=usuarioDao.count()+1;
 			usuario.setCodigoUsuario(idLoc.intValue());
 			String[] parts = docente.getApellidoDocente().split(" ");
@@ -163,7 +162,7 @@ public class IDocenteServiceImpl implements IDocenteService  {
 			List<Docente> usuarioperfil= (List<Docente>) docenteDao.findAll();
 			List<Docente> docenteList= new ArrayList<>();
 			for(Docente d: usuarioperfil) {
-				if(d.getIdDocente().equals(idespe)){
+				if(d.getCedulaDocente().equals(idespe)){
 					docenteList.add(d);
 					response.getDocenteResponse().setDocente(docenteList);
 					response.setMetadata("Respuesta 0k", "200", "Respuesta exitosa");

@@ -106,8 +106,8 @@ public class UsuarioServiceImpl implements IUsuarioService {
 			if (usuarioF.isPresent()) {
 				estadoUsuario = usuarioF.get().getEstadoUsuario();
 				usuarioF.get().setNombreUsuario(usuario.getNombreUsuario());
-				System.out.println(estadoUsuario);
-				if (estadoUsuario != '0') {
+				System.out.println("estado:"+estadoUsuario);
+				if (estadoUsuario == '2') {
 					usuarioF.get().setPasswUsuario(passeconder.encode(usuario.getPasswUsuario()));
 				}
 				usuarioF.get().setFechaCreUsu(usuario.getFechaCreUsu());

@@ -18,6 +18,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
@@ -37,14 +38,14 @@ public class Usuper implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date fechRetiroUsuperOpcper;
     
+    @JsonIgnore 
     @JoinColumn(name = "CODIGO_PERFIL", referencedColumnName = "CODIGO_PERFIL")
     @ManyToOne(optional = false,fetch= FetchType.LAZY)
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Perfil codigoPerfil;
     
     @JoinColumn(name = "CODIGO_USUARIO", referencedColumnName = "CODIGO_USUARIO")
     @ManyToOne(optional = false,fetch= FetchType.LAZY)
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    
     private Usuario codigoUsuario;
 
     public Usuper() {
