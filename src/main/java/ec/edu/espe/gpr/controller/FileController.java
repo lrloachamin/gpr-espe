@@ -29,7 +29,7 @@ public class FileController {
     FileService fileService;
 
     @PostMapping("/upload")
-    public ResponseEntity<FileMessage> uploadFiles(@RequestParam("files")MultipartFile file){
+    public ResponseEntity<FileMessage> uploadFiles(@RequestParam("file")MultipartFile file){
         String message = "";
         try{
             fileService.save(file);

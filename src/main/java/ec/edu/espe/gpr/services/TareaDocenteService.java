@@ -7,6 +7,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import ec.edu.espe.gpr.dao.ICargoDao;
 import ec.edu.espe.gpr.dao.IDocenteDao;
@@ -24,6 +25,13 @@ import ec.edu.espe.gpr.model.TareaDocente;
 import ec.edu.espe.gpr.model.TareaDocenteProyecto;
 import ec.edu.espe.gpr.model.TareaIndicador;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.stream.Stream;
+
 @Service
 public class TareaDocenteService {
 	
@@ -39,6 +47,8 @@ public class TareaDocenteService {
 	private TareaIndicadorDao tareaIndicadorDao;
     @Autowired
 	private ICargoDao cargoDao;
+
+    private final Path root = Paths.get("uploads");
 
 	public Tarea obtenerTareaPorCodigoTarea(Integer codTarea) {	
 		Optional<Tarea> tareaOpt = this.tareaDao.findById(codTarea);
@@ -142,7 +152,7 @@ public class TareaDocenteService {
         Tarea tarea =this.tareaDao.save(tareaDocenteProyecto.getTarea());
         for(Docente docente :tareaDocenteProyecto.getDocentes()){
             TareaDocente t = new TareaDocente();
-            t.setEstadoTareaDocente(EstadoTareaDocenteEnum.ACTIVE.getValue());
+            t.setEstadoTareaDocente(EstadoTareaDocenteEnum.ASIGNADA.getValue());
             t.setCodigoDocente(docente);
             t.setCodigoTarea(tarea);
             TareaDocente tDocenteBD=this.tareaDocenteDao.save(t);
@@ -184,7 +194,7 @@ public class TareaDocenteService {
         if(tareaDocenteProyecto.getDocentes().size() > 0){
             for(Docente docente : tareaDocenteProyecto.getDocentes()){
                 TareaDocente t = new TareaDocente();
-                t.setEstadoTareaDocente(EstadoTareaDocenteEnum.ACTIVE.getValue());
+                t.setEstadoTareaDocente(EstadoTareaDocenteEnum.ASIGNADA.getValue());
                 t.setCodigoDocente(docente);
                 t.setCodigoTarea(tareaDocenteProyecto.getTarea());
                 TareaDocente tDocenteBD=this.tareaDocenteDao.save(t);
@@ -198,6 +208,7 @@ public class TareaDocenteService {
                 }
             }
         }
+        
         /* 
     
         List<TareaIndicador> tareaIndicadors = this.tareaIndicadorDao.findByTareadocenteCODIGOTAREADOCENTE(tareaD);
@@ -229,4 +240,20 @@ public class TareaDocenteService {
         }
     }
 
+    private void saveFile(MultipartFile file, String nameFile) {
+        try {
+            //copy (que queremos copiar, a donde queremos copiar)
+            Files.copy(file.getInputStream(), this.root.resolve(nameFile));
+        } catch (IOException e) {
+            throw new RuntimeException("No se puede guardar el archivo. Error " + e.getMessage());
+        }
+    }
+
+    public void guardarArchivoTareaAsignadaAlProfesor(MultipartFile file, Integer codigoTareaDocente) {
+        TareaDocente tareaDocente = this.obtenerIndicadorPorCodigoTareaDocente(codigoTareaDocente);
+        this.saveFile(file,tareaDocente.getCodigoTareaDocente().toString());
+        tareaDocente.setArchivoTareaDocente(tareaDocente.getCodigoTareaDocente().toString());
+        tareaDocente.setEstadoTareaDocente(EstadoTareaDocenteEnum.EN_REVISION.getValue());
+        this.tareaDocenteDao.save(tareaDocente);    
+    }
 }

@@ -1,8 +1,11 @@
 package ec.edu.espe.gpr.enums;
 
 public enum EstadoTareaDocenteEnum {
-    ACTIVE("INICIADA", "Iniciada"),
-    INACTIVE("FINALIZADA", "Finalizado");
+    ASIGNADA("ASIGNADA", "ASIGNADA"),
+    EN_REVISION("EN REVISIÓN", "EN REVISIÓN"),
+    DENEGADO("DENEGADO", "DENEGADO"),
+    ACEPTADO("ACEPTADO", "ACEPTADO");
+
 
     private final String value;
     private final String text;

@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import ec.edu.espe.gpr.model.Cargo;
 import ec.edu.espe.gpr.model.Docente;
@@ -134,4 +136,15 @@ public class TareaDocenteRestController {
             return ResponseEntity.badRequest().build();
         }
     }
+
+    @PutMapping("/guardarArchivoTareaAsignadaAlProfesor")
+    public ResponseEntity<String> guardarArchivoTareaAsignadaAlProfesor(@RequestParam("file") MultipartFile file,@RequestParam("codigoTareaDocente") String codigoTareaDocente){
+        try{
+            this.tareaDocenteService.guardarArchivoTareaAsignadaAlProfesor(file,Integer.parseInt(codigoTareaDocente));
+            return ResponseEntity.ok().build();
+        }catch (Exception e){
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
 }
