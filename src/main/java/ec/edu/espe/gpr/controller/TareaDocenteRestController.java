@@ -104,6 +104,16 @@ public class TareaDocenteRestController {
         }
     }
 
+    @GetMapping(path = "/listarTareasEntregadas")
+    public ResponseEntity<List<TareaDocente>> listarTareasEntregadas() {
+        try {
+            List<TareaDocente> tareaDocentes = this.tareaDocenteService.listarTareasEntregadas();
+            return ResponseEntity.ok(tareaDocentes);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
     @PostMapping
     public ResponseEntity<String> crear(@RequestBody TareaDocenteProyecto tareaDocenteProyecto) {
         try {
