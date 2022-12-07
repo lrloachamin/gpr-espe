@@ -239,16 +239,8 @@ public class TareaDocenteService {
     }
 
     public void guardarTareaAsignadaAlProfesor(List<TareaIndicador> tareaIndicadors) {
-        Boolean check = true;
-        for (TareaIndicador tIndicador : tareaIndicadors) {
-            if(check){
-                TareaDocente tareaDocente = tIndicador.getTareadocenteCODIGOTAREADOCENTE();
-                tareaDocente.setDescripcionTareadocente(null);
-                this.tareaDocenteDao.save(tareaDocente);
-                check = false;
-            }
+        for (TareaIndicador tIndicador : tareaIndicadors) 
             this.tareaIndicadorDao.save(tIndicador);    
-        }
     }
 
     private void saveFile(MultipartFile file, String nameFile) {
