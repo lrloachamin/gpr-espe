@@ -45,7 +45,6 @@ public class Usuper implements Serializable {
     
     @JoinColumn(name = "CODIGO_USUARIO", referencedColumnName = "CODIGO_USUARIO")
     @ManyToOne(optional = false,fetch= FetchType.LAZY)
-    
     private Usuario codigoUsuario;
 
     public Usuper() {

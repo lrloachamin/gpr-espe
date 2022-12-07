@@ -1,5 +1,6 @@
 package ec.edu.espe.gpr.services;
 
+import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -66,6 +67,11 @@ public class IDocenteServiceImpl implements IDocenteService  {
 			usuario.setCodigoUsuario(idLoc.intValue());
 			String[] parts = docente.getApellidoDocente().split(" ");
 			String nombreUsuario=(docente.getNombreDocente().substring(0,1).concat(parts[0])).toLowerCase();
+			nombreUsuario=nombreUsuario.replace("ñ","n");
+			
+			
+			nombreUsuario = Normalizer.normalize(nombreUsuario, Normalizer.Form.NFD);
+			nombreUsuario = nombreUsuario.replaceAll("[^\\p{ASCII}]","");
 			usuario.setNombreUsuario(nombreUsuario);
 			usuario.setPasswUsuario(passeconder.encode(docente.getCedulaDocente()));
 			usuario.setFechaCreUsu(new Date());

@@ -138,9 +138,9 @@ public class UsuarioServiceImpl implements IUsuarioService {
 				System.out.println("s" + estadoUsuario);
 
 				if (estadoUsuario == '0') {
-					emservice.enviarCorreo(correo, "Registro completo",
-							"Bienvenido el administrador a aceptado su solicitud, su usuario es "
-									+ usuarioF.get().getNombreUsuario() + " y su contraseña es" + password2);
+					emservice.enviarCorreo(correo, "GPR - Registro completo",
+							"Bienvenido el administrador a aceptado su solicitud, sus credenciales de ingreso son las siguientes: Su usuario es "
+									+ usuarioF.get().getNombreUsuario() + " y su contraseña es " + password2);
 
 				}
 
