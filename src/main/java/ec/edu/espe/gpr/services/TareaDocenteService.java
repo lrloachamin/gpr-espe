@@ -239,7 +239,14 @@ public class TareaDocenteService {
     }
 
     public void guardarTareaAsignadaAlProfesor(List<TareaIndicador> tareaIndicadors) {
+        Boolean check = true;
         for (TareaIndicador tIndicador : tareaIndicadors) {
+            if(check){
+                TareaDocente tareaDocente = tIndicador.getTareadocenteCODIGOTAREADOCENTE();
+                tareaDocente.setDescripcionTareadocente(null);
+                this.tareaDocenteDao.save(tareaDocente);
+                check = false;
+            }
             this.tareaIndicadorDao.save(tIndicador);    
         }
     }
@@ -258,6 +265,16 @@ public class TareaDocenteService {
         this.saveFile(file,tareaDocente.getCodigoTareaDocente().toString());
         tareaDocente.setArchivoTareaDocente(tareaDocente.getCodigoTareaDocente().toString());
         tareaDocente.setEstadoTareaDocente(EstadoTareaDocenteEnum.EN_REVISION.getValue());
+        this.tareaDocenteDao.save(tareaDocente);    
+    }
+
+    public void aprobarTareaDocente(TareaDocente tareaDocente) {
+        tareaDocente.setEstadoTareaDocente(EstadoTareaDocenteEnum.ACEPTADO.getValue());
+        this.tareaDocenteDao.save(tareaDocente);    
+    }
+
+    public void denegarTareaDocente(TareaDocente tareaDocente) {
+        tareaDocente.setEstadoTareaDocente(EstadoTareaDocenteEnum.DENEGADO.getValue());
         this.tareaDocenteDao.save(tareaDocente);    
     }
 }
