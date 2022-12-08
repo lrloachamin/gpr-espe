@@ -149,6 +149,11 @@ public class TareaDocenteService {
         TareaDocente tareaDocente = this.obtenerIndicadorPorCodigoTareaDocente(codigoTareaDocente);
         return tareaDocente.getTareaIndicadorList();
     }
+
+    public List<TareaDocente> listarDocentesTareasAsignadas(Integer codigoDocente){
+        Docente docente = this.obtenerDocentePorCodigoDocente(codigoDocente);
+        return this.tareaDocenteDao.findByCodigoDocenteAndEstadoTareaDocenteNot(docente,EstadoTareaDocenteEnum.ACEPTADO.getValue());
+    }
 	
     public void crear(TareaDocenteProyecto tareaDocenteProyecto) {
         tareaDocenteProyecto.getTarea().setFechaCreaciontarea(new Date());

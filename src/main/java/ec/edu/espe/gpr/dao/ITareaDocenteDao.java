@@ -11,5 +11,6 @@ import ec.edu.espe.gpr.model.TareaDocente;
 public interface ITareaDocenteDao extends JpaRepository<TareaDocente, Integer>{
     List<TareaDocente> findByCodigoTarea(Tarea codigoTarea);
     List<TareaDocente> findByCodigoDocente(Docente codigoDocente);
+    List<TareaDocente> findByCodigoDocenteAndEstadoTareaDocenteNot(Docente codigoDocente,String estadoTareaDocente);
     List<TareaDocente> findByEstadoTareaDocente(String estadoTareaDocente);
 }
