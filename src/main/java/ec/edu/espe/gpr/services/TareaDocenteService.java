@@ -254,7 +254,7 @@ public class TareaDocenteService {
 
     public void guardarArchivoTareaAsignadaAlProfesor(MultipartFile file, Integer codigoTareaDocente) {
         TareaDocente tareaDocente = this.obtenerIndicadorPorCodigoTareaDocente(codigoTareaDocente);
-        this.saveFile(file,tareaDocente.getCodigoTareaDocente().toString());
+        this.saveFile(file,tareaDocente.getCodigoTareaDocente().toString()+".pdf");
         tareaDocente.setArchivoTareaDocente(tareaDocente.getCodigoTareaDocente().toString());
         tareaDocente.setEstadoTareaDocente(EstadoTareaDocenteEnum.EN_REVISION.getValue());
         this.tareaDocenteDao.save(tareaDocente);    
