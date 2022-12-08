@@ -243,8 +243,17 @@ public class TareaDocenteService {
             this.tareaIndicadorDao.save(tIndicador);    
     }
 
+    public void init() {
+        try {
+            Files.createDirectory(root);
+        } catch (IOException e) {
+            throw new RuntimeException("No se puede inicializar la carpeta uploads");
+        }
+    }
+
     private void saveFile(MultipartFile file, String nameFile) {
         try {
+            //this.init();
             //copy (que queremos copiar, a donde queremos copiar)
             Files.copy(file.getInputStream(), this.root.resolve(nameFile));
         } catch (IOException e) {

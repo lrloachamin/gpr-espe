@@ -234,8 +234,6 @@ public class IDocenteServiceImpl implements IDocenteService  {
 			return new ResponseEntity<DocenteResponseRest>(response,HttpStatus.INTERNAL_SERVER_ERROR);
 			
 		}
-		
-		
 		return new ResponseEntity<DocenteResponseRest>(response,HttpStatus.OK);
 	}
 	
