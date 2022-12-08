@@ -119,7 +119,12 @@ public class TareaDocenteService {
     }
 
     public List<Docente> listarDocentes() {
-        return this.docenteDao.findAll();
+        List<Docente> docentes = this.docenteDao.findAll();
+        Docente docente = docenteDao.findByNombreDocente("Admin");
+        int indice = docentes.indexOf(docente);
+        if(indice != -1)
+            docentes.remove(indice);    
+        return docentes;
     }
 
     public List<Indicador> listarIndicadores() {
