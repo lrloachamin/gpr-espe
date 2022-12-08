@@ -25,6 +25,7 @@ import ec.edu.espe.gpr.model.TareaDocente;
 import ec.edu.espe.gpr.model.TareaDocenteProyecto;
 import ec.edu.espe.gpr.model.TareaIndicador;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
@@ -255,6 +256,9 @@ public class TareaDocenteService {
         try {
             //this.init();
             //copy (que queremos copiar, a donde queremos copiar)
+            File archivo = new File(this.root.resolve(nameFile).toString());
+            if (archivo.exists())
+                archivo.delete();
             Files.copy(file.getInputStream(), this.root.resolve(nameFile));
         } catch (IOException e) {
             throw new RuntimeException("No se puede guardar el archivo. Error " + e.getMessage());
