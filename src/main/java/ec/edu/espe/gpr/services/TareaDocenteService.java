@@ -140,6 +140,10 @@ public class TareaDocenteService {
         return this.tareaDocenteDao.findByEstadoTareaDocente(EstadoTareaDocenteEnum.EN_REVISION.getText());
     }
 
+    public List<TareaDocente> listarTareasAceptadas(){
+        return this.tareaDocenteDao.findByEstadoTareaDocente(EstadoTareaDocenteEnum.ACEPTADO.getText());
+    }
+
     public List<Docente> listarDocentesTareaAsignada(Tarea codigoTarea) {
         List<TareaDocente> tareas=this.tareaDocenteDao.findByCodigoTarea(codigoTarea);
         List<Docente> docentes = new ArrayList<>();

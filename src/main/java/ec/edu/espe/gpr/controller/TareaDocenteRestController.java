@@ -113,6 +113,16 @@ public class TareaDocenteRestController {
         }
     }
 
+    @GetMapping(path = "/listarTareasAceptadas")
+    public ResponseEntity<List<TareaDocente>> listarTareasAceptadas() {
+        try {
+            List<TareaDocente> tareaDocentes = this.tareaDocenteService.listarTareasAceptadas();
+            return ResponseEntity.ok(tareaDocentes);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
     @GetMapping(path = "/listarDocentesTareasAsignadas/{codigoDocente}")
     public ResponseEntity<List<TareaDocente>> listarDocentesTareasAsignadas(@PathVariable Integer codigoDocente) {
         try {
