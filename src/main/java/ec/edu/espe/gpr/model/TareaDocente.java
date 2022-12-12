@@ -22,6 +22,9 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import java.util.Date;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -54,6 +57,13 @@ public class TareaDocente implements Serializable {
 
     @Column(name = "ESTADO_TAREA_DOCENTE")
     private String estadoTareaDocente;
+
+    @Column(name = "NOMBRE_ARCHIVO_TAREA_DOCENTE")
+    private String nombreArchivoTareaDocente;
+
+    @Column(name = "FECHA_ENTREGADA_TAREA_DOCENTE")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date fechaEntregadaTareaDocente;
 
     @JoinColumn(name = "CODIGO_DOCENTE", referencedColumnName = "CODIGO_DOCENTE")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)

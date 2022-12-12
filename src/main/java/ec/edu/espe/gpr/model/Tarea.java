@@ -59,8 +59,8 @@ public class Tarea implements Serializable {
     @Column(name = "PRIORIDAD_TAREA")
     private String prioridadTarea;
     
-    @Column(name = "DESCRIPICION_TAREA")
-    private String descripicionTarea;
+    @Column(name = "OBSERVACION_TAREA")
+    private String observacionTarea;
     
     @Column(name = "ESTADO_TAREA")
     private Character estadoTarea;
@@ -68,6 +68,15 @@ public class Tarea implements Serializable {
     @Column(name = "FECHA_ENTREGA_TAREA")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaEntregaTarea;
+
+    @Column(name = "ARCHIVO_TAREA")
+    private String archivoTarea;
+    @Column(name = "NOMBRE_ARCHIVO_TAREA")
+    private String nombreArchivoTarea;
+    @Column(name = "PESO_TAREA")
+    private String pesoTarea;
+    @Column(name = "VALOR_PESO_TAREA")
+    private int valorPesoTarea;
 
     @JoinColumn(name = "CODIGO_PROYECTO", referencedColumnName = "CODIGO_PROYECTO")
     @ManyToOne(optional = false,fetch= FetchType.LAZY)
@@ -77,5 +86,5 @@ public class Tarea implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "codigoTarea",fetch= FetchType.LAZY)
     @JsonBackReference(value="tareaDocenteList")
     private List<TareaDocente> tareaDocenteList;
-    
+
 }

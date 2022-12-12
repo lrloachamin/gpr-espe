@@ -22,6 +22,7 @@
     <class>ec.edu.espe.gpr.model.Sistema</class>
     <class>ec.edu.espe.gpr.model.Indicador</class>
     <class>ec.edu.espe.gpr.model.TareaIndicador</class>
+    <class>ec.edu.espe.gpr.model.TipoProceso</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://gpr-bd-mysql.mysql.database.azure.com:3306/gprbd?zeroDateTimeBehavior=CONVERT_TO_NULL"/>
       <property name="javax.persistence.jdbc.user" value="bnacato"/>
