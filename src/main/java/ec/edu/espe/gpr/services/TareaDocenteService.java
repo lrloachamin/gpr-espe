@@ -69,7 +69,12 @@ public class TareaDocenteService {
 
     public List<Docente> obtenerDocentesPorCargo(String codigoCargo) {
         Cargo cargo = obtenerCargoPorCodigoCargo(codigoCargo);
-		return this.docenteDao.findByCodCargo(cargo);
+		List<Docente> docentes = this.docenteDao.findByCodCargo(cargo);
+        Docente docente = docenteDao.findByNombreDocente("Admin");
+        int indice = docentes.indexOf(docente);
+        if(indice != -1)
+            docentes.remove(indice);
+        return docentes;
 	}
 
     public Docente obtenerDocentePorCodigoDocente(Integer codigoDocente) {	
@@ -133,6 +138,10 @@ public class TareaDocenteService {
 
     public List<TareaDocente> listarTareasEntregadas(){
         return this.tareaDocenteDao.findByEstadoTareaDocente(EstadoTareaDocenteEnum.EN_REVISION.getText());
+    }
+
+    public List<TareaDocente> listarTareasAceptadas(){
+        return this.tareaDocenteDao.findByEstadoTareaDocente(EstadoTareaDocenteEnum.ACEPTADO.getText());
     }
 
     public List<Docente> listarDocentesTareaAsignada(Tarea codigoTarea) {
