@@ -15,12 +15,15 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -55,6 +58,11 @@ public class Proyecto implements Serializable {
     
     @Column(name = "ESTADO_PROYECTO")
     private String estadoProyecto;
+
+    @JoinColumn(name = "tipo_proceso_CODIGO_TIPO_PROCESO", referencedColumnName = "CODIGO_TIPO_PROCESO")
+    @ManyToOne(fetch= FetchType.LAZY)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    private TipoProceso tipoProceso;
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "codigoProyecto",fetch= FetchType.LAZY)
     @JsonBackReference(value="tareaList")
