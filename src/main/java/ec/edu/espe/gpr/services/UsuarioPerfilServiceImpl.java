@@ -135,11 +135,13 @@ public class UsuarioPerfilServiceImpl implements IUsuarioPerfilService {
 			Optional<Usuper> usuarioperfil=usuarioperfilDao.findById(codusuper);
 			
 			if(usuarioperfil.isPresent()) {
-				response.setMetadata("Respuesta nok", "000", "Registro no eliminado docente repetido");
-				
-			}else {
 				usuarioperfilDao.deleteById(idUsuPer);
 				response.setMetadata("Respuesta nok", "000", "Registro eliminado");
+				
+			}else {
+				response.setMetadata("Respuesta nok", "000", "Registro no eliminado docente repetido");
+
+				
 				
 			}
 			
