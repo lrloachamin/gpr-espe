@@ -57,13 +57,27 @@ public class UsuarioPerfilServiceImpl implements IUsuarioPerfilService {
 	}
 
 	@Override
-	public ResponseEntity<UsuarioPerfilResponseRest> save(String codigoperfil,Integer codigousuario) {
+	public ResponseEntity<UsuarioPerfilResponseRest> save(String codigoperfil,Integer codigousuario, String codusuper) {
 		UsuarioPerfilResponseRest response = new UsuarioPerfilResponseRest();
 		List<Usuper> list= new ArrayList<>();
 		try {
 			
-			Usuper usuper= new Usuper();
+			Optional<Usuper> usuarioperfil=usuarioperfilDao.findById(codusuper);
+			
+			if(usuarioperfil.isPresent()) {
+				
+				list.add(usuarioperfil.get());
+				response.getUsuarioPerfilResponse().setUsuarioPerfil(list); 
+				response.setMetadata("Respuesta 0k", "000", "Respuesta exitosa docente repetido");
+				
+			}else {
+			
 			Optional<Usuario> usuario=usuarioDao.findById(codigousuario);
+			
+			Usuper usuper= new Usuper();
+		
+			
+			
 			if(usuario.isPresent()) {
 				usuper.setCodigoUsuario(usuario.get());
 
@@ -99,6 +113,7 @@ public class UsuarioPerfilServiceImpl implements IUsuarioPerfilService {
 				return new ResponseEntity<UsuarioPerfilResponseRest>(response,HttpStatus.BAD_REQUEST);
 				
 			}
+		}
 			
 			
 		}catch(Exception e) {
@@ -112,13 +127,22 @@ public class UsuarioPerfilServiceImpl implements IUsuarioPerfilService {
 
 	@Override
 	@Transactional
-	public ResponseEntity<UsuarioPerfilResponseRest> delete(String idUsuPer) {
+	public ResponseEntity<UsuarioPerfilResponseRest> delete(String idUsuPer, String codusuper) {
 		UsuarioPerfilResponseRest response= new UsuarioPerfilResponseRest();
 		
 		try {
-			usuarioperfilDao.deleteById(idUsuPer);
-			response.setMetadata("Respuesta nok", "000", "Registro eliminado");
 		
+			Optional<Usuper> usuarioperfil=usuarioperfilDao.findById(codusuper);
+			
+			if(usuarioperfil.isPresent()) {
+				response.setMetadata("Respuesta nok", "000", "Registro no eliminado docente repetido");
+				
+			}else {
+				usuarioperfilDao.deleteById(idUsuPer);
+				response.setMetadata("Respuesta nok", "000", "Registro eliminado");
+				
+			}
+			
 			
 		}catch (Exception e) {
 			// TODO: handle exception

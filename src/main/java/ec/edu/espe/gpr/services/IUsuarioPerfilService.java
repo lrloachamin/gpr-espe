@@ -9,7 +9,7 @@ import ec.edu.espe.gpr.response.UsuarioPerfilResponseRest;
 
 public interface IUsuarioPerfilService {
 	public ResponseEntity<UsuarioPerfilResponseRest> search();
-	public ResponseEntity<UsuarioPerfilResponseRest> save(String codigoperfil,Integer codigousuario );
-	public ResponseEntity<UsuarioPerfilResponseRest> delete(String idUsuPer );
+	public ResponseEntity<UsuarioPerfilResponseRest> save(String codigoperfil,Integer codigousuario , String codusuper);
+	public ResponseEntity<UsuarioPerfilResponseRest> delete(String idUsuPer,String codusuper );
 
 }

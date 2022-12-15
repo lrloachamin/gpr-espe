@@ -31,25 +31,26 @@ public class UsuarioPerfilRestController {
 		}
 	}
 	
-	@PostMapping("/usuarioperfil")
+	@PostMapping("/usuarioperfil/{codigoperfil}/{codigousuario}/{idusuper}")
 	
 	public ResponseEntity<UsuarioPerfilResponseRest> saveUsuariosPerdfil(
 			
-			@RequestParam("codigoperfil") String codigoperfil,
-			@RequestParam("codigousuario") Integer codigousuario
+			@PathVariable String codigoperfil,
+			@PathVariable Integer codigousuario,
+			@PathVariable String idusuper
 			){
 		
 		try {
-			ResponseEntity<UsuarioPerfilResponseRest> responseEntity=usuarioperfilService.save(codigoperfil, codigousuario);
+			ResponseEntity<UsuarioPerfilResponseRest> responseEntity=usuarioperfilService.save(codigoperfil, codigousuario,idusuper);
 			return responseEntity;
 		}catch(Exception c) {
 			return null;
 		}
 	}
 	
-	@DeleteMapping("/usuarioperfil/{id}")
-	public ResponseEntity<UsuarioPerfilResponseRest> deleteCategories(@PathVariable String id){
-		ResponseEntity<UsuarioPerfilResponseRest> responseEntity=usuarioperfilService.delete(id);
+	@DeleteMapping("/usuarioperfil/{id}/{idusuper}")
+	public ResponseEntity<UsuarioPerfilResponseRest> deleteCategories(@PathVariable String id,@PathVariable String idusuper){
+		ResponseEntity<UsuarioPerfilResponseRest> responseEntity=usuarioperfilService.delete(id,idusuper);
 		return responseEntity;
 	}
 
