@@ -50,6 +50,7 @@ public class TareaDocenteService {
 	private ICargoDao cargoDao;
 
     private final Path root = Paths.get("uploads");
+    private final Path rootFileGuia = Paths.get("archivo_guia");
 
 	public Tarea obtenerTareaPorCodigoTarea(Integer codTarea) {	
 		Optional<Tarea> tareaOpt = this.tareaDao.findById(codTarea);
@@ -169,11 +170,20 @@ public class TareaDocenteService {
         return this.tareaDocenteDao.findByCodigoDocenteAndEstadoTareaDocenteNot(docente,EstadoTareaDocenteEnum.ACEPTADO.getValue());
     }
 	
-    public void crear(TareaDocenteProyecto tareaDocenteProyecto) {
+    public void crear(TareaDocenteProyecto tareaDocenteProyecto,MultipartFile file) {
         tareaDocenteProyecto.getTarea().setFechaCreaciontarea(new Date());
         tareaDocenteProyecto.getTarea().setEstadoTarea(EstadoTareaEnum.ACTIVE.getValue().charAt(0));
         
         Tarea tarea =this.tareaDao.save(tareaDocenteProyecto.getTarea());
+
+        if(!file.isEmpty()){
+            String[] extensionArchivo = file.getOriginalFilename().split(".");
+            tarea.setArchivoTarea(tarea.getCodigoTarea().toString()+extensionArchivo[1]);
+            tarea.setNombreArchivoTarea(file.getOriginalFilename());
+            tarea = this.tareaDao.save(tarea);
+            this.saveFileGuia(file,tarea.getArchivoTarea()); 
+        }
+
         for(Docente docente :tareaDocenteProyecto.getDocentes()){
             TareaDocente t = new TareaDocente();
             t.setEstadoTareaDocente(EstadoTareaDocenteEnum.ASIGNADA.getValue());
@@ -188,6 +198,24 @@ public class TareaDocenteService {
                 indicadorBD.setTareadocenteCODIGOTAREADOCENTE(tDocenteBD);  
                 this.tareaIndicadorDao.save(indicadorBD);          
             }
+        }
+    }
+
+
+    private void saveFileGuia(MultipartFile file, String nameFile) {
+        try {
+            //this.init();
+            //copy (que queremos copiar, a donde queremos copiar)
+            File directorio = new File(this.rootFileGuia.toString());
+            if (!directorio.exists()) {
+                directorio.mkdirs();
+            }
+            File archivo = new File(this.rootFileGuia.resolve(nameFile).toString());
+            if (archivo.exists())
+                archivo.delete();
+            Files.copy(file.getInputStream(), this.root.resolve(nameFile));
+        } catch (IOException e) {
+            throw new RuntimeException("No se puede guardar el archivo. Error " + e.getMessage());
         }
     }
 

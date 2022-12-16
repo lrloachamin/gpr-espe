@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.google.gson.Gson;
+
 import ec.edu.espe.gpr.model.Docente;
 import ec.edu.espe.gpr.model.Indicador;
 import ec.edu.espe.gpr.model.Tarea;
@@ -24,7 +26,7 @@ import ec.edu.espe.gpr.model.TareaIndicador;
 import ec.edu.espe.gpr.services.TareaDocenteService;
 import lombok.RequiredArgsConstructor;
 
-@CrossOrigin(origins= {"https://mango-rock-08c52cc10.2.azurestaticapps.net","http://localhost:4200"})
+@CrossOrigin(origins = { "https://mango-rock-08c52cc10.2.azurestaticapps.net", "http://localhost:4200" })
 @RestController
 @RequestMapping(path = "/tareaDocente")
 @RequiredArgsConstructor
@@ -96,7 +98,8 @@ public class TareaDocenteRestController {
     @GetMapping(path = "/listarIndicadoresPorTarea/{codigoTareaDocente}")
     public ResponseEntity<List<TareaIndicador>> listarIndicadoresPorTarea(@PathVariable Integer codigoTareaDocente) {
         try {
-            List<TareaIndicador> tareaIndicador = this.tareaDocenteService.listarIndicadoresPorTarea(codigoTareaDocente);
+            List<TareaIndicador> tareaIndicador = this.tareaDocenteService
+                    .listarIndicadoresPorTarea(codigoTareaDocente);
             return ResponseEntity.ok(tareaIndicador);
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();
@@ -134,9 +137,12 @@ public class TareaDocenteRestController {
     }
 
     @PostMapping
-    public ResponseEntity<String> crear(@RequestBody TareaDocenteProyecto tareaDocenteProyecto) {
+    public ResponseEntity<String> crear(@RequestParam("tareaDocenteProyecto") String strTareaDocenteProyecto,
+            @RequestParam("file") MultipartFile file) {
         try {
-            this.tareaDocenteService.crear(tareaDocenteProyecto);
+            Gson gson = new Gson();
+            TareaDocenteProyecto tareaDocenteProyecto = gson.fromJson(strTareaDocenteProyecto, TareaDocenteProyecto.class);
+            this.tareaDocenteService.crear(tareaDocenteProyecto,file);
             return ResponseEntity.ok().build();
         } catch (Exception e) {
             e.printStackTrace();
@@ -156,7 +162,8 @@ public class TareaDocenteRestController {
     }
 
     @PutMapping("/guardarTareaAsignadaAlProfesor")
-    public ResponseEntity<TareaDocente> guardarTareaAsignadaAlProfesor(@RequestBody List<TareaIndicador> tareaIndicadors) {
+    public ResponseEntity<TareaDocente> guardarTareaAsignadaAlProfesor(
+            @RequestBody List<TareaIndicador> tareaIndicadors) {
         try {
             this.tareaDocenteService.guardarTareaAsignadaAlProfesor(tareaIndicadors);
             return ResponseEntity.ok().build();
@@ -167,31 +174,32 @@ public class TareaDocenteRestController {
     }
 
     @PutMapping("/guardarArchivoTareaAsignadaAlProfesor")
-    public ResponseEntity<String> guardarArchivoTareaAsignadaAlProfesor(@RequestParam("file") MultipartFile file,@RequestParam("codigoTareaDocente") String codigoTareaDocente){
-        try{
-            this.tareaDocenteService.guardarArchivoTareaAsignadaAlProfesor(file,Integer.parseInt(codigoTareaDocente));
+    public ResponseEntity<String> guardarArchivoTareaAsignadaAlProfesor(@RequestParam("file") MultipartFile file,
+            @RequestParam("codigoTareaDocente") String codigoTareaDocente) {
+        try {
+            this.tareaDocenteService.guardarArchivoTareaAsignadaAlProfesor(file, Integer.parseInt(codigoTareaDocente));
             return ResponseEntity.ok().build();
-        }catch (Exception e){
+        } catch (Exception e) {
             return ResponseEntity.badRequest().build();
         }
     }
 
     @PutMapping("/aprobarTareaDocente")
-    public ResponseEntity<String> aprobarTareaDocente(@RequestBody TareaDocente tareaDocente){
-        try{
+    public ResponseEntity<String> aprobarTareaDocente(@RequestBody TareaDocente tareaDocente) {
+        try {
             this.tareaDocenteService.aprobarTareaDocente(tareaDocente);
             return ResponseEntity.ok().build();
-        }catch (Exception e){
+        } catch (Exception e) {
             return ResponseEntity.badRequest().build();
         }
     }
 
     @PutMapping("/denegarTareaDocente")
-    public ResponseEntity<String> denegarTareaDocente(@RequestBody TareaDocente tareaDocente){
-        try{
+    public ResponseEntity<String> denegarTareaDocente(@RequestBody TareaDocente tareaDocente) {
+        try {
             this.tareaDocenteService.denegarTareaDocente(tareaDocente);
             return ResponseEntity.ok().build();
-        }catch (Exception e){
+        } catch (Exception e) {
             return ResponseEntity.badRequest().build();
         }
     }
