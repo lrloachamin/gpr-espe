@@ -141,9 +141,20 @@ public class TareaDocenteRestController {
     public ResponseEntity<String> crear(@RequestParam("tareaDocenteProyecto") String strTareaDocenteProyecto,
             @RequestParam("file") MultipartFile file ) {
         try {
-            System.out.println("\nLLego :=");
             Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm").create();;
             TareaDocenteProyecto tareaDocenteProyecto = gson.fromJson(strTareaDocenteProyecto, TareaDocenteProyecto.class);
+            this.tareaDocenteService.crear(tareaDocenteProyecto,file);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+    @PostMapping(path = "/crearTarea")
+    public ResponseEntity<String> crearTarea(@RequestBody TareaDocenteProyecto  tareaDocenteProyecto) {
+        try {
+            MultipartFile file = null;
             this.tareaDocenteService.crear(tareaDocenteProyecto,file);
             return ResponseEntity.ok().build();
         } catch (Exception e) {

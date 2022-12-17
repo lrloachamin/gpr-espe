@@ -48,6 +48,8 @@ public class TareaDocenteService {
 	private TareaIndicadorDao tareaIndicadorDao;
     @Autowired
 	private ICargoDao cargoDao;
+    @Autowired
+	private IEmailService emservice;
 
     private final Path root = Paths.get("uploads");
     private final Path rootFileGuia = Paths.get("archivo_guia");
@@ -194,6 +196,9 @@ public class TareaDocenteService {
             t.setEstadoTareaDocente(EstadoTareaDocenteEnum.ASIGNADA.getValue());
             t.setCodigoDocente(docente);
             t.setCodigoTarea(tarea);
+            emservice.enviarCorreo(docente.getCorreoDocente(), "GPR - Nueva Tarea: "+tarea.getNombreTarea(),
+							"Se ha asignado una nueva tarea de prioridad "+tarea.getPrioridadTarea() + 
+                            ", y debe ser realizada hasta la fecha de:"+tarea.getFechaEntregaTarea());
             TareaDocente tDocenteBD=this.tareaDocenteDao.save(t);
             for (Indicador indicador : tareaDocenteProyecto.getIndicadors()) {
                 TareaIndicador indicadorBD = new TareaIndicador();
@@ -209,8 +214,6 @@ public class TareaDocenteService {
 
     private void saveFileGuia(MultipartFile file, String nameFile) {
         try {
-            //this.init();
-            //copy (que queremos copiar, a donde queremos copiar)
             File directorio = new File(this.rootFileGuia.toString());
             if (!directorio.exists()) {
                 directorio.mkdirs();
@@ -230,7 +233,6 @@ public class TareaDocenteService {
         int indice;
         Boolean check = true;
         TareaDocente tareaD = new TareaDocente(); 
-        //Comprobar el docente primero :v
         for(TareaDocente tareaDocente : tareaDocentes){
             if(check){
                 tareaD = tareaDocente;
@@ -254,6 +256,9 @@ public class TareaDocenteService {
                 t.setEstadoTareaDocente(EstadoTareaDocenteEnum.ASIGNADA.getValue());
                 t.setCodigoDocente(docente);
                 t.setCodigoTarea(tareaDocenteProyecto.getTarea());
+                emservice.enviarCorreo(docente.getCorreoDocente(), "GPR - Nueva Tarea: "+tareaDocenteProyecto.getTarea().getNombreTarea(),
+							"Se ha asignado una nueva tarea de prioridad "+tareaDocenteProyecto.getTarea().getPrioridadTarea() + 
+                            ", y debe ser realizada hasta la fecha de:"+tareaDocenteProyecto.getTarea().getFechaEntregaTarea());
                 TareaDocente tDocenteBD=this.tareaDocenteDao.save(t);
                 for (Indicador indicador : tareaDocenteProyecto.getIndicadors()) {
                     TareaIndicador indicadorBD = new TareaIndicador();
