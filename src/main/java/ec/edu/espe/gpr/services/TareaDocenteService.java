@@ -176,9 +176,14 @@ public class TareaDocenteService {
         
         Tarea tarea =this.tareaDao.save(tareaDocenteProyecto.getTarea());
 
-        if(!file.isEmpty()){
-            String[] extensionArchivo = file.getOriginalFilename().split(".");
-            tarea.setArchivoTarea(tarea.getCodigoTarea().toString()+extensionArchivo[1]);
+        if(file!=null){
+            String extensionArchivo = "";
+            int i = file.getOriginalFilename().toString().lastIndexOf('.');
+            
+            if (i > 0) 
+                extensionArchivo = file.getOriginalFilename().toString().substring(i+1);
+            
+            tarea.setArchivoTarea(tarea.getCodigoTarea().toString()+"."+extensionArchivo);
             tarea.setNombreArchivoTarea(file.getOriginalFilename());
             tarea = this.tareaDao.save(tarea);
             this.saveFileGuia(file,tarea.getArchivoTarea()); 
@@ -213,7 +218,7 @@ public class TareaDocenteService {
             File archivo = new File(this.rootFileGuia.resolve(nameFile).toString());
             if (archivo.exists())
                 archivo.delete();
-            Files.copy(file.getInputStream(), this.root.resolve(nameFile));
+            Files.copy(file.getInputStream(), this.rootFileGuia.resolve(nameFile));
         } catch (IOException e) {
             throw new RuntimeException("No se puede guardar el archivo. Error " + e.getMessage());
         }

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import ec.edu.espe.gpr.model.Docente;
 import ec.edu.espe.gpr.model.Indicador;
@@ -136,11 +137,12 @@ public class TareaDocenteRestController {
         }
     }
 
-    @PostMapping
+    @PostMapping(path = "/crearTareaConArchivo")
     public ResponseEntity<String> crear(@RequestParam("tareaDocenteProyecto") String strTareaDocenteProyecto,
-            @RequestParam("file") MultipartFile file) {
+            @RequestParam("file") MultipartFile file ) {
         try {
-            Gson gson = new Gson();
+            System.out.println("\nLLego :=");
+            Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm").create();;
             TareaDocenteProyecto tareaDocenteProyecto = gson.fromJson(strTareaDocenteProyecto, TareaDocenteProyecto.class);
             this.tareaDocenteService.crear(tareaDocenteProyecto,file);
             return ResponseEntity.ok().build();
