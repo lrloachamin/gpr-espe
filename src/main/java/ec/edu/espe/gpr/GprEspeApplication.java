@@ -1,5 +1,8 @@
 package ec.edu.espe.gpr;
 
+import java.io.FileInputStream;
+
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -8,6 +11,17 @@ import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 
 import ec.edu.espe.gpr.services.IEmailService;
+
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.util.Iterator;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.DataFormatter;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 
 @SpringBootApplication(exclude = { SecurityAutoConfiguration.class })
@@ -19,6 +33,30 @@ public class GprEspeApplication {
 	
 
 	public static void main(String[] args) {
+
+
+		try {
+            String rutaArchivoExcel = "matriz_docente.xlsx";
+            FileInputStream inputStream = new FileInputStream(new File(rutaArchivoExcel));
+            Workbook workbook = new XSSFWorkbook(inputStream);
+            Sheet firstSheet = workbook.getSheetAt(0);
+            Iterator<Row> iterator = firstSheet.iterator();
+            
+            DataFormatter formatter = new DataFormatter();
+            while (iterator.hasNext()) {
+                Row nextRow = iterator.next();
+                Iterator<Cell> cellIterator = nextRow.cellIterator();
+                while(cellIterator.hasNext()) {
+                    Cell cell = cellIterator.next();
+                   
+                    String contenidoCelda = formatter.formatCellValue(cell);
+                    System.out.println("celda: " + contenidoCelda);
+                }
+                
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
 
 		SpringApplication.run(GprEspeApplication.class, args);

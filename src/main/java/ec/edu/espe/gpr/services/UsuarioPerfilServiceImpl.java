@@ -1,6 +1,8 @@
 package ec.edu.espe.gpr.services;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -9,7 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
+import org.yaml.snakeyaml.util.ArrayUtils;
 
 import java.util.Optional;
 
@@ -99,9 +101,34 @@ public class UsuarioPerfilServiceImpl implements IUsuarioPerfilService {
 			usuper.setFechaAsgUsuper(new Date());
 			usuper.setFechRetiroUsuperOpcper(new Date());
 			
-			Long idLocUsuPer=usuarioperfilDao.count()+1;
-			usuper.setCodUsuper(idLocUsuPer.toString());
-			Usuper usupersave=usuarioperfilDao.save(usuper);
+			
+			
+			List<Usuper> usurioID=(List<Usuper>)usuarioperfilDao.findAll();
+			
+			System.out.println("no entra");
+			List<Integer> listaCodigoUsuper = new ArrayList<Integer>();
+			
+			System.out.println("ndeclarar arrays");
+			
+			for(Usuper u :usurioID) {
+			
+				listaCodigoUsuper.add(Integer.parseInt(u.getCodUsuper()));
+				
+				
+			}
+		
+			int idLocUsuPer=1;
+			 boolean isEmpty = isEmpty(listaCodigoUsuper);
+		        if (isEmpty) {
+		        	idLocUsuPer=1;
+		        	usuper.setCodUsuper(Integer.toString(idLocUsuPer));
+		        } else {
+		        	idLocUsuPer=Collections.max(listaCodigoUsuper)+1;
+					usuper.setCodUsuper(Integer.toString(idLocUsuPer));
+				
+		        }
+		    	Usuper usupersave=usuarioperfilDao.save(usuper);
+		
 			
 			if(usupersave!=null) {
 				list.add(usupersave);
@@ -125,6 +152,11 @@ public class UsuarioPerfilServiceImpl implements IUsuarioPerfilService {
 		return new ResponseEntity<UsuarioPerfilResponseRest>(response,HttpStatus.OK);
 	}
 
+	public static boolean isEmpty(Collection<?> collection) {
+        return collection == null || collection.isEmpty();
+    }
+ 
+	
 	@Override
 	@Transactional
 	public ResponseEntity<UsuarioPerfilResponseRest> delete(String idUsuPer, String codusuper) {

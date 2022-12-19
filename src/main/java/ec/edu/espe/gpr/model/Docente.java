@@ -48,6 +48,9 @@ public class Docente implements Serializable {
     @Column(name = "CORREO_DOCENTE")
     private String correoDocente;
     
+    @Column(name = "SEXO_DOCENTE")
+    private String sexo;
+    
     @JoinColumn(name = "COD_CARGO", referencedColumnName = "COD_CARGO")
     @ManyToOne(optional = false,fetch= FetchType.LAZY)
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
