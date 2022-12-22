@@ -48,7 +48,7 @@ public class Docente implements Serializable {
     @Column(name = "CORREO_DOCENTE")
     private String correoDocente;
     
-    @Column(name = "SEXO_DOCENTE")
+    @Column(name = "SEXO_DOCENTE",nullable = true)
     private String sexo;
     
     @JoinColumn(name = "COD_CARGO", referencedColumnName = "COD_CARGO")

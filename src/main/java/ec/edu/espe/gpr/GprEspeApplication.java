@@ -35,29 +35,7 @@ public class GprEspeApplication {
 	public static void main(String[] args) {
 
 
-		try {
-            String rutaArchivoExcel = "matriz_docente.xlsx";
-            FileInputStream inputStream = new FileInputStream(new File(rutaArchivoExcel));
-            Workbook workbook = new XSSFWorkbook(inputStream);
-            Sheet firstSheet = workbook.getSheetAt(0);
-            Iterator<Row> iterator = firstSheet.iterator();
-            
-            DataFormatter formatter = new DataFormatter();
-            while (iterator.hasNext()) {
-                Row nextRow = iterator.next();
-                Iterator<Cell> cellIterator = nextRow.cellIterator();
-                while(cellIterator.hasNext()) {
-                    Cell cell = cellIterator.next();
-                   
-                    String contenidoCelda = formatter.formatCellValue(cell);
-                    System.out.println("celda: " + contenidoCelda);
-                }
-                
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
+		
 
 		SpringApplication.run(GprEspeApplication.class, args);
 		
