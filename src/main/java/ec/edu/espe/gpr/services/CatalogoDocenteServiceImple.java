@@ -1,5 +1,6 @@
 package ec.edu.espe.gpr.services;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,7 +23,7 @@ public class CatalogoDocenteServiceImple implements ICatalogoDocenteService {
 	public ResponseEntity<CatalogoDocenteResponseRest> findById(String cedula) {
 		CatalogoDocenteResponseRest response= new CatalogoDocenteResponseRest();
 		try {
-			List<CatalogoDocente> listacatalogo= (List<CatalogoDocente>) catalagodocenteDao.findAll();
+			List<CatalogoDocente> listacatalogo= new ArrayList<>();
 			
 			Optional<CatalogoDocente> category=catalagodocenteDao.findById(cedula);
 			if(category.isPresent()) {
@@ -31,7 +32,7 @@ public class CatalogoDocenteServiceImple implements ICatalogoDocenteService {
 				response.setMetadata("Respuesta 0k", "000", "Respuesta exitosa");
 				
 			}else {
-				listacatalogo.add(category.get());
+				listacatalogo.add(new CatalogoDocente());
 				response.getDocenteResponse().setDocente(listacatalogo);
 				response.setMetadata("Respuesta 0k", "200", "Respuesta exitosa");
 			}

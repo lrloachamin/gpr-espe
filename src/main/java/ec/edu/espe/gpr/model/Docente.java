@@ -48,8 +48,11 @@ public class Docente implements Serializable {
     @Column(name = "CORREO_DOCENTE")
     private String correoDocente;
     
-    @Column(name = "SEXO_DOCENTE",nullable = true)
+    @Column(name = "SEXO_DOCENTE")
     private String sexo;
+    
+    @Column(name = "PUESTO_TRABAJO")
+    private String puestoTrabajoDocente;
     
     @JoinColumn(name = "COD_CARGO", referencedColumnName = "COD_CARGO")
     @ManyToOne(optional = false,fetch= FetchType.LAZY)
@@ -163,7 +166,26 @@ public class Docente implements Serializable {
         this.tareaDocenteList = tareaDocenteList;
     }
     
-    @Override
+    
+    
+    
+    public String getSexo() {
+		return sexo;
+	}
+
+	public void setSexo(String sexo) {
+		this.sexo = sexo;
+	}
+
+	public String getPuestoTrabajoDocente() {
+		return puestoTrabajoDocente;
+	}
+
+	public void setPuestoTrabajoDocente(String puestoTrabajoDocente) {
+		this.puestoTrabajoDocente = puestoTrabajoDocente;
+	}
+
+	@Override
     public int hashCode() {
         int hash = 0;
         hash += (codigoDocente != null ? codigoDocente.hashCode() : 0);
