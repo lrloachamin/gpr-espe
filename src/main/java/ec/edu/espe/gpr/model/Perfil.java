@@ -12,20 +12,22 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "perfil")
 public class Perfil implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @Id
-    
+    @Id    
     @Column(name = "CODIGO_PERFIL")
     private String codigoPerfil;
     
@@ -34,6 +36,11 @@ public class Perfil implements Serializable {
     @Lob
     @Column(name = "OBS_PERFIL")
     private String obsPerfil;
+    
+    @JoinColumn(name = "CODIGO_PERFIL_PADRE", referencedColumnName = "CODIGO_PERFIL")
+    @OneToOne(optional = true, fetch = FetchType.LAZY)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    private Perfil codigoPerfilPadre;
     
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "codigoPerfil",fetch= FetchType.LAZY)
