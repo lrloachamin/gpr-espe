@@ -56,6 +56,8 @@ public class DocenteRestController {
 			@RequestParam("cedulaDocente")String cedulaDocente ,
 			@RequestParam("telefonoDocente") String telefonoDocente,
 			@RequestParam("correoDocente")String correoDocente ,
+			@RequestParam("sexooDocente")String sexooDocente,
+			@RequestParam("puestoDocente")String puestoDocente,
 			@RequestParam("codCargo") String codCargo
 	
 			){
@@ -68,6 +70,10 @@ public class DocenteRestController {
 		docente.setCedulaDocente(cedulaDocente);
 		docente.setTelefonoDocente(telefonoDocente);
 		docente.setCorreoDocente(correoDocente);
+		
+		docente.setSexo(sexooDocente);
+		docente.setPuestoTrabajoDocente(puestoDocente);
+		System.out.println(docente.getSexo()+docente.getPuestoTrabajoDocente());
 		
 		
 		ResponseEntity<DocenteResponseRest> responseEntity=docenteservice.save(docente,codCargo);
