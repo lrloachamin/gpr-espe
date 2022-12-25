@@ -204,6 +204,9 @@ public class IDocenteServiceImpl implements IDocenteService  {
 			    usuarioF.get().setCedulaDocente(docente.getCedulaDocente());
 			    usuarioF.get().setTelefonoDocente(docente.getTelefonoDocente());
 			    usuarioF.get().setCorreoDocente(docente.getCorreoDocente());
+			    usuarioF.get().setSexo(docente.getSexo());
+			    usuarioF.get().setPuestoTrabajoDocente(docente.getPuestoTrabajoDocente());
+			    usuarioF.get().setCorreoDocente(docente.getCorreoDocente());
 			    usuarioF.get().setCodCargo(docente.getCodCargo());
 
 				
