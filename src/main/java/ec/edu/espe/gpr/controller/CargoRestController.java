@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import ec.edu.espe.gpr.model.Cargo;
+import ec.edu.espe.gpr.model.Perfil;
 import ec.edu.espe.gpr.response.CargoResponseRest;
 import ec.edu.espe.gpr.services.ICargoService;
 
@@ -54,6 +55,14 @@ public class CargoRestController {
             return ResponseEntity.badRequest().build();
         }
 	}
-	
 
+	@GetMapping("/obtenerCargosPorPerfil/{codPerfil}")
+	public ResponseEntity<List<Cargo>> obtenerCargosPorPerfil(@PathVariable String codPerfil){
+		try {
+            List<Cargo> cargos = this.cargoservice.findByPerfil(codPerfil);
+            return ResponseEntity.ok(cargos);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+	}
 }

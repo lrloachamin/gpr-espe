@@ -22,8 +22,11 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import lombok.EqualsAndHashCode;
+
 @Entity
 @Table(name = "perfil")
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Perfil implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -104,29 +107,16 @@ public class Perfil implements Serializable {
         this.usuperList = usuperList;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (codigoPerfil != null ? codigoPerfil.hashCode() : 0);
-        return hash;
+    public static long getSerialversionuid() {
+        return serialVersionUID;
     }
 
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Perfil)) {
-            return false;
-        }
-        Perfil other = (Perfil) object;
-        if ((this.codigoPerfil == null && other.codigoPerfil != null) || (this.codigoPerfil != null && !this.codigoPerfil.equals(other.codigoPerfil))) {
-            return false;
-        }
-        return true;
+    public Perfil getCodigoPerfilPadre() {
+        return codigoPerfilPadre;
     }
 
-    @Override
-    public String toString() {
-        return "ec.edu.espe.gpr.model.Perfil[ codigoPerfil=" + codigoPerfil + " ]";
+    public void setCodigoPerfilPadre(Perfil codigoPerfilPadre) {
+        this.codigoPerfilPadre = codigoPerfilPadre;
     }
     
 }

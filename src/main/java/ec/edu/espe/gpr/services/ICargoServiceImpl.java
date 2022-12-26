@@ -7,26 +7,31 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-
-
 import ec.edu.espe.gpr.dao.ICargoDao;
+import ec.edu.espe.gpr.dao.IDocenteDao;
+import ec.edu.espe.gpr.dao.IPerfilDao;
+import ec.edu.espe.gpr.dao.IUsuarioPerfilDao;
 import ec.edu.espe.gpr.model.Cargo;
 import ec.edu.espe.gpr.model.Docente;
+import ec.edu.espe.gpr.model.Perfil;
 import ec.edu.espe.gpr.model.Usuario;
+import ec.edu.espe.gpr.model.Usuper;
 import ec.edu.espe.gpr.response.CargoResponseRest;
-import ec.edu.espe.gpr.response.UsuarioResponseRest;
 
 
 @Service
 public class ICargoServiceImpl implements ICargoService{
 	@Autowired
 	private ICargoDao cargodao;
-
+	@Autowired
+	private IUsuarioPerfilDao usuarioperfilDao;
+	@Autowired
+	private IDocenteDao docenteDao;
+	@Autowired
+	private IPerfilDao perfilDao;
 
 	@Override
 	@Transactional(readOnly = true)
@@ -107,6 +112,49 @@ public class ICargoServiceImpl implements ICargoService{
 	
 	public List<Cargo> findAll(){
 		return this.cargodao.findAll();
+	}
+
+	private Docente obtenerDocentePorCodigoUsuario(Usuario usuario) {	
+		Optional<Docente> docenteOpt = this.docenteDao.findByCodigoUsuario(usuario);
+		if (docenteOpt.isPresent())
+			return docenteOpt.get();
+		else 
+			return null;
+	}
+
+	private List<Cargo> obtenerCargosPorPerfil(Perfil perfil){
+		System.out.println("El perfi es");
+		System.out.println(perfil.getCodigoPerfil());
+		List<Usuper> usupers= this.usuarioperfilDao.findByCodigoPerfil(perfil);
+		List<Cargo> cargos = new ArrayList<>();
+		for (Usuper usuper : usupers) {
+			Docente docente = this.obtenerDocentePorCodigoUsuario(usuper.getCodigoUsuario());
+			if(!cargos.contains(docente.getCodCargo()))
+				cargos.add(docente.getCodCargo());
+		}
+		return cargos;
+	}
+
+	private Perfil obtenerPerfilPorCodigoPerfil(String codPerfil) {	
+		Optional<Perfil> perfilOpt = this.perfilDao.findById(codPerfil);
+		if (perfilOpt.isPresent())
+			return perfilOpt.get();
+		else 
+			return null;
+	}
+
+	private Perfil obtenerPerfilPorCodigoPerfilPadre(Perfil codPerfil) {	
+		Optional<Perfil> perfilOpt = this.perfilDao.findByCodigoPerfilPadre(codPerfil);
+		if (perfilOpt.isPresent())
+			return perfilOpt.get();
+		else 
+			return null;
+	}
+
+	@Override
+	public List<Cargo> findByPerfil(String codPerfil){
+		Perfil perfil = obtenerPerfilPorCodigoPerfil(codPerfil);
+		return this.obtenerCargosPorPerfil(obtenerPerfilPorCodigoPerfilPadre(perfil));
 	}
 
 }

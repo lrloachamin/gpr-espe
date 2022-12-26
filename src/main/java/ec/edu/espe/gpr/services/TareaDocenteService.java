@@ -11,8 +11,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import ec.edu.espe.gpr.dao.ICargoDao;
 import ec.edu.espe.gpr.dao.IDocenteDao;
+import ec.edu.espe.gpr.dao.IPerfilDao;
 import ec.edu.espe.gpr.dao.ITareaDao;
 import ec.edu.espe.gpr.dao.ITareaDocenteDao;
+import ec.edu.espe.gpr.dao.IUsuarioPerfilDao;
 import ec.edu.espe.gpr.dao.IndicadorDao;
 import ec.edu.espe.gpr.dao.TareaIndicadorDao;
 import ec.edu.espe.gpr.enums.EstadoTareaDocenteEnum;
@@ -20,10 +22,13 @@ import ec.edu.espe.gpr.enums.EstadoTareaEnum;
 import ec.edu.espe.gpr.model.Cargo;
 import ec.edu.espe.gpr.model.Docente;
 import ec.edu.espe.gpr.model.Indicador;
+import ec.edu.espe.gpr.model.Perfil;
 import ec.edu.espe.gpr.model.Tarea;
 import ec.edu.espe.gpr.model.TareaDocente;
 import ec.edu.espe.gpr.model.TareaDocenteProyecto;
 import ec.edu.espe.gpr.model.TareaIndicador;
+import ec.edu.espe.gpr.model.Usuario;
+import ec.edu.espe.gpr.model.Usuper;
 
 import java.io.File;
 import java.io.IOException;
@@ -49,6 +54,10 @@ public class TareaDocenteService {
     @Autowired
 	private ICargoDao cargoDao;
     @Autowired
+	private IPerfilDao perfilDao;
+	@Autowired
+	private IUsuarioPerfilDao usuarioperfilDao;
+    @Autowired
 	private IEmailService emservice;
 
     private final Path root = Paths.get("uploads");
@@ -70,14 +79,56 @@ public class TareaDocenteService {
 			return null;
 	}
 
-    public List<Docente> obtenerDocentesPorCargo(String codigoCargo) {
+    private Docente obtenerDocentePorCodigoUsuario(Usuario usuario) {	
+		Optional<Docente> docenteOpt = this.docenteDao.findByCodigoUsuario(usuario);
+		if (docenteOpt.isPresent())
+			return docenteOpt.get();
+		else 
+			return null;
+	}
+
+    private List<Docente> obtenerDocentesPorPerfil(Perfil perfil){
+		List<Usuper> usupers= this.usuarioperfilDao.findByCodigoPerfil(perfil);
+		List<Docente> docentes = new ArrayList<>();
+		for (Usuper usuper : usupers) {
+			Docente docente = this.obtenerDocentePorCodigoUsuario(usuper.getCodigoUsuario());
+			docentes.add(docente);
+		}
+		return docentes;
+	}
+
+	private Perfil obtenerPerfilPorCodigoPerfil(String codPerfil) {	
+		Optional<Perfil> perfilOpt = this.perfilDao.findById(codPerfil);
+		if (perfilOpt.isPresent())
+			return perfilOpt.get();
+		else 
+			return null;
+	}
+
+    private Perfil obtenerPerfilPorCodigoPerfilPadre(Perfil codPerfil) {	
+		Optional<Perfil> perfilOpt = this.perfilDao.findByCodigoPerfilPadre(codPerfil);
+		if (perfilOpt.isPresent())
+			return perfilOpt.get();
+		else 
+			return null;
+	}
+
+    public List<Docente> obtenerDocentesPorCargo(String codigoCargo,String codigoPerfil) {
         Cargo cargo = obtenerCargoPorCodigoCargo(codigoCargo);
-		List<Docente> docentes = this.docenteDao.findByCodCargo(cargo);
-        Docente docente = docenteDao.findByNombreDocente("Admin");
+        Perfil perfil = obtenerPerfilPorCodigoPerfilPadre(obtenerPerfilPorCodigoPerfil(codigoPerfil));
+		List<Docente> docentes = this.obtenerDocentesPorPerfil(perfil);
+        List<Docente> docentesPerfil = new ArrayList<>();
+		//List<Docente> docentes = this.docenteDao.findByCodCargo(cargo);
+        for (Docente docente : docentes) {
+            if(docente.getCodCargo().equals(cargo))
+                docentesPerfil.add(docente);       
+        }
+        /*Docente docente = docenteDao.findByNombreDocente("Admin");
         int indice = docentes.indexOf(docente);
         if(indice != -1)
             docentes.remove(indice);
-        return docentes;
+        */
+        return docentesPerfil;
 	}
 
     public Docente obtenerDocentePorCodigoDocente(Integer codigoDocente) {	
