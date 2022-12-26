@@ -36,10 +36,10 @@ public class TareaDocenteRestController {
     @Autowired
     private TareaDocenteService tareaDocenteService;
 
-    @GetMapping(path = "/listarTareas")
-    public ResponseEntity<List<TareaDocenteProyecto>> listarTareas() {
+    @GetMapping(path = "/listarTareas/{idDocente}")
+    public ResponseEntity<List<TareaDocenteProyecto>> listarTareas(@PathVariable String idDocente) {
         try {
-            List<TareaDocenteProyecto> tareas = this.tareaDocenteService.listarTareasDocentes();
+            List<TareaDocenteProyecto> tareas = this.tareaDocenteService.listarTareasDocentes(idDocente);
             return ResponseEntity.ok(tareas);
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();
