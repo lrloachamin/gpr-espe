@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-
+import ec.edu.espe.gpr.model.Perfil;
 import ec.edu.espe.gpr.response.UsuarioPerfilResponseRest;
 import ec.edu.espe.gpr.services.IUsuarioPerfilService;
 
@@ -30,6 +30,16 @@ public class UsuarioPerfilRestController {
 			return responseEntity;
 		}catch(Exception c) {
 			return null;
+		}
+	}
+
+	@GetMapping("/obtenerPerfil/{codeUser}")
+	public ResponseEntity<Perfil> obtenerPerfil(@PathVariable Integer codeUser){
+		try {
+			Perfil perfil = usuarioperfilService.obtenerPerfil(codeUser);
+			return ResponseEntity.ok(perfil);
+		}catch(Exception c) {
+			return ResponseEntity.badRequest().build();
 		}
 	}
 	

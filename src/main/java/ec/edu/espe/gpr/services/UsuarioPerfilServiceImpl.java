@@ -188,7 +188,19 @@ public class UsuarioPerfilServiceImpl implements IUsuarioPerfilService {
 		return new ResponseEntity<UsuarioPerfilResponseRest>(response,HttpStatus.OK);
 	}
 
-	
-	
+	private Usuario getUser(Integer codUser){
+		Optional<Usuario> userOpt = this.usuarioDao.findById(codUser);
+		if (userOpt.isPresent())
+			return userOpt.get();
+		else 
+			return null;
+	}
 
+
+	@Override
+	public Perfil obtenerPerfil(Integer codUser){
+		Usuario usuario = this.getUser(codUser);
+		List<Usuper> usupers = this.usuarioperfilDao.findByCodigoUsuario(usuario);
+		return usupers.get(0).getCodigoPerfil();
+	}
 }
