@@ -7,7 +7,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.FileSystemUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import ec.edu.espe.gpr.dao.ITareaDao;
 import ec.edu.espe.gpr.dao.ITareaDocenteDao;
+import ec.edu.espe.gpr.model.Tarea;
 import ec.edu.espe.gpr.model.TareaDocente;
 
 import java.io.IOException;
@@ -21,9 +23,21 @@ import java.util.stream.Stream;
 @Service
 public class FileService {
 
+    private final Path root = Paths.get("uploads");
+    private final Path rootFileGuia = Paths.get("archivo_guia");
+
     @Autowired
 	private ITareaDocenteDao tareaDocenteDao;
-
+    @Autowired
+	private ITareaDao tareaDao;
+        
+    public void init() {
+        try {
+            Files.createDirectory(root);
+        } catch (IOException e) {
+            throw new RuntimeException("No se puede inicializar la carpeta uploads");
+        }
+    }
 
     private TareaDocente obtenerTareaDocentePorCodigoTareaDocente(Integer codigoTareaDocente) {	
 		Optional<TareaDocente> tareaOpt = this.tareaDocenteDao.findById(codigoTareaDocente);
@@ -37,15 +51,18 @@ public class FileService {
 		return this.obtenerTareaDocentePorCodigoTareaDocente(codigoTareaDocente);
 	}
 
-    private final Path root = Paths.get("uploads");
-    
-    public void init() {
-        try {
-            Files.createDirectory(root);
-        } catch (IOException e) {
-            throw new RuntimeException("No se puede inicializar la carpeta uploads");
-        }
-    }
+    private Tarea obtenerTareaPorCodigoTarea(Integer codigoTarea) {	
+		Optional<Tarea> tareaOpt = this.tareaDao.findById(codigoTarea);
+		if (tareaOpt.isPresent())
+			return tareaOpt.get();
+		else 
+			return null;
+	}
+
+    public Tarea getTarea(Integer codigoTarea){	
+		return this.obtenerTareaPorCodigoTarea(codigoTarea);
+	}
+
 
     public void save(MultipartFile file) {
         try {
@@ -59,6 +76,22 @@ public class FileService {
     public Resource load(String filename) {
         try {
             Path file = root.resolve(filename);
+            Resource resource = new UrlResource(file.toUri());
+
+            if(resource.exists() || resource.isReadable()){
+                return resource;
+            }else{
+                throw new RuntimeException("No se puede leer el archivo ");
+            }
+
+        }catch (MalformedURLException e){
+            throw new RuntimeException("Error: " + e.getMessage());
+        }
+    }
+
+    public Resource loadFileTarea(String filename) {
+        try {
+            Path file = rootFileGuia.resolve(filename);
             Resource resource = new UrlResource(file.toUri());
 
             if(resource.exists() || resource.isReadable()){
