@@ -19,6 +19,7 @@ import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBui
 
 import ec.edu.espe.gpr.message.FileMessage;
 import ec.edu.espe.gpr.model.FileModel;
+import ec.edu.espe.gpr.model.TareaDocente;
 import ec.edu.espe.gpr.services.FileService;
 
 @Controller
@@ -47,6 +48,7 @@ public class FileController {
           String filename = path.getFileName().toString();
           String url = MvcUriComponentsBuilder.fromMethodName(FileController.class, "getFile",
                   path.getFileName().toString()).build().toString();
+                  System.out.println("URL:");
                   System.out.println(url);
                   return new FileModel(filename, url);
         }).collect(Collectors.toList());
@@ -54,12 +56,31 @@ public class FileController {
         return ResponseEntity.status(HttpStatus.OK).body(fileInfos);
     }
 
+    @GetMapping("/fileDocenteTarea/{codigoTareaDocente}")
+    public ResponseEntity<FileModel> getFileDocenteTarea(@PathVariable Integer codigoTareaDocente){
+        TareaDocente tareaDocente = this.fileService.getTareaDocente(codigoTareaDocente);
+        FileModel fileModel=null; 
+        if(tareaDocente.getNombreArchivoTareaDocente()!="" || tareaDocente.getNombreArchivoTareaDocente()!=null){
+            String filename = tareaDocente.getNombreArchivoTareaDocente();
+            String url = MvcUriComponentsBuilder.fromMethodName(FileController.class, "getFile",
+                    tareaDocente.getArchivoTareaDocente()).build().toString();
+            System.out.println("URL 32:");
+            System.out.println(url);
+            fileModel= new FileModel(filename, url); 
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(fileModel);
+    }
+
 
     @GetMapping("/files/{filename:.+}")
     public ResponseEntity<Resource> getFile(@PathVariable String filename){
         Resource file = fileService.load(filename);
+        String[] fileProperties = filename.split("\\.");
+        TareaDocente tareaDocente = this.fileService.getTareaDocente(Integer.parseInt(fileProperties[0]));
+        /*return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,
+                "attachment; filename=\""+file.getFilename() + "\"").body(file);*/
         return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,
-                "attachment; filename=\""+file.getFilename() + "\"").body(file);
+                "attachment; filename=\""+tareaDocente.getNombreArchivoTareaDocente() + "\"").body(file);        
     }
 
     @GetMapping("/delete/{filename:.+}")

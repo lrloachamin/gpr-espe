@@ -190,8 +190,8 @@ public class TareaDocenteService {
         return this.indicadorDao.findAll();
     }
 
-    public List<TareaDocente> listarTareasEntregadas(){
-        return this.tareaDocenteDao.findByEstadoTareaDocente(EstadoTareaDocenteEnum.EN_REVISION.getText());
+    public List<TareaDocente> listarTareasEntregadas(String cedulaDocenteRevisor){
+        return this.tareaDocenteDao.findByEstadoTareaDocenteAndCedulaDocenteRevisor(EstadoTareaDocenteEnum.EN_REVISION.getText(),cedulaDocenteRevisor);
     }
 
     public List<TareaDocente> listarTareasAceptadas(){
@@ -247,6 +247,7 @@ public class TareaDocenteService {
             t.setEstadoTareaDocente(EstadoTareaDocenteEnum.ASIGNADA.getValue());
             t.setCodigoDocente(docente);
             t.setCodigoTarea(tarea);
+            t.setCedulaDocenteRevisor(tarea.getIdDocenteRevisor());
             /*emservice.enviarCorreo(docente.getCorreoDocente(), "GPR - Nueva Tarea: "+tarea.getNombreTarea(),
 							"Se ha asignado una nueva tarea de prioridad "+tarea.getPrioridadTarea() + 
                             ", y debe ser realizada hasta la fecha de:"+tarea.getFechaEntregaTarea());
@@ -377,7 +378,8 @@ public class TareaDocenteService {
     public void guardarArchivoTareaAsignadaAlProfesor(MultipartFile file, Integer codigoTareaDocente) {
         TareaDocente tareaDocente = this.obtenerIndicadorPorCodigoTareaDocente(codigoTareaDocente);
         this.saveFile(file,tareaDocente.getCodigoTareaDocente().toString()+".pdf");
-        tareaDocente.setArchivoTareaDocente(tareaDocente.getCodigoTareaDocente().toString());
+        tareaDocente.setArchivoTareaDocente(tareaDocente.getCodigoTareaDocente().toString()+".pdf");//Revisar
+        tareaDocente.setNombreArchivoTareaDocente(file.getOriginalFilename());
         tareaDocente.setEstadoTareaDocente(EstadoTareaDocenteEnum.EN_REVISION.getValue());
         this.tareaDocenteDao.save(tareaDocente);    
     }

@@ -1,20 +1,41 @@
 package ec.edu.espe.gpr.services;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.util.FileSystemUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import ec.edu.espe.gpr.dao.ITareaDocenteDao;
+import ec.edu.espe.gpr.model.TareaDocente;
+
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 @Service
 public class FileService {
+
+    @Autowired
+	private ITareaDocenteDao tareaDocenteDao;
+
+
+    private TareaDocente obtenerTareaDocentePorCodigoTareaDocente(Integer codigoTareaDocente) {	
+		Optional<TareaDocente> tareaOpt = this.tareaDocenteDao.findById(codigoTareaDocente);
+		if (tareaOpt.isPresent())
+			return tareaOpt.get();
+		else 
+			return null;
+	}
+
+    public TareaDocente getTareaDocente(Integer codigoTareaDocente){	
+		return this.obtenerTareaDocentePorCodigoTareaDocente(codigoTareaDocente);
+	}
 
     private final Path root = Paths.get("uploads");
     

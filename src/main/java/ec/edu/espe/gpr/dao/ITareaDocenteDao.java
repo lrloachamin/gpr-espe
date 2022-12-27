@@ -13,4 +13,5 @@ public interface ITareaDocenteDao extends JpaRepository<TareaDocente, Integer>{
     List<TareaDocente> findByCodigoDocente(Docente codigoDocente);
     List<TareaDocente> findByCodigoDocenteAndEstadoTareaDocenteNot(Docente codigoDocente,String estadoTareaDocente);
     List<TareaDocente> findByEstadoTareaDocente(String estadoTareaDocente);
+    List<TareaDocente> findByEstadoTareaDocenteAndCedulaDocenteRevisor(String estadoTareaDocente,String cedulaDocenteRevisor);
 }

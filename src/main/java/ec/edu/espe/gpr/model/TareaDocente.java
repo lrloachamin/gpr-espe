@@ -65,6 +65,9 @@ public class TareaDocente implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaEntregadaTareaDocente;
 
+    @Column(name = "CEDULA_DOCENTE_REVISOR")
+    private String cedulaDocenteRevisor;
+
     @JoinColumn(name = "CODIGO_DOCENTE", referencedColumnName = "CODIGO_DOCENTE")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
