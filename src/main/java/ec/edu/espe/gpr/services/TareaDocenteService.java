@@ -1,5 +1,10 @@
 package ec.edu.espe.gpr.services;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -29,14 +34,6 @@ import ec.edu.espe.gpr.model.TareaDocenteProyecto;
 import ec.edu.espe.gpr.model.TareaIndicador;
 import ec.edu.espe.gpr.model.Usuario;
 import ec.edu.espe.gpr.model.Usuper;
-
-import java.io.File;
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.stream.Stream;
 
 @Service
 public class TareaDocenteService {
@@ -284,13 +281,13 @@ public class TareaDocenteService {
         this.tareaDao.save(tareaDocenteProyecto.getTarea());
         List<TareaDocente> tareaDocentes = this.tareaDocenteDao.findByCodigoTarea(tareaDocenteProyecto.getTarea());
         int indice;
-        Boolean check = true;
-        TareaDocente tareaD = new TareaDocente(); 
+        //Boolean check = true;
+        //TareaDocente tareaD = new TareaDocente(); 
         for(TareaDocente tareaDocente : tareaDocentes){
-            if(check){
+            /*if(check){
                 tareaD = tareaDocente;
                 check = false;
-            }
+            }*/
             indice = tareaDocenteProyecto.getDocentes().indexOf(tareaDocente.getCodigoDocente());
             if(indice == -1){
 

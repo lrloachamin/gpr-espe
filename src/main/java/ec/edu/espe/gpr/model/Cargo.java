@@ -12,10 +12,13 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.EqualsAndHashCode;
 
@@ -26,7 +29,6 @@ public class Cargo implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    
     @Column(name = "COD_CARGO")
     private String codCargo;
     
@@ -35,6 +37,15 @@ public class Cargo implements Serializable {
     
     @Column(name = "DESCRI_CARGO")
     private String descriCargo;
+
+    @JoinColumn(name = "COD_CARGO_PADRE", referencedColumnName = "COD_CARGO")
+    @ManyToOne(optional = true, fetch = FetchType.LAZY)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+    @Column(name = "COD_CARGO")
+    private Cargo codCargoPadre;
+
+    @Column(name = "COD_PERFIL_PADRE")
+    private String codPerfilPadre;
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "codCargo",fetch= FetchType.LAZY)
     @JsonBackReference(value="docenteList")
@@ -83,6 +94,26 @@ public class Cargo implements Serializable {
 
     public void setDocenteList(List<Docente> docenteList) {
         this.docenteList = docenteList;
+    }
+
+    public static long getSerialversionuid() {
+        return serialVersionUID;
+    }
+
+    public Cargo getCodCargoPadre() {
+        return codCargoPadre;
+    }
+
+    public void setCodCargoPadre(Cargo codCargoPadre) {
+        this.codCargoPadre = codCargoPadre;
+    }
+
+    public String getCodPerfilPadre() {
+        return codPerfilPadre;
+    }
+
+    public void setCodPerfilPadre(String codPerfilPadre) {
+        this.codPerfilPadre = codPerfilPadre;
     }
     
 }

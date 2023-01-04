@@ -13,10 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import ec.edu.espe.gpr.model.Docente;
-import ec.edu.espe.gpr.model.Usuario;
-import ec.edu.espe.gpr.response.CargoResponseRest;
 import ec.edu.espe.gpr.response.DocenteResponseRest;
-import ec.edu.espe.gpr.response.UsuarioResponseRest;
 import ec.edu.espe.gpr.services.IDocenteService;
 
 @CrossOrigin(origins= {"https://mango-rock-08c52cc10.2.azurestaticapps.net","http://localhost:4200"})

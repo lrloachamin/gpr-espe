@@ -5,25 +5,20 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.yaml.snakeyaml.util.ArrayUtils;
-
-import java.util.Optional;
 
 import ec.edu.espe.gpr.dao.IPerfilDao;
 import ec.edu.espe.gpr.dao.IUsuarioDao;
 import ec.edu.espe.gpr.dao.IUsuarioPerfilDao;
-
-import ec.edu.espe.gpr.model.Usuper;
-import ec.edu.espe.gpr.model.Usuario;
 import ec.edu.espe.gpr.model.Perfil;
-import ec.edu.espe.gpr.response.DocenteResponseRest;
-import ec.edu.espe.gpr.response.UsuarioPerfilResponse;
+import ec.edu.espe.gpr.model.Usuario;
+import ec.edu.espe.gpr.model.Usuper;
 import ec.edu.espe.gpr.response.UsuarioPerfilResponseRest;
 
 @Service

@@ -107,7 +107,7 @@ public class FileController {
                 "attachment; filename=\""+tarea.getNombreArchivoTarea() + "\"").body(file);        
     }
 
-    @GetMapping("/delete/{filename:.+}")
+    /*@GetMapping("/delete/{filename:.+}")
     public ResponseEntity<FileMessage> deleteFile(@PathVariable String filename) {
         String message = "";
         try {
@@ -116,6 +116,6 @@ public class FileController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new FileMessage(message));
         }
-    }
+    }*/
 
 }

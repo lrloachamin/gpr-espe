@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import ec.edu.espe.gpr.model.Cargo;
-import ec.edu.espe.gpr.model.Perfil;
 import ec.edu.espe.gpr.response.CargoResponseRest;
 import ec.edu.espe.gpr.services.ICargoService;
 

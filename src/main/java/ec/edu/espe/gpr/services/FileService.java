@@ -1,5 +1,13 @@
 package ec.edu.espe.gpr.services;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Optional;
+import java.util.stream.Stream;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -11,14 +19,6 @@ import ec.edu.espe.gpr.dao.ITareaDao;
 import ec.edu.espe.gpr.dao.ITareaDocenteDao;
 import ec.edu.espe.gpr.model.Tarea;
 import ec.edu.espe.gpr.model.TareaDocente;
-
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.Optional;
-import java.util.stream.Stream;
 
 @Service
 public class FileService {
@@ -122,7 +122,7 @@ public class FileService {
         }
     }
 
-    public String deleteFile(String filename){
+    /*public String deleteFile(String filename){
         try {
             Boolean delete = Files.deleteIfExists(this.root.resolve(filename));
                 return "Borrado";
@@ -131,5 +131,6 @@ public class FileService {
             return "Error Borrando ";
         }
     }
+    */
 
 }
