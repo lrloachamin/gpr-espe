@@ -7,20 +7,18 @@ package ec.edu.espe.gpr.model;
 
 import java.io.Serializable;
 import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.EqualsAndHashCode;
 
@@ -39,12 +37,7 @@ public class Perfil implements Serializable {
     @Lob
     @Column(name = "OBS_PERFIL")
     private String obsPerfil;
-    
-    @JoinColumn(name = "CODIGO_PERFIL_PADRE", referencedColumnName = "CODIGO_PERFIL")
-    @OneToOne(optional = true, fetch = FetchType.LAZY)
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    private Perfil codigoPerfilPadre;
-    
+
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "codigoPerfil",fetch= FetchType.LAZY)
     @JsonBackReference(value="opcPerList")
@@ -111,12 +104,4 @@ public class Perfil implements Serializable {
         return serialVersionUID;
     }
 
-    public Perfil getCodigoPerfilPadre() {
-        return codigoPerfilPadre;
-    }
-
-    public void setCodigoPerfilPadre(Perfil codigoPerfilPadre) {
-        this.codigoPerfilPadre = codigoPerfilPadre;
-    }
-    
 }
