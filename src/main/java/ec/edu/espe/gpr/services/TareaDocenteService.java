@@ -16,10 +16,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import ec.edu.espe.gpr.dao.ICargoDao;
 import ec.edu.espe.gpr.dao.IDocenteDao;
-import ec.edu.espe.gpr.dao.IPerfilDao;
 import ec.edu.espe.gpr.dao.ITareaDao;
 import ec.edu.espe.gpr.dao.ITareaDocenteDao;
-import ec.edu.espe.gpr.dao.IUsuarioPerfilDao;
 import ec.edu.espe.gpr.dao.IndicadorDao;
 import ec.edu.espe.gpr.dao.TareaIndicadorDao;
 import ec.edu.espe.gpr.enums.EstadoTareaDocenteEnum;
@@ -27,13 +25,16 @@ import ec.edu.espe.gpr.enums.EstadoTareaEnum;
 import ec.edu.espe.gpr.model.Cargo;
 import ec.edu.espe.gpr.model.Docente;
 import ec.edu.espe.gpr.model.Indicador;
-import ec.edu.espe.gpr.model.Perfil;
 import ec.edu.espe.gpr.model.Tarea;
 import ec.edu.espe.gpr.model.TareaDocente;
 import ec.edu.espe.gpr.model.TareaDocenteProyecto;
 import ec.edu.espe.gpr.model.TareaIndicador;
-import ec.edu.espe.gpr.model.Usuario;
+/*import ec.edu.espe.gpr.model.Usuario;
 import ec.edu.espe.gpr.model.Usuper;
+import ec.edu.espe.gpr.dao.IUsuarioPerfilDao;
+import ec.edu.espe.gpr.model.Perfil;
+import ec.edu.espe.gpr.dao.IPerfilDao;
+import ec.edu.espe.gpr.dao.IPerfilDao;*/
 
 @Service
 public class TareaDocenteService {
@@ -50,10 +51,10 @@ public class TareaDocenteService {
 	private TareaIndicadorDao tareaIndicadorDao;
     @Autowired
 	private ICargoDao cargoDao;
-    @Autowired
+    /*@Autowired
 	private IPerfilDao perfilDao;
 	@Autowired
-	private IUsuarioPerfilDao usuarioperfilDao;
+	private IUsuarioPerfilDao usuarioperfilDao;*/
     @Autowired
 	private IEmailService emservice;
 
@@ -76,7 +77,7 @@ public class TareaDocenteService {
 			return null;
 	}
 
-    private Docente obtenerDocentePorCodigoUsuario(Usuario usuario) {	
+    /*private Docente obtenerDocentePorCodigoUsuario(Usuario usuario) {	
 		Optional<Docente> docenteOpt = this.docenteDao.findByCodigoUsuario(usuario);
 		if (docenteOpt.isPresent())
 			return docenteOpt.get();
@@ -102,30 +103,32 @@ public class TareaDocenteService {
 			return null;
 	}
 
-    private Perfil obtenerPerfilPorCodigoPerfilPadre(Perfil codPerfil) {	
+    */
+    /*private Perfil obtenerPerfilPorCodigoPerfilPadre(Perfil codPerfil) {	
 		Optional<Perfil> perfilOpt = this.perfilDao.findByCodigoPerfilPadre(codPerfil);
 		if (perfilOpt.isPresent())
 			return perfilOpt.get();
 		else 
 			return null;
-	}
+	}*/
 
-    public List<Docente> obtenerDocentesPorCargo(String codigoCargo,String codigoPerfil) {
+    public List<Docente> obtenerDocentesPorCargo(String codigoCargo) {
         Cargo cargo = obtenerCargoPorCodigoCargo(codigoCargo);
-        Perfil perfil = obtenerPerfilPorCodigoPerfilPadre(obtenerPerfilPorCodigoPerfil(codigoPerfil));
+        /*Perfil perfil = obtenerPerfilPorCodigoPerfilPadre(obtenerPerfilPorCodigoPerfil(codigoPerfil));
 		List<Docente> docentes = this.obtenerDocentesPorPerfil(perfil);
-        List<Docente> docentesPerfil = new ArrayList<>();
-		//List<Docente> docentes = this.docenteDao.findByCodCargo(cargo);
-        for (Docente docente : docentes) {
+        List<Docente> docentesPerfil = new ArrayList<>();*/
+		return this.docenteDao.findByCodCargo(cargo);
+        /*for (Docente docente : docentes) {
             if(docente.getCodCargo().equals(cargo))
                 docentesPerfil.add(docente);       
-        }
+        }*/
         /*Docente docente = docenteDao.findByNombreDocente("Admin");
         int indice = docentes.indexOf(docente);
         if(indice != -1)
             docentes.remove(indice);
         */
-        return docentesPerfil;
+
+        //return docentesPerfil;
 	}
 
     public Docente obtenerDocentePorCodigoDocente(Integer codigoDocente) {	
