@@ -41,7 +41,6 @@ public class Cargo implements Serializable {
     @JoinColumn(name = "COD_CARGO_PADRE", referencedColumnName = "COD_CARGO")
     @ManyToOne(optional = true, fetch = FetchType.LAZY)
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    @Column(name = "COD_CARGO")
     private Cargo codCargoPadre;
 
     @Column(name = "COD_PERFIL_PADRE")

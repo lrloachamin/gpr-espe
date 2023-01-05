@@ -349,9 +349,25 @@ public class TareaDocenteService {
         return new TareaDocente();
     }
 
-    public void guardarTareaAsignadaAlProfesor(List<TareaIndicador> tareaIndicadors) {
+    public void guardarTareaAsignadaAlProfesor(List<TareaIndicador> tareaIndicadors,MultipartFile file) {
+        TareaDocente tareaDocente = tareaIndicadors.get(0).getTareadocenteCODIGOTAREADOCENTE();
+        if(file!=null){
+            /*String extensionArchivo = "";
+            int i = file.getOriginalFilename().toString().lastIndexOf('.');
+            
+            if (i > 0) 
+                extensionArchivo = file.getOriginalFilename().toString().substring(i+1);
+            */
+            tareaDocente.setArchivoTareaDocente(tareaDocente.getCodigoTareaDocente().toString()+".pdf");//Revisar
+            tareaDocente.setNombreArchivoTareaDocente(file.getOriginalFilename());
+            this.saveFile(file,tareaDocente.getArchivoTareaDocente());
+        }
+        
         for (TareaIndicador tIndicador : tareaIndicadors) 
             this.tareaIndicadorDao.save(tIndicador);    
+            
+        tareaDocente.setEstadoTareaDocente(EstadoTareaDocenteEnum.EN_REVISION.getValue());
+        this.tareaDocenteDao.save(tareaDocente);
     }
 
     public void init() {
@@ -376,12 +392,12 @@ public class TareaDocenteService {
     }
 
     public void guardarArchivoTareaAsignadaAlProfesor(MultipartFile file, Integer codigoTareaDocente) {
-        TareaDocente tareaDocente = this.obtenerIndicadorPorCodigoTareaDocente(codigoTareaDocente);
+        /*TareaDocente tareaDocente = this.obtenerIndicadorPorCodigoTareaDocente(codigoTareaDocente);
         this.saveFile(file,tareaDocente.getCodigoTareaDocente().toString()+".pdf");
         tareaDocente.setArchivoTareaDocente(tareaDocente.getCodigoTareaDocente().toString()+".pdf");//Revisar
         tareaDocente.setNombreArchivoTareaDocente(file.getOriginalFilename());
         tareaDocente.setEstadoTareaDocente(EstadoTareaDocenteEnum.EN_REVISION.getValue());
-        this.tareaDocenteDao.save(tareaDocente);    
+        this.tareaDocenteDao.save(tareaDocente);    */
     }
 
     public void aprobarTareaDocente(TareaDocente tareaDocente) {

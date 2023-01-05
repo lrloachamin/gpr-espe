@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 
 import ec.edu.espe.gpr.model.Docente;
 import ec.edu.espe.gpr.model.Indicador;
@@ -141,7 +142,7 @@ public class TareaDocenteRestController {
     public ResponseEntity<String> crear(@RequestParam("tareaDocenteProyecto") String strTareaDocenteProyecto,
             @RequestParam("file") MultipartFile file ) {
         try {
-            Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm").create();;
+            Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm").create();
             TareaDocenteProyecto tareaDocenteProyecto = gson.fromJson(strTareaDocenteProyecto, TareaDocenteProyecto.class);
             this.tareaDocenteService.crear(tareaDocenteProyecto,file);
             return ResponseEntity.ok().build();
@@ -178,7 +179,8 @@ public class TareaDocenteRestController {
     public ResponseEntity<TareaDocente> guardarTareaAsignadaAlProfesor(
             @RequestBody List<TareaIndicador> tareaIndicadors) {
         try {
-            this.tareaDocenteService.guardarTareaAsignadaAlProfesor(tareaIndicadors);
+            MultipartFile file = null;
+            this.tareaDocenteService.guardarTareaAsignadaAlProfesor(tareaIndicadors,file);
             return ResponseEntity.ok().build();
         } catch (Exception e) {
             e.printStackTrace();
@@ -188,9 +190,12 @@ public class TareaDocenteRestController {
 
     @PutMapping("/guardarArchivoTareaAsignadaAlProfesor")
     public ResponseEntity<String> guardarArchivoTareaAsignadaAlProfesor(@RequestParam("file") MultipartFile file,
-            @RequestParam("codigoTareaDocente") String codigoTareaDocente) {
+            @RequestParam("tareaIndicadors") String strTareaIndicadors) {
         try {
-            this.tareaDocenteService.guardarArchivoTareaAsignadaAlProfesor(file, Integer.parseInt(codigoTareaDocente));
+            Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm").create();
+            //List<TareaIndicador> tareaIndicadors = gson.fromJson(strTareaIndicadors, TareaIndicador[].class);
+            List<TareaIndicador> tareaIndicadors = gson.fromJson(strTareaIndicadors, new TypeToken<List<TareaIndicador>>(){}.getType());
+            this.tareaDocenteService.guardarTareaAsignadaAlProfesor(tareaIndicadors,file);
             return ResponseEntity.ok().build();
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();
