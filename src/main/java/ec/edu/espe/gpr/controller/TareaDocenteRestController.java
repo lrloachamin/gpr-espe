@@ -138,6 +138,26 @@ public class TareaDocenteRestController {
         }
     }
 
+    @GetMapping(path = "/listarTodasTareasRevisar")
+    public ResponseEntity<List<TareaDocente>> listarTodasTareasRevisar() {
+        try {
+            List<TareaDocente> tareaDocentes = this.tareaDocenteService.listarTodasTareasRevisar();
+            return ResponseEntity.ok(tareaDocentes);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+    @GetMapping(path = "/listarTodasTareasRevisadas")
+    public ResponseEntity<List<TareaDocente>> listarTodasTareasRevisadas() {
+        try {
+            List<TareaDocente> tareaDocentes = this.tareaDocenteService.listarTodasTareasRevisadas();
+            return ResponseEntity.ok(tareaDocentes);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
     @PostMapping(path = "/crearTareaConArchivo")
     public ResponseEntity<String> crear(@RequestParam("tareaDocenteProyecto") String strTareaDocenteProyecto,
             @RequestParam("file") MultipartFile file ) {

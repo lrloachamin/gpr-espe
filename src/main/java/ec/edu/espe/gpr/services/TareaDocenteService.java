@@ -222,6 +222,14 @@ public class TareaDocenteService {
         Docente docente = this.obtenerDocentePorCodigoDocente(codigoDocente);
         return this.tareaDocenteDao.findByCodigoDocenteAndEstadoTareaDocenteNot(docente,EstadoTareaDocenteEnum.ACEPTADO.getValue());
     }
+
+    public List<TareaDocente> listarTodasTareasRevisar(){
+        return this.tareaDocenteDao.findByEstadoTareaDocente(EstadoTareaDocenteEnum.EN_REVISION.getValue());
+    }
+
+    public List<TareaDocente> listarTodasTareasRevisadas(){
+        return this.tareaDocenteDao.findByEstadoTareaDocente(EstadoTareaDocenteEnum.ACEPTADO.getValue());
+    }
 	
     public void crear(TareaDocenteProyecto tareaDocenteProyecto,MultipartFile file) {
         tareaDocenteProyecto.getTarea().setFechaCreaciontarea(new Date());
