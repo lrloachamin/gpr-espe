@@ -349,8 +349,8 @@ public class TareaDocenteService {
         return new TareaDocente();
     }
 
-    public void guardarTareaAsignadaAlProfesor(List<TareaIndicador> tareaIndicadors,MultipartFile file) {
-        TareaDocente tareaDocente = tareaIndicadors.get(0).getTareadocenteCODIGOTAREADOCENTE();
+    public void guardarTareaAsignadaAlProfesor(List<TareaIndicador> tareaIndicadors,MultipartFile file,Integer codigoTareaDocente) {
+        TareaDocente tareaDocente = this.obtenerIndicadorPorCodigoTareaDocente(codigoTareaDocente);
         if(file!=null){
             /*String extensionArchivo = "";
             int i = file.getOriginalFilename().toString().lastIndexOf('.');

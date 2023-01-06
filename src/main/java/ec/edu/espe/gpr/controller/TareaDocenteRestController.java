@@ -177,10 +177,12 @@ public class TareaDocenteRestController {
 
     @PutMapping("/guardarTareaAsignadaAlProfesor")
     public ResponseEntity<TareaDocente> guardarTareaAsignadaAlProfesor(
-            @RequestBody List<TareaIndicador> tareaIndicadors) {
+        @RequestParam("tareaIndicadors") String strTareaIndicadors, @RequestParam("codigoTareaDocente") String codigoTareaDocente) {
         try {
             MultipartFile file = null;
-            this.tareaDocenteService.guardarTareaAsignadaAlProfesor(tareaIndicadors,file);
+            Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm").create();
+            List<TareaIndicador> tareaIndicadors = gson.fromJson(strTareaIndicadors, new TypeToken<List<TareaIndicador>>(){}.getType());
+            this.tareaDocenteService.guardarTareaAsignadaAlProfesor(tareaIndicadors,file,Integer.parseInt(codigoTareaDocente));
             return ResponseEntity.ok().build();
         } catch (Exception e) {
             e.printStackTrace();
@@ -190,12 +192,12 @@ public class TareaDocenteRestController {
 
     @PutMapping("/guardarArchivoTareaAsignadaAlProfesor")
     public ResponseEntity<String> guardarArchivoTareaAsignadaAlProfesor(@RequestParam("file") MultipartFile file,
-            @RequestParam("tareaIndicadors") String strTareaIndicadors) {
+            @RequestParam("tareaIndicadors") String strTareaIndicadors, @RequestParam("codigoTareaDocente") String codigoTareaDocente) {
         try {
             Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm").create();
             //List<TareaIndicador> tareaIndicadors = gson.fromJson(strTareaIndicadors, TareaIndicador[].class);
             List<TareaIndicador> tareaIndicadors = gson.fromJson(strTareaIndicadors, new TypeToken<List<TareaIndicador>>(){}.getType());
-            this.tareaDocenteService.guardarTareaAsignadaAlProfesor(tareaIndicadors,file);
+            this.tareaDocenteService.guardarTareaAsignadaAlProfesor(tareaIndicadors,file,Integer.parseInt(codigoTareaDocente));
             return ResponseEntity.ok().build();
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();
