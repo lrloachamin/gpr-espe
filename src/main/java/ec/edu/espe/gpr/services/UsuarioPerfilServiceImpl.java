@@ -54,7 +54,7 @@ public class UsuarioPerfilServiceImpl implements IUsuarioPerfilService {
 	}
 
 	@Override
-	public ResponseEntity<UsuarioPerfilResponseRest> save(String codigoperfil,Integer codigousuario, String codusuper) {
+	public ResponseEntity<UsuarioPerfilResponseRest> save(String codigoperfil,Integer codigousuario, Integer codusuper) {
 		UsuarioPerfilResponseRest response = new UsuarioPerfilResponseRest();
 		List<Usuper> list= new ArrayList<>();
 		try {
@@ -107,7 +107,7 @@ public class UsuarioPerfilServiceImpl implements IUsuarioPerfilService {
 			
 			for(Usuper u :usurioID) {
 			
-				listaCodigoUsuper.add(Integer.parseInt(u.getCodUsuper()));
+				listaCodigoUsuper.add(u.getCodUsuper().intValue());
 				
 				
 			}
@@ -116,10 +116,10 @@ public class UsuarioPerfilServiceImpl implements IUsuarioPerfilService {
 			 boolean isEmpty = isEmpty(listaCodigoUsuper);
 		        if (isEmpty) {
 		        	idLocUsuPer=1;
-		        	usuper.setCodUsuper(Integer.toString(idLocUsuPer));
+		        	//usuper.setCodUsuper(Integer.toString(idLocUsuPer));
 		        } else {
 		        	idLocUsuPer=Collections.max(listaCodigoUsuper)+1;
-					usuper.setCodUsuper(Integer.toString(idLocUsuPer));
+					//usuper.setCodUsuper(Integer.toString(idLocUsuPer));
 				
 		        }
 		    	Usuper usupersave=usuarioperfilDao.save(usuper);
@@ -154,7 +154,7 @@ public class UsuarioPerfilServiceImpl implements IUsuarioPerfilService {
 	
 	@Override
 	@Transactional
-	public ResponseEntity<UsuarioPerfilResponseRest> delete(String idUsuPer, String codusuper) {
+	public ResponseEntity<UsuarioPerfilResponseRest> delete(Integer idUsuPer, Integer codusuper) {
 		UsuarioPerfilResponseRest response= new UsuarioPerfilResponseRest();
 		
 		try {

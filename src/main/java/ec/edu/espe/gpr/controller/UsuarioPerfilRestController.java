@@ -48,7 +48,7 @@ public class UsuarioPerfilRestController {
 			
 			@PathVariable String codigoperfil,
 			@PathVariable Integer codigousuario,
-			@PathVariable String idusuper
+			@PathVariable Integer idusuper
 			){
 		
 		try {
@@ -60,7 +60,7 @@ public class UsuarioPerfilRestController {
 	}
 	
 	@DeleteMapping("/usuarioperfil/{id}/{idusuper}")
-	public ResponseEntity<UsuarioPerfilResponseRest> deleteCategories(@PathVariable String id,@PathVariable String idusuper){
+	public ResponseEntity<UsuarioPerfilResponseRest> deleteCategories(@PathVariable Integer id,@PathVariable Integer idusuper){
 		ResponseEntity<UsuarioPerfilResponseRest> responseEntity=usuarioperfilService.delete(id,idusuper);
 		return responseEntity;
 	}
