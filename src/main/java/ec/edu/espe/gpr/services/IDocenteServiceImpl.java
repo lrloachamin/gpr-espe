@@ -241,10 +241,11 @@ public class IDocenteServiceImpl implements IDocenteService  {
 		docente.getCodigoUsuario().setPasswUsuario(passeconder.encode(docente.getCedulaDocente()));
 		docente.getCodigoUsuario().setFechaModUsuario(new Date());
 		docente.getCodigoUsuario().setEstadoUsuario('2');
+		this.usuarioDao.save(docente.getCodigoUsuario());
 		emservice.enviarCorreo(docente.getCorreoDocente(), "GPR - Cambio de Contraseña: ",
 							"Se ha solicitado el cambio de su contraseña, Su usuario es: "+docente.getCodigoUsuario().getNombreUsuario() + 
                             ", y su password:"+docente.getCedulaDocente());
-		this.usuarioDao.save(docente.getCodigoUsuario());
+		
 	}
 
 
