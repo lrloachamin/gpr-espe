@@ -42,6 +42,9 @@ public class PerfilServiceImpl implements IPerfilService {
 		}
 		return new ResponseEntity<PerfilResponseRest>(response,HttpStatus.OK);
 	}
-	
 
+	@Override
+	public List<Perfil> listarPerfiles() {
+		return (List<Perfil>) perfilDao.findAll();
+	}
 }
