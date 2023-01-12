@@ -53,6 +53,9 @@ public class Docente implements Serializable {
     
     @Column(name = "PUESTO_TRABAJO")
     private String puestoTrabajoDocente;
+
+    @Column(name = "NUM_LOGUEO")
+    private Integer numLogueo;
     
     @JoinColumn(name = "COD_CARGO", referencedColumnName = "COD_CARGO")
     @ManyToOne(optional = false,fetch= FetchType.LAZY)
@@ -208,6 +211,18 @@ public class Docente implements Serializable {
     @Override
     public String toString() {
         return "ec.edu.espe.gpr.model.Docente[ codigoDocente=" + codigoDocente + " ]";
+    }
+
+    public static long getSerialversionuid() {
+        return serialVersionUID;
+    }
+
+    public Integer getNumLogueo() {
+        return numLogueo;
+    }
+
+    public void setNumLogueo(Integer numLogueo) {
+        this.numLogueo = numLogueo;
     }
     
 }

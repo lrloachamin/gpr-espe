@@ -38,12 +38,12 @@ public class Perfil implements Serializable {
     @Column(name = "OBS_PERFIL")
     private String obsPerfil;
 
-    @JsonIgnore
+    //@JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "codigoPerfil",fetch= FetchType.LAZY)
     @JsonBackReference(value="opcPerList")
     private List<OpcPer> opcPerList;
     
-    @JsonIgnore
+    //@JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "codigoPerfil",fetch= FetchType.LAZY)
     @JsonBackReference(value="usuperList")
     private List<Usuper> usuperList;

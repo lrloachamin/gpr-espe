@@ -178,7 +178,12 @@ public class UsuarioServiceImpl implements IUsuarioService {
 
 	@Override
 	public Docente getDocentByCodeUser(Integer codeUser) {
-		return this.getDocentByCodeUserSearch(codeUser);
+		Docente docente = this.getDocentByCodeUserSearch(codeUser);
+		if(docente.getNumLogueo()==null)
+			docente.setNumLogueo(0);
+		docente.setNumLogueo(docente.getNumLogueo()+1);
+		docente = this.docentedao.save(docente);
+		return docente;
 	}
 
 }

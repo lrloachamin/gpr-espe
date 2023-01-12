@@ -34,6 +34,8 @@ public class IDocenteServiceImpl implements IDocenteService  {
 	private ICargoDao cargoDao;
 	@Autowired
 	private IUsuarioDao usuarioDao;
+    @Autowired
+	private IEmailService emservice;
 	
 	@Transactional
 	@Override
@@ -231,7 +233,19 @@ public class IDocenteServiceImpl implements IDocenteService  {
 		}
 		return new ResponseEntity<DocenteResponseRest>(response,HttpStatus.OK);
 	}
-	
+
+	@Override
+	public void resetearPassword(String email){
+		PasswordEncoder passeconder = new BCryptPasswordEncoder();
+		Docente docente = this.docenteDao.findByCorreoDocente(email);
+		docente.getCodigoUsuario().setPasswUsuario(passeconder.encode(docente.getCedulaDocente()));
+		docente.getCodigoUsuario().setFechaModUsuario(new Date());
+		docente.getCodigoUsuario().setEstadoUsuario('0');
+		emservice.enviarCorreo(docente.getCorreoDocente(), "GPR - Cambio de Contraseña: ",
+							"Se ha solicitado el cambio de su contraseña, Su usuario es: "+docente.getCodigoUsuario().getNombreUsuario() + 
+                            ", y su password:"+docente.getCedulaDocente());
+		this.usuarioDao.save(docente.getCodigoUsuario());
+	}
 
 
 }

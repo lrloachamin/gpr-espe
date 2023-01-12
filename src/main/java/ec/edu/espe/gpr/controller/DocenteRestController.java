@@ -83,5 +83,15 @@ public class DocenteRestController {
 		return responseEntity;
 	}
 	
+	@PutMapping("/resetearPassword")
+	public ResponseEntity<String> resetearPassword(@RequestBody String email){
+		try {
+            this.docenteservice.resetearPassword(email);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.badRequest().build();
+        }
+	}
 	
 }
