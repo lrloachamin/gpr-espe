@@ -8,7 +8,7 @@ import ec.edu.espe.gpr.model.Perfil;
 import ec.edu.espe.gpr.model.Usuario;
 import ec.edu.espe.gpr.model.Usuper;
 
-public interface IUsuarioPerfilDao extends CrudRepository<Usuper, String>{
+public interface IUsuarioPerfilDao extends CrudRepository<Usuper, Integer>{
     List<Usuper> findByCodigoUsuario(Usuario codigoUsuario);
     List<Usuper> findByCodigoPerfil(Perfil codigoPerfil);
 }

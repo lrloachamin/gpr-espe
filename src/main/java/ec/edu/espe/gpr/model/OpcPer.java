@@ -17,6 +17,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
@@ -42,6 +43,7 @@ public class OpcPer implements Serializable {
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Opcion codigoOpcion;
     
+    @JsonIgnore
     @JoinColumn(name = "CODIGO_PERFIL", referencedColumnName = "CODIGO_PERFIL")
     @ManyToOne(optional = false,fetch= FetchType.LAZY)
     private Perfil codigoPerfil;

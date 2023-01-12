@@ -8,9 +8,12 @@ package ec.edu.espe.gpr.model;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -26,9 +29,10 @@ public class Usuper implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
     @Column(name = "COD_USUPER")
-    private String codUsuper;
+    private Integer codUsuper;
     
     @Column(name = "FECHA_ASG_USUPER")
     @Temporal(TemporalType.DATE)
@@ -49,20 +53,20 @@ public class Usuper implements Serializable {
     public Usuper() {
     }
 
-    public Usuper(String codUsuper) {
+    public Usuper(Integer codUsuper) {
         this.codUsuper = codUsuper;
     }
 
-    public Usuper(String codUsuper, Date fechaAsgUsuper) {
+    public Usuper(Integer codUsuper, Date fechaAsgUsuper) {
         this.codUsuper = codUsuper;
         this.fechaAsgUsuper = fechaAsgUsuper;
     }
 
-    public String getCodUsuper() {
+    public Integer getCodUsuper() {
         return codUsuper;
     }
 
-    public void setCodUsuper(String codUsuper) {
+    public void setCodUsuper(Integer codUsuper) {
         this.codUsuper = codUsuper;
     }
 
