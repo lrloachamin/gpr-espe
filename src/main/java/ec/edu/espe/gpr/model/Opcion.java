@@ -33,6 +33,9 @@ public class Opcion implements Serializable {
     @Column(name = "DESC_OPCION")
     private String descOpcion;
     
+    @Column(name = "URL_OPCION")
+    private String urlOpcion;
+    
     @OneToMany(cascade = CascadeType.ALL,fetch= FetchType.LAZY, mappedBy = "codigoOpcion")
     @JsonBackReference(value="opcPerList")
     private List<OpcPer> opcPerList;
@@ -85,8 +88,18 @@ public class Opcion implements Serializable {
     public void setCodSistema(Sistema codSistema) {
         this.codSistema = codSistema;
     }
+    
+    
 
-    @Override
+    public String getUrlOpcion() {
+		return urlOpcion;
+	}
+
+	public void setUrlOpcion(String urlOpcion) {
+		this.urlOpcion = urlOpcion;
+	}
+
+	@Override
     public int hashCode() {
         int hash = 0;
         hash += (codigoOpcion != null ? codigoOpcion.hashCode() : 0);

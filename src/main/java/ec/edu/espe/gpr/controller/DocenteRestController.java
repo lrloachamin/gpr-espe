@@ -44,6 +44,16 @@ public class DocenteRestController {
 		}
 	}
 	
+	@GetMapping("/docentePerfilU")
+	public ResponseEntity<DocenteResponseRest> buscarUsuarioPerfil(){
+		try {
+			ResponseEntity<DocenteResponseRest> responseEntity=docenteservice.serachPorPerfil();
+			return responseEntity;
+		}catch(Exception c) {
+			return null;
+		}
+	}
+	
 	@PostMapping("/docentes")
 	public ResponseEntity<DocenteResponseRest> saveDocentes(
 			
