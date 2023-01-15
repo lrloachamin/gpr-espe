@@ -17,9 +17,11 @@ import org.springframework.transaction.annotation.Transactional;
 import ec.edu.espe.gpr.dao.ICargoDao;
 import ec.edu.espe.gpr.dao.IDocenteDao;
 import ec.edu.espe.gpr.dao.IUsuarioDao;
+import ec.edu.espe.gpr.dao.IUsuarioPerfilDao;
 import ec.edu.espe.gpr.model.Cargo;
 import ec.edu.espe.gpr.model.Docente;
 import ec.edu.espe.gpr.model.Usuario;
+import ec.edu.espe.gpr.model.Usuper;
 import ec.edu.espe.gpr.response.DocenteResponseRest;
 
 
@@ -30,6 +32,8 @@ public class IDocenteServiceImpl implements IDocenteService  {
 	
 	@Autowired
 	private IDocenteDao docenteDao;
+	@Autowired
+	private IUsuarioPerfilDao usuarioperfilDao;
 	@Autowired
 	private ICargoDao cargoDao;
 	@Autowired
@@ -124,6 +128,48 @@ public class IDocenteServiceImpl implements IDocenteService  {
 		}
 		return new ResponseEntity<DocenteResponseRest>(response,HttpStatus.OK);
 	}
+	
+	@Override
+	@Transactional(readOnly = true)
+	public ResponseEntity<DocenteResponseRest> serachPorPerfil() {
+		DocenteResponseRest response= new DocenteResponseRest();
+		try {
+			boolean bandera;
+			List<Docente> usuarioperfil= (List<Docente>) docenteDao.findAll();
+			
+			List<Usuper> usuarioperfilP= (List<Usuper>) usuarioperfilDao.findAll();
+			
+			List<Docente> docentes=new ArrayList<>();
+			for(Docente d: usuarioperfil) {
+				bandera=false;
+				
+				for(Usuper up:usuarioperfilP) {
+					if(up.getCodigoUsuario().getCodigoUsuario()==d.getCodigoUsuario().getCodigoUsuario()) {
+						bandera=true;
+						
+					}
+				}
+				if(bandera!=true) {
+					docentes.add(d);
+				}	
+				
+			}
+			
+			response.getDocenteResponse().setDocente(docentes);
+			response.setMetadata("Respuesta 0k", "200", "Respuesta exitosa");
+			
+			
+		}catch (Exception e) {
+			// TODO: handle exception
+			response.setMetadata("Respuesta nok", "000", "Error Consultar");
+			e.getStackTrace();
+			System.out.println("Sale");
+			return new ResponseEntity<DocenteResponseRest>(response,HttpStatus.INTERNAL_SERVER_ERROR);
+			
+		}
+		return new ResponseEntity<DocenteResponseRest>(response,HttpStatus.OK);
+	}
+	
 	
 
 	@Override

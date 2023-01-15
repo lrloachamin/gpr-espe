@@ -43,7 +43,8 @@ public class Perfil implements Serializable {
     @JsonBackReference(value="opcPerList")
     private List<OpcPer> opcPerList;
     
-    //@JsonIgnore
+    
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "codigoPerfil",fetch= FetchType.LAZY)
     @JsonBackReference(value="usuperList")
     private List<Usuper> usuperList;

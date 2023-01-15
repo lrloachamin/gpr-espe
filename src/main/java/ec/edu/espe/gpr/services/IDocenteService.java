@@ -12,5 +12,6 @@ public interface IDocenteService {
 	public ResponseEntity<DocenteResponseRest> buscarPorIDEspe(String idespe);
 	public ResponseEntity<DocenteResponseRest> buscarPorUsuario(String usuario);
 	public ResponseEntity<DocenteResponseRest> update(Docente docente, Integer id);
+	public ResponseEntity<DocenteResponseRest> serachPorPerfil();
 	public void resetearPassword(String email);
 }
